@@ -206,10 +206,23 @@ body {
 }
 
 .field-group.field-title { flex-basis: 100%; }
-.field-group.field-due { flex: 1 1 170px; min-width: 160px; }
-.field-group.field-time { flex: 1 1 150px; min-width: 140px; }
 .field-group.field-category { flex: 1 1 150px; }
 .field-group.field-choice { flex: 0 1 auto; min-width: 0; }
+
+.datetime-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+.datetime-row .field-group {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.datetime-row input {
+  padding-left: 6px;
+  padding-right: 6px;
+  font-size: 0.85rem;
+}
 
 .choice-group {
   display: flex;
