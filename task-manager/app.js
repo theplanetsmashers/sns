@@ -2,7 +2,6 @@
   "use strict";
 
   const STORAGE_KEY = "task-manager.tasks";
-  const THEME_KEY = "task-manager.theme";
 
   const PRIORITY_LABEL = { low: "低", medium: "中", high: "高" };
   const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
@@ -23,7 +22,6 @@
     filterGroup: document.getElementById("filterStatus"),
     filterSpaceGroup: document.getElementById("filterSpace"),
     template: document.getElementById("taskItemTemplate"),
-    themeToggle: document.getElementById("themeToggle"),
     statTotal: document.getElementById("statTotal"),
     statActive: document.getElementById("statActive"),
     statDone: document.getElementById("statDone"),
@@ -242,6 +240,7 @@
       const node = els.template.content.firstElementChild.cloneNode(true);
       node.dataset.id = task.id;
       node.classList.toggle("done", task.done);
+      node.classList.toggle("overdue", isOverdue(task));
 
       const checkbox = node.querySelector(".task-done-checkbox");
       checkbox.checked = task.done;
@@ -448,25 +447,5 @@
     render();
   });
 
-  function applyTheme(theme) {
-    if (theme === "dark") document.documentElement.setAttribute("data-theme", "dark");
-    else if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
-    else document.documentElement.removeAttribute("data-theme");
-  }
-
-  els.themeToggle.addEventListener("click", () => {
-    const stored = localStorage.getItem(THEME_KEY);
-    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const current = stored || (prefersDark ? "dark" : "light");
-    const next = current === "dark" ? "light" : "dark";
-    localStorage.setItem(THEME_KEY, next);
-    applyTheme(next);
-  });
-
-  try {
-    applyTheme(localStorage.getItem(THEME_KEY));
-  } catch {
-    applyTheme(null);
-  }
   render();
 })();
