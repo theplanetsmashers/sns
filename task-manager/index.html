@@ -4,12 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>タスク管理ツール</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app">
     <header class="app-header">
-      <h1>タスク管理ツール</h1>
+      <div class="wordmark">
+        <span class="wordmark-mark" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 8.5L6 12.5L14 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h1>タスク管理ツール</h1>
+      </div>
       <button id="themeToggle" class="icon-btn" title="テーマ切替" aria-label="テーマ切替">🌓</button>
     </header>
 
@@ -33,22 +39,52 @@
     </section>
 
     <form id="taskForm" class="task-form">
-      <input type="text" id="taskTitle" placeholder="タスク名を入力…" required maxlength="200" />
-      <input type="date" id="taskDue" />
-      <select id="taskPriority">
-        <option value="low">低</option>
-        <option value="medium" selected>中</option>
-        <option value="high">高</option>
-      </select>
-      <input type="text" id="taskCategory" placeholder="カテゴリ（任意）" maxlength="40" />
-      <button type="submit" class="primary-btn">追加</button>
+      <div class="field-group field-title">
+        <label class="field-label" for="taskTitle">タスク名</label>
+        <input type="text" id="taskTitle" placeholder="タスク名を入力…" required maxlength="200" />
+      </div>
+      <div class="form-fields-row">
+        <div class="field-group">
+          <label class="field-label" for="taskDue">期限日</label>
+          <input type="date" id="taskDue" />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="taskTime">時刻（任意）</label>
+          <input type="time" id="taskTime" />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="taskPriority">優先度</label>
+          <select id="taskPriority">
+            <option value="low">低</option>
+            <option value="medium" selected>中</option>
+            <option value="high">高</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="taskSpace">区分</label>
+          <select id="taskSpace">
+            <option value="work" selected>仕事</option>
+            <option value="personal">私用</option>
+          </select>
+        </div>
+        <div class="field-group field-category">
+          <label class="field-label" for="taskCategory">カテゴリ（任意）</label>
+          <input type="text" id="taskCategory" placeholder="例）営業" maxlength="40" />
+        </div>
+        <button type="submit" class="primary-btn">追加</button>
+      </div>
     </form>
 
     <section class="toolbar">
       <div class="filter-group" id="filterStatus">
-        <button data-filter="all" class="filter-btn active">すべて</button>
-        <button data-filter="active" class="filter-btn">未完了</button>
-        <button data-filter="done" class="filter-btn">完了</button>
+        <button data-filter="all" class="filter-btn active" type="button">すべて</button>
+        <button data-filter="active" class="filter-btn" type="button">未完了</button>
+        <button data-filter="done" class="filter-btn" type="button">完了</button>
+      </div>
+      <div class="filter-group" id="filterSpace">
+        <button data-space="all" class="filter-btn active" type="button">すべて</button>
+        <button data-space="work" class="filter-btn" type="button">仕事</button>
+        <button data-space="personal" class="filter-btn" type="button">私用</button>
       </div>
       <input type="search" id="searchInput" placeholder="検索…" />
       <select id="sortSelect">
@@ -70,7 +106,8 @@
       </label>
       <div class="task-body">
         <div class="task-title-row">
-          <span class="task-title"></span>
+          <span class="task-title" tabindex="0"></span>
+          <span class="space-badge"></span>
           <span class="priority-badge"></span>
         </div>
         <div class="task-meta">
@@ -79,8 +116,8 @@
         </div>
       </div>
       <div class="task-actions">
-        <button class="icon-btn edit-btn" title="編集">✏️</button>
-        <button class="icon-btn delete-btn" title="削除">🗑️</button>
+        <button class="icon-btn edit-btn" title="編集" type="button">✏️</button>
+        <button class="icon-btn delete-btn" title="削除" type="button">🗑️</button>
       </div>
     </li>
   </template>
