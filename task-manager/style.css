@@ -194,7 +194,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 14px;
+  gap: 16px;
 }
 
 .field-group {
@@ -206,8 +206,8 @@ body {
 }
 
 .field-group.field-title { flex-basis: 100%; }
-.field-group.field-due { flex: 1 1 150px; min-width: 138px; }
-.field-group.field-time { flex: 1 1 130px; min-width: 118px; }
+.field-group.field-due { flex: 1 1 170px; min-width: 160px; }
+.field-group.field-time { flex: 1 1 150px; min-width: 140px; }
 .field-group.field-category { flex: 1 1 150px; }
 .field-group.field-choice { flex: 0 1 auto; min-width: 0; }
 
