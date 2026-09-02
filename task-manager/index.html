@@ -44,11 +44,11 @@
         <input type="text" id="taskTitle" placeholder="タスク名を入力…" required maxlength="200" />
       </div>
       <div class="form-fields-row">
-        <div class="field-group">
+        <div class="field-group field-due">
           <label class="field-label" for="taskDue">期限日</label>
           <input type="date" id="taskDue" />
         </div>
-        <div class="field-group">
+        <div class="field-group field-time">
           <label class="field-label" for="taskTime">時刻（任意）</label>
           <input type="time" id="taskTime" />
         </div>
@@ -56,7 +56,6 @@
           <label class="field-label" for="taskCategory">カテゴリ（任意）</label>
           <input type="text" id="taskCategory" placeholder="例）営業" maxlength="40" />
         </div>
-        <button type="submit" class="primary-btn">追加</button>
       </div>
       <div class="form-choices-row">
         <div class="field-group field-choice">
@@ -82,6 +81,7 @@
             <button type="button" class="choice-btn" data-value="monthly">毎月</button>
           </div>
         </div>
+        <button type="submit" class="primary-btn">追加</button>
       </div>
     </form>
 

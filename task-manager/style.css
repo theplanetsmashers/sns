@@ -148,15 +148,15 @@ body {
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 22px;
+  gap: 6px;
+  margin-bottom: 18px;
 }
 
 .stat-card {
   background: var(--bg-tile);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 10px;
+  border-radius: 9px;
+  padding: 8px 4px;
   text-align: center;
 }
 
@@ -164,15 +164,15 @@ body {
   display: block;
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .stat-label {
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   color: var(--text-muted);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.01em;
 }
 
 #statOverdueCard .stat-value { color: var(--danger); }
@@ -194,7 +194,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 10px;
+  gap: 14px;
 }
 
 .field-group {
@@ -206,6 +206,8 @@ body {
 }
 
 .field-group.field-title { flex-basis: 100%; }
+.field-group.field-due { flex: 1 1 150px; min-width: 138px; }
+.field-group.field-time { flex: 1 1 130px; min-width: 118px; }
 .field-group.field-category { flex: 1 1 150px; }
 .field-group.field-choice { flex: 0 1 auto; min-width: 0; }
 
@@ -258,7 +260,7 @@ body {
 }
 .task-form input::placeholder { color: var(--text-muted); }
 .task-form input:disabled, .task-form select:disabled { opacity: 0.5; cursor: not-allowed; }
-.form-fields-row .primary-btn { flex: 0 0 auto; height: 38px; }
+.form-choices-row .primary-btn { flex: 0 0 auto; height: 38px; }
 
 .primary-btn {
   background: var(--accent);
@@ -486,8 +488,7 @@ body {
 }
 
 @media (max-width: 640px) {
-  .form-fields-row .primary-btn { flex: 1 1 100%; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
+  .form-choices-row .primary-btn { flex: 1 1 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
