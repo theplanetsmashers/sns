@@ -52,34 +52,36 @@
           <label class="field-label" for="taskTime">時刻（任意）</label>
           <input type="time" id="taskTime" />
         </div>
-        <div class="field-group">
-          <label class="field-label" for="taskRecur">繰り返し</label>
-          <select id="taskRecur">
-            <option value="none" selected>なし</option>
-            <option value="weekly">毎週</option>
-            <option value="monthly">毎月</option>
-          </select>
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="taskPriority">優先度</label>
-          <select id="taskPriority">
-            <option value="low">低</option>
-            <option value="medium" selected>中</option>
-            <option value="high">高</option>
-          </select>
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="taskSpace">区分</label>
-          <select id="taskSpace">
-            <option value="work" selected>仕事</option>
-            <option value="personal">私用</option>
-          </select>
-        </div>
         <div class="field-group field-category">
           <label class="field-label" for="taskCategory">カテゴリ（任意）</label>
           <input type="text" id="taskCategory" placeholder="例）営業" maxlength="40" />
         </div>
         <button type="submit" class="primary-btn">追加</button>
+      </div>
+      <div class="form-choices-row">
+        <div class="field-group field-choice">
+          <span class="field-label">優先度</span>
+          <div class="choice-group" id="priorityChoice" role="group" aria-label="優先度">
+            <button type="button" class="choice-btn" data-value="low">低</button>
+            <button type="button" class="choice-btn active" data-value="medium">中</button>
+            <button type="button" class="choice-btn" data-value="high">高</button>
+          </div>
+        </div>
+        <div class="field-group field-choice">
+          <span class="field-label">区分</span>
+          <div class="choice-group" id="spaceChoice" role="group" aria-label="区分">
+            <button type="button" class="choice-btn active" data-value="work">💼 仕事</button>
+            <button type="button" class="choice-btn" data-value="personal">🏠 私用</button>
+          </div>
+        </div>
+        <div class="field-group field-choice">
+          <span class="field-label">繰り返し</span>
+          <div class="choice-group" id="recurChoice" role="group" aria-label="繰り返し">
+            <button type="button" class="choice-btn active" data-value="none">なし</button>
+            <button type="button" class="choice-btn" data-value="weekly">毎週</button>
+            <button type="button" class="choice-btn" data-value="monthly">毎月</button>
+          </div>
+        </div>
       </div>
     </form>
 

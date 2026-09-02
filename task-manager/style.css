@@ -189,7 +189,8 @@ body {
   box-shadow: var(--shadow);
 }
 
-.form-fields-row {
+.form-fields-row,
+.form-choices-row {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -206,6 +207,35 @@ body {
 
 .field-group.field-title { flex-basis: 100%; }
 .field-group.field-category { flex: 1 1 150px; }
+.field-group.field-choice { flex: 0 1 auto; min-width: 0; }
+
+.choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.choice-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); }
+.choice-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+#priorityChoice .choice-btn[data-value="low"].active { background: var(--success); border-color: var(--success); color: var(--accent-contrast); }
+#priorityChoice .choice-btn[data-value="medium"].active { background: var(--warning); border-color: var(--warning); color: var(--accent-contrast); }
+#priorityChoice .choice-btn[data-value="high"].active { background: var(--danger); border-color: var(--danger); color: var(--accent-contrast); }
+#spaceChoice .choice-btn[data-value="work"].active { background: var(--work); border-color: var(--work); color: var(--accent-contrast); }
+#spaceChoice .choice-btn[data-value="personal"].active { background: var(--personal); border-color: var(--personal); color: var(--accent-contrast); }
+#recurChoice .choice-btn.active { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
 
 .field-label {
   font-size: 0.7rem;

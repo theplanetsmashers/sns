@@ -15,9 +15,6 @@
     title: document.getElementById("taskTitle"),
     due: document.getElementById("taskDue"),
     time: document.getElementById("taskTime"),
-    recur: document.getElementById("taskRecur"),
-    priority: document.getElementById("taskPriority"),
-    space: document.getElementById("taskSpace"),
     category: document.getElementById("taskCategory"),
     list: document.getElementById("taskList"),
     empty: document.getElementById("emptyState"),
@@ -32,6 +29,36 @@
     statDone: document.getElementById("statDone"),
     statOverdue: document.getElementById("statOverdue"),
   };
+
+  function createChoiceGroup(elId, defaultValue) {
+    const groupEl = document.getElementById(elId);
+    const buttons = Array.from(groupEl.querySelectorAll(".choice-btn"));
+    const state = { value: defaultValue };
+
+    function applyActive() {
+      for (const b of buttons) b.classList.toggle("active", b.dataset.value === state.value);
+    }
+
+    groupEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".choice-btn");
+      if (!btn || btn.disabled) return;
+      state.value = btn.dataset.value;
+      applyActive();
+    });
+    applyActive();
+
+    return {
+      get value() { return state.value; },
+      set value(v) { state.value = v; applyActive(); },
+      setDisabled(disabled) {
+        for (const b of buttons) b.disabled = disabled;
+      },
+    };
+  }
+
+  const priorityChoice = createChoiceGroup("priorityChoice", "medium");
+  const spaceChoice = createChoiceGroup("spaceChoice", "work");
+  const recurChoice = createChoiceGroup("recurChoice", "none");
 
   let tasks = loadTasks();
   let filter = "all";
@@ -298,10 +325,10 @@
   function syncDueDependentFields() {
     const hasDue = Boolean(els.due.value);
     els.time.disabled = !hasDue;
-    els.recur.disabled = !hasDue;
+    recurChoice.setDisabled(!hasDue);
     if (!hasDue) {
       els.time.value = "";
-      els.recur.value = "none";
+      recurChoice.value = "none";
     }
   }
   els.due.addEventListener("input", syncDueDependentFields);
@@ -314,14 +341,14 @@
       title: els.title.value,
       due: els.due.value,
       dueTime: els.time.value,
-      recur: els.recur.value,
-      priority: els.priority.value,
-      space: els.space.value,
+      recur: recurChoice.value,
+      priority: priorityChoice.value,
+      space: spaceChoice.value,
       category: els.category.value,
     });
     els.form.reset();
-    els.priority.value = "medium";
-    els.space.value = "work";
+    priorityChoice.value = "medium";
+    spaceChoice.value = "work";
     syncDueDependentFields();
     els.title.focus();
   });
