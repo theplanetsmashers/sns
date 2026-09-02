@@ -428,23 +428,13 @@
     closePopover();
   });
 
-  els.filterGroup.addEventListener("click", (e) => {
-    const btn = e.target.closest(".filter-btn");
-    if (!btn) return;
-    filter = btn.dataset.filter;
-    for (const b of els.filterGroup.querySelectorAll(".filter-btn")) {
-      b.classList.toggle("active", b === btn);
-    }
+  els.filterGroup.addEventListener("change", () => {
+    filter = els.filterGroup.value;
     render();
   });
 
-  els.filterSpaceGroup.addEventListener("click", (e) => {
-    const btn = e.target.closest(".filter-btn");
-    if (!btn) return;
-    spaceFilter = btn.dataset.space;
-    for (const b of els.filterSpaceGroup.querySelectorAll(".filter-btn")) {
-      b.classList.toggle("active", b === btn);
-    }
+  els.filterSpaceGroup.addEventListener("change", () => {
+    spaceFilter = els.filterSpaceGroup.value;
     render();
   });
 

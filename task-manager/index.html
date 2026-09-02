@@ -100,21 +100,21 @@
     </section>
 
     <section class="toolbar">
-      <div class="filter-group" id="filterStatus">
-        <button data-filter="all" class="filter-btn active" type="button">すべて</button>
-        <button data-filter="active" class="filter-btn" type="button">未完了</button>
-        <button data-filter="done" class="filter-btn" type="button">完了</button>
-      </div>
-      <select id="sortSelect">
+      <select id="filterStatus" class="toolbar-select" aria-label="ステータス">
+        <option value="all" selected>すべて</option>
+        <option value="active">未完了</option>
+        <option value="done">完了</option>
+      </select>
+      <select id="sortSelect" class="toolbar-select" aria-label="並び替え">
         <option value="created">作成日順</option>
         <option value="due">期限順</option>
         <option value="priority">優先度順</option>
       </select>
-      <div class="filter-group" id="filterSpace">
-        <button data-space="all" class="filter-btn active" type="button">すべて</button>
-        <button data-space="work" class="filter-btn" type="button">仕事</button>
-        <button data-space="personal" class="filter-btn" type="button">私用</button>
-      </div>
+      <select id="filterSpace" class="toolbar-select" aria-label="区分">
+        <option value="all" selected>すべて</option>
+        <option value="work">仕事</option>
+        <option value="personal">私用</option>
+      </select>
       <input type="search" id="searchInput" placeholder="検索…" />
     </section>
 

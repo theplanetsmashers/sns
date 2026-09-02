@@ -362,38 +362,26 @@ body {
 .toolbar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 2px;
 }
 
-.filter-group {
-  display: flex;
-  gap: 3px;
-  background: var(--surface);
+.toolbar-select {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 8px 8px;
   border: 1px solid var(--border);
-  border-radius: 9px;
-  padding: 3px;
-}
-
-.filter-btn {
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  padding: 7px 13px;
-  border-radius: 6px;
-  cursor: pointer;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
   font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 0.82rem;
 }
 
-.filter-btn.active {
-  background: var(--accent);
-  color: var(--accent-contrast);
-}
-
-#searchInput, #sortSelect {
+#searchInput {
   padding: 8px 11px;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -401,9 +389,9 @@ body {
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.85rem;
+  flex: 1 1 100px;
+  min-width: 100px;
 }
-
-#searchInput { flex: 1; min-width: 140px; }
 
 .task-list {
   list-style: none;
