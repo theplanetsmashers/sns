@@ -171,9 +171,7 @@
       dueEl.classList.toggle("overdue", isOverdue(task));
 
       node.querySelector(".edit-btn").addEventListener("click", () => startEdit(node, task));
-      node.querySelector(".delete-btn").addEventListener("click", () => {
-        if (confirm(`「${task.title}」を削除しますか？`)) deleteTask(task.id);
-      });
+      node.querySelector(".delete-btn").addEventListener("click", () => requestDelete(node, task));
 
       node.addEventListener("dragstart", () => {
         dragSourceId = task.id;
@@ -218,6 +216,32 @@
       if (e.key === "Escape") render();
     });
     input.addEventListener("blur", commit);
+  }
+
+  function requestDelete(node, task) {
+    const actions = node.querySelector(".task-actions");
+    actions.innerHTML = "";
+    actions.classList.add("confirming");
+
+    const label = document.createElement("span");
+    label.className = "confirm-label";
+    label.textContent = "削除する？";
+
+    const yesBtn = document.createElement("button");
+    yesBtn.type = "button";
+    yesBtn.className = "icon-btn confirm-yes";
+    yesBtn.title = "削除を確定";
+    yesBtn.textContent = "✔";
+    yesBtn.addEventListener("click", () => deleteTask(task.id));
+
+    const noBtn = document.createElement("button");
+    noBtn.type = "button";
+    noBtn.className = "icon-btn confirm-no";
+    noBtn.title = "キャンセル";
+    noBtn.textContent = "✕";
+    noBtn.addEventListener("click", () => render());
+
+    actions.append(label, yesBtn, noBtn);
   }
 
   function syncTimeAvailability() {

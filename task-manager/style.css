@@ -415,7 +415,26 @@ body {
   display: flex;
   gap: 4px;
   flex: none;
+  align-items: center;
 }
+
+.task-actions.confirming {
+  gap: 6px;
+  background: var(--danger-soft);
+  border-radius: 9px;
+  padding: 3px 4px 3px 10px;
+}
+
+.confirm-label {
+  font-size: 0.78rem;
+  color: var(--danger);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.confirm-yes { border-color: var(--danger); color: var(--danger); }
+.confirm-yes:hover { background: var(--danger); color: var(--accent-contrast); }
+.confirm-no:hover { border-color: var(--text-muted); }
 
 .edit-title-input {
   width: 100%;
