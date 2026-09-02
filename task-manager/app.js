@@ -30,6 +30,9 @@
     popover: document.getElementById("addPopover"),
     popoverBackdrop: document.getElementById("popoverBackdrop"),
     closePopoverBtn: document.getElementById("closePopoverBtn"),
+    exportBtn: document.getElementById("exportBtn"),
+    importBtn: document.getElementById("importBtn"),
+    importFileInput: document.getElementById("importFileInput"),
   };
 
   function openPopover() {
@@ -445,6 +448,44 @@
   els.sort.addEventListener("change", () => {
     sortBy = els.sort.value;
     render();
+  });
+
+  function exportTasks() {
+    const payload = { app: "task-manager", exportedAt: new Date().toISOString(), tasks };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `tasks-${todayISO()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showToast("タスクをエクスポートしました");
+  }
+
+  els.exportBtn.addEventListener("click", exportTasks);
+  els.importBtn.addEventListener("click", () => els.importFileInput.click());
+
+  els.importFileInput.addEventListener("change", async () => {
+    const file = els.importFileInput.files[0];
+    els.importFileInput.value = "";
+    if (!file) return;
+    try {
+      const parsed = JSON.parse(await file.text());
+      const imported = Array.isArray(parsed) ? parsed : Array.isArray(parsed.tasks) ? parsed.tasks : null;
+      if (!imported) throw new Error("invalid format");
+      tasks = imported.map((t) => ({
+        dueTime: "", space: "work", recur: "none", category: "", done: false, priority: "medium",
+        ...t,
+        id: t.id || uid(),
+      }));
+      saveTasks();
+      render();
+      showToast(`${tasks.length}件のタスクをインポートしました（既存のタスクは置き換えられました）`);
+    } catch {
+      showToast("インポートに失敗しました。ファイル形式を確認してください。");
+    }
   });
 
   render();

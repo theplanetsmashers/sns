@@ -17,6 +17,9 @@
         <h1>タスク管理ツール</h1>
       </div>
       <div class="header-actions">
+        <button type="button" id="exportBtn" class="icon-btn" title="タスクをエクスポート" aria-label="タスクをエクスポート">📤</button>
+        <button type="button" id="importBtn" class="icon-btn" title="タスクをインポート" aria-label="タスクをインポート">📥</button>
+        <input type="file" id="importFileInput" accept="application/json" hidden />
         <div class="add-task-anchor">
           <button type="button" id="addTaskBtn" class="icon-btn add-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="addPopover" aria-label="タスクを追加" title="タスクを追加">＋</button>
           <div class="popover-backdrop" id="popoverBackdrop"></div>
