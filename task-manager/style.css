@@ -552,17 +552,70 @@ body {
 .confirm-yes:hover { background: var(--danger); color: var(--accent-contrast); }
 .confirm-no:hover { border-color: var(--text-muted); }
 
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
 .edit-title-input {
   width: 100%;
-  padding: 4px 7px;
+  padding: 6px 8px;
   border: 1px solid var(--accent);
   border-radius: 6px;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
+
+.edit-datetime-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+.edit-datetime-row input {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 6px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+.edit-datetime-row input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.edit-actions {
+  display: flex;
+  gap: 6px;
+}
+.edit-save-btn {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.edit-save-btn:hover { filter: brightness(1.08); }
+.edit-cancel-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.edit-cancel-btn:hover { border-color: var(--text-muted); }
 
 .empty-state {
   text-align: center;

@@ -301,27 +301,74 @@
   }
 
   function startEdit(node, task) {
-    const titleEl = node.querySelector(".task-title");
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = task.title;
-    input.maxLength = 200;
-    input.className = "edit-title-input";
-    titleEl.replaceWith(input);
-    input.focus();
-    input.select();
+    const body = node.querySelector(".task-body");
+    body.innerHTML = "";
 
-    const commit = () => {
-      const value = input.value.trim();
-      if (value) updateTask(task.id, { title: value });
-      else render();
-    };
+    const form = document.createElement("form");
+    form.className = "edit-form";
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") commit();
+    const titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.className = "edit-title-input";
+    titleInput.maxLength = 200;
+    titleInput.required = true;
+    titleInput.value = task.title;
+
+    const dtRow = document.createElement("div");
+    dtRow.className = "edit-datetime-row";
+
+    const dueInput = document.createElement("input");
+    dueInput.type = "date";
+    dueInput.className = "edit-due-input";
+    dueInput.value = task.due || "";
+
+    const timeInput = document.createElement("input");
+    timeInput.type = "time";
+    timeInput.className = "edit-time-input";
+    timeInput.value = task.dueTime || "";
+    timeInput.disabled = !task.due;
+
+    dueInput.addEventListener("input", () => {
+      timeInput.disabled = !dueInput.value;
+      if (!dueInput.value) timeInput.value = "";
+    });
+
+    dtRow.append(dueInput, timeInput);
+
+    const actions = document.createElement("div");
+    actions.className = "edit-actions";
+
+    const saveBtn = document.createElement("button");
+    saveBtn.type = "submit";
+    saveBtn.className = "edit-save-btn";
+    saveBtn.textContent = "保存";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "edit-cancel-btn";
+    cancelBtn.textContent = "キャンセル";
+    cancelBtn.addEventListener("click", () => render());
+
+    actions.append(saveBtn, cancelBtn);
+    form.append(titleInput, dtRow, actions);
+    body.appendChild(form);
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = titleInput.value.trim();
+      if (!title) return;
+      const due = dueInput.value;
+      const patch = { title, due, dueTime: due ? timeInput.value : "" };
+      if (!due) patch.recur = "none";
+      updateTask(task.id, patch);
+    });
+
+    form.addEventListener("keydown", (e) => {
       if (e.key === "Escape") render();
     });
-    input.addEventListener("blur", commit);
+
+    titleInput.focus();
+    titleInput.select();
   }
 
   function requestDelete(node, task) {
