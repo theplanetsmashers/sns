@@ -125,6 +125,13 @@ body {
   margin: 0;
 }
 
+.header-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .icon-btn {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -177,28 +184,15 @@ body {
 
 #statOverdueCard .stat-value { color: var(--danger); }
 
-.add-task-anchor {
-  position: relative;
-  margin-bottom: 18px;
+.add-icon-btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
 }
-
-.add-fab {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--surface);
-  border: 1.5px solid var(--accent);
-  color: var(--accent);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 10px 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.12s ease;
-}
-.add-fab:hover { background: var(--accent-soft); }
-.add-fab-icon { font-size: 1.05rem; line-height: 1; }
+.add-icon-btn:hover { filter: brightness(1.08); border-color: var(--accent); }
 
 .popover-backdrop {
   position: fixed;
@@ -214,8 +208,8 @@ body {
 .add-popover {
   position: absolute;
   top: calc(100% + 12px);
-  left: 0;
-  width: min(420px, 100%);
+  right: 0;
+  width: min(380px, calc(100vw - 40px));
   opacity: 0;
   transform: translateY(-6px);
   visibility: hidden;
@@ -233,7 +227,7 @@ body {
 .popover-arrow {
   position: absolute;
   top: -7px;
-  left: 22px;
+  right: 58px;
   width: 14px;
   height: 14px;
   background: var(--surface);
