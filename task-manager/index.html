@@ -38,11 +38,22 @@
       </div>
     </section>
 
-    <form id="taskForm" class="task-form">
-      <div class="field-group field-title">
-        <label class="field-label" for="taskTitle">タスク名</label>
-        <input type="text" id="taskTitle" placeholder="タスク名を入力…" required maxlength="200" />
-      </div>
+    <div class="add-task-anchor">
+      <button type="button" id="addTaskBtn" class="add-fab" aria-haspopup="true" aria-expanded="false" aria-controls="addPopover">
+        <span class="add-fab-icon">＋</span> タスクを追加
+      </button>
+      <div class="popover-backdrop" id="popoverBackdrop"></div>
+      <div class="add-popover" id="addPopover">
+        <div class="popover-arrow" aria-hidden="true"></div>
+        <form id="taskForm" class="task-form">
+          <div class="popover-header">
+            <span class="popover-title">新しいタスク</span>
+            <button type="button" id="closePopoverBtn" class="icon-btn" aria-label="閉じる">✕</button>
+          </div>
+          <div class="field-group field-title">
+            <label class="field-label" for="taskTitle">タスク名</label>
+            <input type="text" id="taskTitle" placeholder="タスク名を入力…" required maxlength="200" />
+          </div>
       <div class="datetime-row">
         <div class="field-group field-due">
           <label class="field-label" for="taskDue">期限日</label>
@@ -85,7 +96,9 @@
         </div>
         <button type="submit" class="primary-btn">追加</button>
       </div>
-    </form>
+        </form>
+      </div>
+    </div>
 
     <section class="toolbar">
       <div class="filter-group" id="filterStatus">

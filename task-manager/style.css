@@ -177,6 +177,82 @@ body {
 
 #statOverdueCard .stat-value { color: var(--danger); }
 
+.add-task-anchor {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.add-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.add-fab:hover { background: var(--accent-soft); }
+.add-fab-icon { font-size: 1.05rem; line-height: 1; }
+
+.popover-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 12, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 35;
+}
+.popover-backdrop.open { opacity: 1; pointer-events: auto; }
+
+.add-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  width: min(420px, 100%);
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 40;
+}
+.add-popover.open {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.popover-arrow {
+  position: absolute;
+  top: -7px;
+  left: 22px;
+  width: 14px;
+  height: 14px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+
+.popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.popover-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
 .task-form {
   display: flex;
   flex-direction: column;
@@ -185,8 +261,9 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px;
-  margin-bottom: 20px;
   box-shadow: var(--shadow);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
 }
 
 .form-fields-row,

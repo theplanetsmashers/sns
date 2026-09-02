@@ -28,7 +28,35 @@
     statActive: document.getElementById("statActive"),
     statDone: document.getElementById("statDone"),
     statOverdue: document.getElementById("statOverdue"),
+    addTaskBtn: document.getElementById("addTaskBtn"),
+    popover: document.getElementById("addPopover"),
+    popoverBackdrop: document.getElementById("popoverBackdrop"),
+    closePopoverBtn: document.getElementById("closePopoverBtn"),
   };
+
+  function openPopover() {
+    els.popover.classList.add("open");
+    els.popoverBackdrop.classList.add("open");
+    els.addTaskBtn.setAttribute("aria-expanded", "true");
+    els.title.focus();
+  }
+
+  function closePopover() {
+    els.popover.classList.remove("open");
+    els.popoverBackdrop.classList.remove("open");
+    els.addTaskBtn.setAttribute("aria-expanded", "false");
+    els.addTaskBtn.focus();
+  }
+
+  els.addTaskBtn.addEventListener("click", () => {
+    if (els.popover.classList.contains("open")) closePopover();
+    else openPopover();
+  });
+  els.closePopoverBtn.addEventListener("click", closePopover);
+  els.popoverBackdrop.addEventListener("click", closePopover);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && els.popover.classList.contains("open")) closePopover();
+  });
 
   function createChoiceGroup(elId, defaultValue) {
     const groupEl = document.getElementById(elId);
@@ -350,7 +378,7 @@
     priorityChoice.value = "medium";
     spaceChoice.value = "work";
     syncDueDependentFields();
-    els.title.focus();
+    closePopover();
   });
 
   els.filterGroup.addEventListener("click", (e) => {
