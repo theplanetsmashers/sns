@@ -8,12 +8,14 @@
   const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
   const SPACE_LABEL = { work: "仕事", personal: "私用" };
   const SPACE_ICON = { work: "💼", personal: "🏠" };
+  const RECUR_LABEL = { none: "なし", weekly: "毎週", monthly: "毎月" };
 
   const els = {
     form: document.getElementById("taskForm"),
     title: document.getElementById("taskTitle"),
     due: document.getElementById("taskDue"),
     time: document.getElementById("taskTime"),
+    recur: document.getElementById("taskRecur"),
     priority: document.getElementById("taskPriority"),
     space: document.getElementById("taskSpace"),
     category: document.getElementById("taskCategory"),
@@ -43,7 +45,7 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : null;
       if (!Array.isArray(parsed)) return [];
-      return parsed.map((t) => ({ dueTime: "", space: "work", ...t }));
+      return parsed.map((t) => ({ dueTime: "", space: "work", recur: "none", ...t }));
     } catch {
       return [];
     }
@@ -69,12 +71,13 @@
     return task.due < todayISO();
   }
 
-  function addTask({ title, due, dueTime, priority, space, category }) {
+  function addTask({ title, due, dueTime, recur, priority, space, category }) {
     tasks.push({
       id: uid(),
       title: title.trim(),
       due: due || "",
       dueTime: due ? dueTime || "" : "",
+      recur: due ? recur || "none" : "none",
       priority: priority || "medium",
       space: space || "work",
       category: (category || "").trim(),
@@ -83,6 +86,43 @@
     });
     saveTasks();
     render();
+  }
+
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function toISODate(d) {
+    return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  }
+
+  function advanceDue(due, recur) {
+    const [y, m, d] = due.split("-").map(Number);
+    if (recur === "weekly") {
+      return toISODate(new Date(y, m - 1, d + 7));
+    }
+    if (recur === "monthly") {
+      let ny = y;
+      let nm = m + 1;
+      if (nm > 12) { nm = 1; ny += 1; }
+      const lastDay = new Date(ny, nm, 0).getDate();
+      return toISODate(new Date(ny, nm - 1, Math.min(d, lastDay)));
+    }
+    return due;
+  }
+
+  function showToast(message) {
+    let toast = document.getElementById("appToast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "appToast";
+      toast.className = "toast";
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(() => toast.classList.remove("show"), 2400);
   }
 
   function updateTask(id, patch) {
@@ -150,7 +190,15 @@
 
       const checkbox = node.querySelector(".task-done-checkbox");
       checkbox.checked = task.done;
-      checkbox.addEventListener("change", () => updateTask(task.id, { done: checkbox.checked }));
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked && task.due && task.recur && task.recur !== "none") {
+          const nextDue = advanceDue(task.due, task.recur);
+          updateTask(task.id, { due: nextDue });
+          showToast(`「${task.title}」の次回期限を ${formatDue({ due: nextDue, dueTime: task.dueTime })} に更新しました`);
+        } else {
+          updateTask(task.id, { done: checkbox.checked });
+        }
+      });
 
       const titleEl = node.querySelector(".task-title");
       titleEl.textContent = task.title;
@@ -169,6 +217,9 @@
       const dueEl = node.querySelector(".task-due");
       dueEl.textContent = formatDue(task);
       dueEl.classList.toggle("overdue", isOverdue(task));
+
+      const recurEl = node.querySelector(".task-recur");
+      recurEl.textContent = task.recur && task.recur !== "none" ? `🔁 ${RECUR_LABEL[task.recur]}` : "";
 
       node.querySelector(".edit-btn").addEventListener("click", () => startEdit(node, task));
       node.querySelector(".delete-btn").addEventListener("click", () => requestDelete(node, task));
@@ -244,13 +295,17 @@
     actions.append(label, yesBtn, noBtn);
   }
 
-  function syncTimeAvailability() {
+  function syncDueDependentFields() {
     const hasDue = Boolean(els.due.value);
     els.time.disabled = !hasDue;
-    if (!hasDue) els.time.value = "";
+    els.recur.disabled = !hasDue;
+    if (!hasDue) {
+      els.time.value = "";
+      els.recur.value = "none";
+    }
   }
-  els.due.addEventListener("input", syncTimeAvailability);
-  syncTimeAvailability();
+  els.due.addEventListener("input", syncDueDependentFields);
+  syncDueDependentFields();
 
   els.form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -259,6 +314,7 @@
       title: els.title.value,
       due: els.due.value,
       dueTime: els.time.value,
+      recur: els.recur.value,
       priority: els.priority.value,
       space: els.space.value,
       category: els.category.value,
@@ -266,7 +322,7 @@
     els.form.reset();
     els.priority.value = "medium";
     els.space.value = "work";
-    syncTimeAvailability();
+    syncDueDependentFields();
     els.title.focus();
   });
 

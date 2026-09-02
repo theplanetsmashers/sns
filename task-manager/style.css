@@ -227,7 +227,7 @@ body {
   width: 100%;
 }
 .task-form input::placeholder { color: var(--text-muted); }
-.task-form input:disabled { opacity: 0.5; cursor: not-allowed; }
+.task-form input:disabled, .task-form select:disabled { opacity: 0.5; cursor: not-allowed; }
 .form-fields-row .primary-btn { flex: 0 0 auto; height: 38px; }
 
 .primary-btn {
@@ -409,7 +409,7 @@ body {
 
 .task-due.overdue { color: var(--danger); font-weight: 600; }
 
-.task-category:empty, .task-due:empty { display: none; }
+.task-category:empty, .task-due:empty, .task-recur:empty { display: none; }
 
 .task-actions {
   display: flex;
@@ -463,3 +463,23 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(6px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 50;
+  max-width: calc(100vw - 40px);
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
