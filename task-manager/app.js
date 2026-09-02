@@ -2,6 +2,16 @@
   "use strict";
 
   const STORAGE_KEY = "task-manager.tasks";
+  const SYNC_CODE_KEY = "task-manager.syncCode";
+  const SYNC_CODE_PATTERN = /^[A-Za-z0-9]{8,12}$/;
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCmt42aC4G5m94EAaASRcuD78LyCW5PlnY",
+    authDomain: "task-manager-b419b.firebaseapp.com",
+    projectId: "task-manager-b419b",
+    storageBucket: "task-manager-b419b.firebasestorage.app",
+    messagingSenderId: "528967500139",
+    appId: "1:528967500139:web:cc66445b2559ba7cdacc2e",
+  };
 
   const PRIORITY_LABEL = { low: "低", medium: "中", high: "高" };
   const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
@@ -33,6 +43,18 @@
     exportBtn: document.getElementById("exportBtn"),
     importBtn: document.getElementById("importBtn"),
     importFileInput: document.getElementById("importFileInput"),
+    syncBtn: document.getElementById("syncBtn"),
+    syncPopover: document.getElementById("syncPopover"),
+    syncPopoverBackdrop: document.getElementById("syncPopoverBackdrop"),
+    closeSyncPopoverBtn: document.getElementById("closeSyncPopoverBtn"),
+    syncDisconnectedView: document.getElementById("syncDisconnectedView"),
+    syncConnectedView: document.getElementById("syncConnectedView"),
+    startSyncBtn: document.getElementById("startSyncBtn"),
+    joinCodeInput: document.getElementById("joinCodeInput"),
+    joinSyncBtn: document.getElementById("joinSyncBtn"),
+    syncCodeText: document.getElementById("syncCodeText"),
+    copySyncCodeBtn: document.getElementById("copySyncCodeBtn"),
+    disconnectSyncBtn: document.getElementById("disconnectSyncBtn"),
   };
 
   function openPopover() {
@@ -96,12 +118,22 @@
   let searchTerm = "";
   let dragSourceId = null;
 
+  let syncCode = null;
+  let syncPollTimer = null;
+  let syncLastUpdatedAt = 0;
+  const SYNC_POLL_MS = 4000;
+  const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/(default)/documents`;
+
+  function normalizeTask(t) {
+    return { dueTime: "", space: "work", recur: "none", category: "", done: false, priority: "medium", ...t };
+  }
+
   function loadTasks() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : null;
       if (!Array.isArray(parsed)) return [];
-      return parsed.map((t) => ({ dueTime: "", space: "work", recur: "none", ...t }));
+      return parsed.map(normalizeTask);
     } catch {
       return [];
     }
@@ -109,6 +141,141 @@
 
   function saveTasks() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    if (syncCode) pushSyncSnapshot();
+  }
+
+  function generateSyncCode() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    for (let i = 0; i < 8; i++) code += chars[Math.floor(Math.random() * chars.length)];
+    return code;
+  }
+
+  // --- Firestore REST helpers (plain HTTPS, no SDK — works over restrictive networks/proxies) ---
+
+  function toFirestoreValue(v) {
+    if (v === null || v === undefined) return { nullValue: null };
+    if (typeof v === "string") return { stringValue: v };
+    if (typeof v === "boolean") return { booleanValue: v };
+    if (typeof v === "number") return Number.isInteger(v) ? { integerValue: String(v) } : { doubleValue: v };
+    if (Array.isArray(v)) return { arrayValue: { values: v.map(toFirestoreValue) } };
+    return { mapValue: { fields: Object.fromEntries(Object.entries(v).map(([k, val]) => [k, toFirestoreValue(val)])) } };
+  }
+
+  function fromFirestoreValue(v) {
+    if (!v) return null;
+    if ("stringValue" in v) return v.stringValue;
+    if ("booleanValue" in v) return v.booleanValue;
+    if ("integerValue" in v) return Number(v.integerValue);
+    if ("doubleValue" in v) return v.doubleValue;
+    if ("nullValue" in v) return null;
+    if ("arrayValue" in v) return (v.arrayValue.values || []).map(fromFirestoreValue);
+    if ("mapValue" in v) {
+      const obj = {};
+      for (const [k, val] of Object.entries(v.mapValue.fields || {})) obj[k] = fromFirestoreValue(val);
+      return obj;
+    }
+    return null;
+  }
+
+  async function firestoreGetDoc(code) {
+    const res = await fetch(`${FIRESTORE_BASE}/synced-lists/${encodeURIComponent(code)}`);
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error(`firestore get failed: ${res.status}`);
+    const json = await res.json();
+    return fromFirestoreValue({ mapValue: { fields: json.fields || {} } });
+  }
+
+  async function firestoreSetDoc(code, data) {
+    const body = { fields: Object.fromEntries(Object.entries(data).map(([k, v]) => [k, toFirestoreValue(v)])) };
+    const res = await fetch(`${FIRESTORE_BASE}/synced-lists/${encodeURIComponent(code)}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(`firestore set failed: ${res.status}`);
+  }
+
+  // --- sync orchestration ---
+
+  function renderSyncView() {
+    const connected = Boolean(syncCode);
+    els.syncDisconnectedView.hidden = connected;
+    els.syncConnectedView.hidden = !connected;
+    els.syncBtn.classList.toggle("connected", connected);
+    if (connected) els.syncCodeText.value = syncCode;
+  }
+
+  function stopSyncPolling() {
+    if (syncPollTimer) clearInterval(syncPollTimer);
+    syncPollTimer = null;
+  }
+
+  async function pollSync() {
+    if (!syncCode) return;
+    try {
+      const remote = await firestoreGetDoc(syncCode);
+      if (remote && Array.isArray(remote.tasks) && (remote.updatedAt || 0) > syncLastUpdatedAt) {
+        tasks = remote.tasks.map(normalizeTask);
+        syncLastUpdatedAt = remote.updatedAt || 0;
+        render();
+      }
+    } catch {
+      // transient network hiccup — silently retry on the next poll
+    }
+  }
+
+  function startSyncPolling() {
+    stopSyncPolling();
+    syncPollTimer = setInterval(pollSync, SYNC_POLL_MS);
+  }
+
+  async function pushSyncSnapshot() {
+    if (!syncCode) return;
+    const stamp = Date.now();
+    try {
+      await firestoreSetDoc(syncCode, { tasks, updatedAt: stamp });
+      syncLastUpdatedAt = stamp;
+    } catch {
+      showToast("同期に失敗しました");
+    }
+  }
+
+  async function connectSync(rawCode, { silent } = {}) {
+    const code = rawCode.trim().toUpperCase();
+    if (!SYNC_CODE_PATTERN.test(code)) {
+      showToast("コードは英数字8〜12文字で入力してください");
+      return;
+    }
+    stopSyncPolling();
+    syncCode = code;
+    localStorage.setItem(SYNC_CODE_KEY, code);
+    renderSyncView();
+
+    try {
+      const remote = await firestoreGetDoc(code);
+      if (remote && Array.isArray(remote.tasks)) {
+        tasks = remote.tasks.map(normalizeTask);
+        syncLastUpdatedAt = remote.updatedAt || 0;
+        render();
+      } else {
+        await firestoreSetDoc(code, { tasks, updatedAt: Date.now() });
+        syncLastUpdatedAt = Date.now();
+      }
+      if (!silent) showToast(`同期コード ${code} に接続しました`);
+    } catch {
+      showToast("同期サーバーに接続できませんでした。インターネット接続を確認してください。");
+    }
+
+    startSyncPolling();
+  }
+
+  function disconnectSync() {
+    stopSyncPolling();
+    syncCode = null;
+    localStorage.removeItem(SYNC_CODE_KEY);
+    renderSyncView();
+    showToast("同期を解除しました");
   }
 
   function uid() {
@@ -475,11 +642,7 @@
       const parsed = JSON.parse(await file.text());
       const imported = Array.isArray(parsed) ? parsed : Array.isArray(parsed.tasks) ? parsed.tasks : null;
       if (!imported) throw new Error("invalid format");
-      tasks = imported.map((t) => ({
-        dueTime: "", space: "work", recur: "none", category: "", done: false, priority: "medium",
-        ...t,
-        id: t.id || uid(),
-      }));
+      tasks = imported.map((t) => normalizeTask({ ...t, id: t.id || uid() }));
       saveTasks();
       render();
       showToast(`${tasks.length}件のタスクをインポートしました（既存のタスクは置き換えられました）`);
@@ -488,5 +651,54 @@
     }
   });
 
+  function openSyncPopover() {
+    els.syncPopover.classList.add("open");
+    els.syncPopoverBackdrop.classList.add("open");
+    els.syncBtn.setAttribute("aria-expanded", "true");
+    renderSyncView();
+  }
+
+  function closeSyncPopover() {
+    els.syncPopover.classList.remove("open");
+    els.syncPopoverBackdrop.classList.remove("open");
+    els.syncBtn.setAttribute("aria-expanded", "false");
+    els.syncBtn.focus();
+  }
+
+  els.syncBtn.addEventListener("click", () => {
+    if (els.syncPopover.classList.contains("open")) closeSyncPopover();
+    else openSyncPopover();
+  });
+  els.closeSyncPopoverBtn.addEventListener("click", closeSyncPopover);
+  els.syncPopoverBackdrop.addEventListener("click", closeSyncPopover);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && els.syncPopover.classList.contains("open")) closeSyncPopover();
+  });
+
+  els.startSyncBtn.addEventListener("click", () => connectSync(generateSyncCode()));
+
+  els.joinSyncBtn.addEventListener("click", () => {
+    if (!els.joinCodeInput.value.trim()) return;
+    connectSync(els.joinCodeInput.value);
+    els.joinCodeInput.value = "";
+  });
+
+  els.syncCodeText.addEventListener("click", () => els.syncCodeText.select());
+
+  els.copySyncCodeBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(syncCode);
+      showToast("コピーしました");
+    } catch {
+      els.syncCodeText.select();
+      showToast("コピーできませんでした。表示中のコードを手動で選択してください。");
+    }
+  });
+
+  els.disconnectSyncBtn.addEventListener("click", disconnectSync);
+
   render();
+
+  const savedSyncCode = localStorage.getItem(SYNC_CODE_KEY);
+  if (savedSyncCode) connectSync(savedSyncCode, { silent: true });
 })();

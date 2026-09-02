@@ -163,7 +163,7 @@ body {
 }
 .popover-backdrop.open { opacity: 1; pointer-events: auto; }
 
-.add-popover {
+.util-popover {
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
@@ -174,8 +174,16 @@ body {
   pointer-events: none;
   transition: opacity 0.15s ease, transform 0.15s ease;
   z-index: 40;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.add-popover.open {
+.util-popover.open {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
@@ -185,7 +193,7 @@ body {
 .popover-arrow {
   position: absolute;
   top: -7px;
-  right: 58px;
+  right: 12px;
   width: 14px;
   height: 14px;
   background: var(--surface);
@@ -205,15 +213,44 @@ body {
   font-size: 1rem;
 }
 
+.sync-desc {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.sync-divider {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.sync-join-row,
+.sync-code-row {
+  display: flex;
+  gap: 8px;
+}
+.sync-join-row .edit-title-input,
+.sync-code-row .edit-title-input {
+  flex: 1;
+}
+.sync-code-row .edit-title-input {
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+#syncBtn.connected {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: var(--glow-accent);
+}
+
 .task-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
   max-height: calc(100vh - 120px);
   overflow-y: auto;
 }

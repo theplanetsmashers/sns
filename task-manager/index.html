@@ -20,10 +20,38 @@
         <button type="button" id="exportBtn" class="icon-btn" title="タスクをエクスポート" aria-label="タスクをエクスポート">📤</button>
         <button type="button" id="importBtn" class="icon-btn" title="タスクをインポート" aria-label="タスクをインポート">📥</button>
         <input type="file" id="importFileInput" accept="application/json" hidden />
+        <div class="sync-anchor">
+          <button type="button" id="syncBtn" class="icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="syncPopover" title="端末間の同期" aria-label="端末間の同期">🔗</button>
+          <div class="popover-backdrop" id="syncPopoverBackdrop"></div>
+          <div class="util-popover" id="syncPopover">
+            <div class="popover-arrow" aria-hidden="true"></div>
+            <div class="popover-header">
+              <span class="popover-title">端末間の同期</span>
+              <button type="button" id="closeSyncPopoverBtn" class="icon-btn" aria-label="閉じる">✕</button>
+            </div>
+            <div id="syncDisconnectedView">
+              <p class="sync-desc">同期コードを発行すると、他の端末で同じコードを入力してタスクをリアルタイムで共有できます。</p>
+              <button type="button" id="startSyncBtn" class="primary-btn">新しい同期コードを発行</button>
+              <div class="sync-divider">または</div>
+              <div class="sync-join-row">
+                <input type="text" id="joinCodeInput" class="edit-title-input" placeholder="コードを入力" maxlength="12" />
+                <button type="button" id="joinSyncBtn" class="edit-save-btn">接続</button>
+              </div>
+            </div>
+            <div id="syncConnectedView" hidden>
+              <p class="sync-desc">この端末は同期中です。他の端末で下のコードを入力してください。</p>
+              <div class="sync-code-row">
+                <input type="text" id="syncCodeText" class="edit-title-input" readonly />
+                <button type="button" id="copySyncCodeBtn" class="icon-btn" title="コピー" aria-label="コピー">📋</button>
+              </div>
+              <button type="button" id="disconnectSyncBtn" class="edit-cancel-btn">同期を解除</button>
+            </div>
+          </div>
+        </div>
         <div class="add-task-anchor">
           <button type="button" id="addTaskBtn" class="icon-btn add-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="addPopover" aria-label="タスクを追加" title="タスクを追加">＋</button>
           <div class="popover-backdrop" id="popoverBackdrop"></div>
-          <div class="add-popover" id="addPopover">
+          <div class="util-popover" id="addPopover">
             <div class="popover-arrow" aria-hidden="true"></div>
             <form id="taskForm" class="task-form">
               <div class="popover-header">
