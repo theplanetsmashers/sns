@@ -171,7 +171,7 @@ body {
 }
 .popover-backdrop.open { opacity: 1; pointer-events: auto; }
 
-.add-popover {
+.util-popover {
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
@@ -182,8 +182,16 @@ body {
   pointer-events: none;
   transition: opacity 0.15s ease, transform 0.15s ease;
   z-index: 40;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.add-popover.open {
+.util-popover.open {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
@@ -193,7 +201,7 @@ body {
 .popover-arrow {
   position: absolute;
   top: -7px;
-  right: 58px;
+  right: 12px;
   width: 14px;
   height: 14px;
   background: var(--surface);
@@ -213,15 +221,44 @@ body {
   font-size: 1rem;
 }
 
+.sync-desc {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.sync-divider {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.sync-join-row,
+.sync-code-row {
+  display: flex;
+  gap: 8px;
+}
+.sync-join-row .edit-title-input,
+.sync-code-row .edit-title-input {
+  flex: 1;
+}
+.sync-code-row .edit-title-input {
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+#syncBtn.connected {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: var(--glow-accent);
+}
+
 .task-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
   max-height: calc(100vh - 120px);
   overflow-y: auto;
 }
@@ -618,6 +655,7 @@ body {
   text-align: center;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
 </style>
 </head>
 <body>
@@ -633,10 +671,38 @@ body {
         <button type="button" id="exportBtn" class="icon-btn" title="タスクをエクスポート" aria-label="タスクをエクスポート">📤</button>
         <button type="button" id="importBtn" class="icon-btn" title="タスクをインポート" aria-label="タスクをインポート">📥</button>
         <input type="file" id="importFileInput" accept="application/json" hidden />
+        <div class="sync-anchor">
+          <button type="button" id="syncBtn" class="icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="syncPopover" title="端末間の同期" aria-label="端末間の同期">🔗</button>
+          <div class="popover-backdrop" id="syncPopoverBackdrop"></div>
+          <div class="util-popover" id="syncPopover">
+            <div class="popover-arrow" aria-hidden="true"></div>
+            <div class="popover-header">
+              <span class="popover-title">端末間の同期</span>
+              <button type="button" id="closeSyncPopoverBtn" class="icon-btn" aria-label="閉じる">✕</button>
+            </div>
+            <div id="syncDisconnectedView">
+              <p class="sync-desc">同期コードを発行すると、他の端末で同じコードを入力してタスクをリアルタイムで共有できます。</p>
+              <button type="button" id="startSyncBtn" class="primary-btn">新しい同期コードを発行</button>
+              <div class="sync-divider">または</div>
+              <div class="sync-join-row">
+                <input type="text" id="joinCodeInput" class="edit-title-input" placeholder="コードを入力" maxlength="12" />
+                <button type="button" id="joinSyncBtn" class="edit-save-btn">接続</button>
+              </div>
+            </div>
+            <div id="syncConnectedView" hidden>
+              <p class="sync-desc">この端末は同期中です。他の端末で下のコードを入力してください。</p>
+              <div class="sync-code-row">
+                <input type="text" id="syncCodeText" class="edit-title-input" readonly />
+                <button type="button" id="copySyncCodeBtn" class="icon-btn" title="コピー" aria-label="コピー">📋</button>
+              </div>
+              <button type="button" id="disconnectSyncBtn" class="edit-cancel-btn">同期を解除</button>
+            </div>
+          </div>
+        </div>
         <div class="add-task-anchor">
           <button type="button" id="addTaskBtn" class="icon-btn add-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="addPopover" aria-label="タスクを追加" title="タスクを追加">＋</button>
           <div class="popover-backdrop" id="popoverBackdrop"></div>
-          <div class="add-popover" id="addPopover">
+          <div class="util-popover" id="addPopover">
             <div class="popover-arrow" aria-hidden="true"></div>
             <form id="taskForm" class="task-form">
               <div class="popover-header">
@@ -762,11 +828,21 @@ body {
     </li>
   </template>
 
-<script>
+  <script>
 (() => {
   "use strict";
 
   const STORAGE_KEY = "task-manager.tasks";
+  const SYNC_CODE_KEY = "task-manager.syncCode";
+  const SYNC_CODE_PATTERN = /^[A-Za-z0-9]{8,12}$/;
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCmt42aC4G5m94EAaASRcuD78LyCW5PlnY",
+    authDomain: "task-manager-b419b.firebaseapp.com",
+    projectId: "task-manager-b419b",
+    storageBucket: "task-manager-b419b.firebasestorage.app",
+    messagingSenderId: "528967500139",
+    appId: "1:528967500139:web:cc66445b2559ba7cdacc2e",
+  };
 
   const PRIORITY_LABEL = { low: "低", medium: "中", high: "高" };
   const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
@@ -798,6 +874,18 @@ body {
     exportBtn: document.getElementById("exportBtn"),
     importBtn: document.getElementById("importBtn"),
     importFileInput: document.getElementById("importFileInput"),
+    syncBtn: document.getElementById("syncBtn"),
+    syncPopover: document.getElementById("syncPopover"),
+    syncPopoverBackdrop: document.getElementById("syncPopoverBackdrop"),
+    closeSyncPopoverBtn: document.getElementById("closeSyncPopoverBtn"),
+    syncDisconnectedView: document.getElementById("syncDisconnectedView"),
+    syncConnectedView: document.getElementById("syncConnectedView"),
+    startSyncBtn: document.getElementById("startSyncBtn"),
+    joinCodeInput: document.getElementById("joinCodeInput"),
+    joinSyncBtn: document.getElementById("joinSyncBtn"),
+    syncCodeText: document.getElementById("syncCodeText"),
+    copySyncCodeBtn: document.getElementById("copySyncCodeBtn"),
+    disconnectSyncBtn: document.getElementById("disconnectSyncBtn"),
   };
 
   function openPopover() {
@@ -861,12 +949,22 @@ body {
   let searchTerm = "";
   let dragSourceId = null;
 
+  let syncCode = null;
+  let syncPollTimer = null;
+  let syncLastUpdatedAt = 0;
+  const SYNC_POLL_MS = 4000;
+  const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/(default)/documents`;
+
+  function normalizeTask(t) {
+    return { dueTime: "", space: "work", recur: "none", category: "", done: false, priority: "medium", ...t };
+  }
+
   function loadTasks() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : null;
       if (!Array.isArray(parsed)) return [];
-      return parsed.map((t) => ({ dueTime: "", space: "work", recur: "none", ...t }));
+      return parsed.map(normalizeTask);
     } catch {
       return [];
     }
@@ -874,6 +972,141 @@ body {
 
   function saveTasks() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    if (syncCode) pushSyncSnapshot();
+  }
+
+  function generateSyncCode() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    for (let i = 0; i < 8; i++) code += chars[Math.floor(Math.random() * chars.length)];
+    return code;
+  }
+
+  // --- Firestore REST helpers (plain HTTPS, no SDK — works over restrictive networks/proxies) ---
+
+  function toFirestoreValue(v) {
+    if (v === null || v === undefined) return { nullValue: null };
+    if (typeof v === "string") return { stringValue: v };
+    if (typeof v === "boolean") return { booleanValue: v };
+    if (typeof v === "number") return Number.isInteger(v) ? { integerValue: String(v) } : { doubleValue: v };
+    if (Array.isArray(v)) return { arrayValue: { values: v.map(toFirestoreValue) } };
+    return { mapValue: { fields: Object.fromEntries(Object.entries(v).map(([k, val]) => [k, toFirestoreValue(val)])) } };
+  }
+
+  function fromFirestoreValue(v) {
+    if (!v) return null;
+    if ("stringValue" in v) return v.stringValue;
+    if ("booleanValue" in v) return v.booleanValue;
+    if ("integerValue" in v) return Number(v.integerValue);
+    if ("doubleValue" in v) return v.doubleValue;
+    if ("nullValue" in v) return null;
+    if ("arrayValue" in v) return (v.arrayValue.values || []).map(fromFirestoreValue);
+    if ("mapValue" in v) {
+      const obj = {};
+      for (const [k, val] of Object.entries(v.mapValue.fields || {})) obj[k] = fromFirestoreValue(val);
+      return obj;
+    }
+    return null;
+  }
+
+  async function firestoreGetDoc(code) {
+    const res = await fetch(`${FIRESTORE_BASE}/synced-lists/${encodeURIComponent(code)}`);
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error(`firestore get failed: ${res.status}`);
+    const json = await res.json();
+    return fromFirestoreValue({ mapValue: { fields: json.fields || {} } });
+  }
+
+  async function firestoreSetDoc(code, data) {
+    const body = { fields: Object.fromEntries(Object.entries(data).map(([k, v]) => [k, toFirestoreValue(v)])) };
+    const res = await fetch(`${FIRESTORE_BASE}/synced-lists/${encodeURIComponent(code)}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(`firestore set failed: ${res.status}`);
+  }
+
+  // --- sync orchestration ---
+
+  function renderSyncView() {
+    const connected = Boolean(syncCode);
+    els.syncDisconnectedView.hidden = connected;
+    els.syncConnectedView.hidden = !connected;
+    els.syncBtn.classList.toggle("connected", connected);
+    if (connected) els.syncCodeText.value = syncCode;
+  }
+
+  function stopSyncPolling() {
+    if (syncPollTimer) clearInterval(syncPollTimer);
+    syncPollTimer = null;
+  }
+
+  async function pollSync() {
+    if (!syncCode) return;
+    try {
+      const remote = await firestoreGetDoc(syncCode);
+      if (remote && Array.isArray(remote.tasks) && (remote.updatedAt || 0) > syncLastUpdatedAt) {
+        tasks = remote.tasks.map(normalizeTask);
+        syncLastUpdatedAt = remote.updatedAt || 0;
+        render();
+      }
+    } catch {
+      // transient network hiccup — silently retry on the next poll
+    }
+  }
+
+  function startSyncPolling() {
+    stopSyncPolling();
+    syncPollTimer = setInterval(pollSync, SYNC_POLL_MS);
+  }
+
+  async function pushSyncSnapshot() {
+    if (!syncCode) return;
+    const stamp = Date.now();
+    try {
+      await firestoreSetDoc(syncCode, { tasks, updatedAt: stamp });
+      syncLastUpdatedAt = stamp;
+    } catch {
+      showToast("同期に失敗しました");
+    }
+  }
+
+  async function connectSync(rawCode, { silent } = {}) {
+    const code = rawCode.trim().toUpperCase();
+    if (!SYNC_CODE_PATTERN.test(code)) {
+      showToast("コードは英数字8〜12文字で入力してください");
+      return;
+    }
+    stopSyncPolling();
+    syncCode = code;
+    localStorage.setItem(SYNC_CODE_KEY, code);
+    renderSyncView();
+
+    try {
+      const remote = await firestoreGetDoc(code);
+      if (remote && Array.isArray(remote.tasks)) {
+        tasks = remote.tasks.map(normalizeTask);
+        syncLastUpdatedAt = remote.updatedAt || 0;
+        render();
+      } else {
+        await firestoreSetDoc(code, { tasks, updatedAt: Date.now() });
+        syncLastUpdatedAt = Date.now();
+      }
+      if (!silent) showToast(`同期コード ${code} に接続しました`);
+    } catch {
+      showToast("同期サーバーに接続できませんでした。インターネット接続を確認してください。");
+    }
+
+    startSyncPolling();
+  }
+
+  function disconnectSync() {
+    stopSyncPolling();
+    syncCode = null;
+    localStorage.removeItem(SYNC_CODE_KEY);
+    renderSyncView();
+    showToast("同期を解除しました");
   }
 
   function uid() {
@@ -1240,11 +1473,7 @@ body {
       const parsed = JSON.parse(await file.text());
       const imported = Array.isArray(parsed) ? parsed : Array.isArray(parsed.tasks) ? parsed.tasks : null;
       if (!imported) throw new Error("invalid format");
-      tasks = imported.map((t) => ({
-        dueTime: "", space: "work", recur: "none", category: "", done: false, priority: "medium",
-        ...t,
-        id: t.id || uid(),
-      }));
+      tasks = imported.map((t) => normalizeTask({ ...t, id: t.id || uid() }));
       saveTasks();
       render();
       showToast(`${tasks.length}件のタスクをインポートしました（既存のタスクは置き換えられました）`);
@@ -1253,8 +1482,58 @@ body {
     }
   });
 
+  function openSyncPopover() {
+    els.syncPopover.classList.add("open");
+    els.syncPopoverBackdrop.classList.add("open");
+    els.syncBtn.setAttribute("aria-expanded", "true");
+    renderSyncView();
+  }
+
+  function closeSyncPopover() {
+    els.syncPopover.classList.remove("open");
+    els.syncPopoverBackdrop.classList.remove("open");
+    els.syncBtn.setAttribute("aria-expanded", "false");
+    els.syncBtn.focus();
+  }
+
+  els.syncBtn.addEventListener("click", () => {
+    if (els.syncPopover.classList.contains("open")) closeSyncPopover();
+    else openSyncPopover();
+  });
+  els.closeSyncPopoverBtn.addEventListener("click", closeSyncPopover);
+  els.syncPopoverBackdrop.addEventListener("click", closeSyncPopover);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && els.syncPopover.classList.contains("open")) closeSyncPopover();
+  });
+
+  els.startSyncBtn.addEventListener("click", () => connectSync(generateSyncCode()));
+
+  els.joinSyncBtn.addEventListener("click", () => {
+    if (!els.joinCodeInput.value.trim()) return;
+    connectSync(els.joinCodeInput.value);
+    els.joinCodeInput.value = "";
+  });
+
+  els.syncCodeText.addEventListener("click", () => els.syncCodeText.select());
+
+  els.copySyncCodeBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(syncCode);
+      showToast("コピーしました");
+    } catch {
+      els.syncCodeText.select();
+      showToast("コピーできませんでした。表示中のコードを手動で選択してください。");
+    }
+  });
+
+  els.disconnectSyncBtn.addEventListener("click", disconnectSync);
+
   render();
+
+  const savedSyncCode = localStorage.getItem(SYNC_CODE_KEY);
+  if (savedSyncCode) connectSync(savedSyncCode, { silent: true });
 })();
+
 </script>
 </body>
 </html>
