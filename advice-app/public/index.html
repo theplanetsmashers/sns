@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>仕事のお悩み相談 - 会社の裏設定アドバイザー</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <h1>仕事のお悩み相談</h1>
+    <p class="subtitle">「会社の裏設定」記事シリーズを参照して、実体験に基づくアドバイスを返します</p>
+    <p id="statusLine" class="status-line">読み込み中...</p>
+  </header>
+
+  <main>
+    <form id="concernForm">
+      <label for="concernInput">今の仕事の困りごと・悩みを書いてください</label>
+      <textarea
+        id="concernInput"
+        rows="5"
+        placeholder="例）部下から急に辞めたいと言われて、どう向き合えばいいか分からない"
+      ></textarea>
+      <button type="submit" id="submitBtn">アドバイスをもらう</button>
+    </form>
+
+    <section id="result" class="result" hidden>
+      <div id="messageBox" class="message-box" hidden></div>
+      <article id="adviceBox" class="advice-box" hidden></article>
+
+      <div id="referencesBox" class="references-box" hidden>
+        <h2>参照した記事</h2>
+        <ul id="referencesList"></ul>
+      </div>
+    </section>
+
+    <div id="loading" class="loading" hidden>考えています…</div>
+  </main>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

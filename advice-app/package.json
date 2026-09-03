@@ -1,0 +1,14 @@
+{
+  "name": "advice-app",
+  "version": "1.0.0",
+  "description": "Google Drive上の「会社の裏設定」記事を参照して、仕事の悩みにアドバイスするアプリ",
+  "private": true,
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
