@@ -112,8 +112,8 @@
   const recurChoice = createChoiceGroup("recurChoice", "none");
 
   let tasks = loadTasks();
-  let filter = "all";
-  let spaceFilter = "all";
+  let filter = "active";
+  let spaceFilter = "work";
   let sortBy = "created";
   let searchTerm = "";
   let dragSourceId = null;
