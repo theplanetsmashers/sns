@@ -114,7 +114,7 @@
   let tasks = loadTasks();
   let filter = "active";
   let spaceFilter = "work";
-  let sortBy = "created";
+  let sortBy = "due";
   let searchTerm = "";
   let dragSourceId = null;
 
