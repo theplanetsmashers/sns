@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>タスク管理ツール</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="wordmark">
+        <span class="wordmark-mark" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 8.5L6 12.5L14 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h1>タスク管理ツール</h1>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="exportBtn" class="icon-btn" title="タスクをエクスポート" aria-label="タスクをエクスポート">📤</button>
+        <button type="button" id="importBtn" class="icon-btn" title="タスクをインポート" aria-label="タスクをインポート">📥</button>
+        <input type="file" id="importFileInput" accept="application/json" hidden />
+        <div class="sync-anchor">
+          <button type="button" id="syncBtn" class="icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="syncPopover" title="端末間の同期" aria-label="端末間の同期">🔗</button>
+          <div class="popover-backdrop" id="syncPopoverBackdrop"></div>
+          <div class="util-popover" id="syncPopover">
+            <div class="popover-arrow" aria-hidden="true"></div>
+            <div class="popover-header">
+              <span class="popover-title">端末間の同期</span>
+              <button type="button" id="closeSyncPopoverBtn" class="icon-btn" aria-label="閉じる">✕</button>
+            </div>
+            <div id="syncDisconnectedView">
+              <p class="sync-desc">同期コードを発行すると、他の端末で同じコードを入力してタスクをリアルタイムで共有できます。</p>
+              <button type="button" id="startSyncBtn" class="primary-btn">新しい同期コードを発行</button>
+              <div class="sync-divider">または</div>
+              <div class="sync-join-row">
+                <input type="text" id="joinCodeInput" class="edit-title-input" placeholder="コードを入力" maxlength="12" />
+                <button type="button" id="joinSyncBtn" class="edit-save-btn">接続</button>
+              </div>
+            </div>
+            <div id="syncConnectedView" hidden>
+              <p class="sync-desc">この端末は同期中です。他の端末で下のコードを入力してください。</p>
+              <div class="sync-code-row">
+                <input type="text" id="syncCodeText" class="edit-title-input" readonly />
+                <button type="button" id="copySyncCodeBtn" class="icon-btn" title="コピー" aria-label="コピー">📋</button>
+              </div>
+              <button type="button" id="disconnectSyncBtn" class="edit-cancel-btn">同期を解除</button>
+            </div>
+          </div>
+        </div>
+        <div class="add-task-anchor">
+          <button type="button" id="addTaskBtn" class="icon-btn add-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="addPopover" aria-label="タスクを追加" title="タスクを追加">＋</button>
+          <div class="popover-backdrop" id="popoverBackdrop"></div>
+          <div class="util-popover" id="addPopover">
+            <div class="popover-arrow" aria-hidden="true"></div>
+            <form id="taskForm" class="task-form">
+              <div class="popover-header">
+                <span class="popover-title">新しいタスク</span>
+                <button type="button" id="closePopoverBtn" class="icon-btn" aria-label="閉じる">✕</button>
+              </div>
+              <div class="field-group field-title">
+                <label class="field-label" for="taskTitle">タスク名</label>
+                <input type="text" id="taskTitle" placeholder="タスク名を入力…" required maxlength="200" />
+              </div>
+              <div class="datetime-row">
+                <div class="field-group field-due">
+                  <label class="field-label" for="taskDue">期限日</label>
+                  <input type="date" id="taskDue" />
+                </div>
+                <div class="field-group field-time">
+                  <label class="field-label" for="taskTime">時刻（任意）</label>
+                  <input type="time" id="taskTime" />
+                </div>
+              </div>
+              <div class="form-fields-row">
+                <div class="field-group field-category">
+                  <label class="field-label" for="taskCategory">カテゴリ（任意）</label>
+                  <input type="text" id="taskCategory" placeholder="例）営業" maxlength="40" />
+                </div>
+              </div>
+              <div class="form-choices-row">
+                <div class="field-group field-choice">
+                  <span class="field-label">優先度</span>
+                  <div class="choice-group" id="priorityChoice" role="group" aria-label="優先度">
+                    <button type="button" class="choice-btn" data-value="low">低</button>
+                    <button type="button" class="choice-btn active" data-value="medium">中</button>
+                    <button type="button" class="choice-btn" data-value="high">高</button>
+                  </div>
+                </div>
+                <div class="field-group field-choice">
+                  <span class="field-label">区分</span>
+                  <div class="choice-group" id="spaceChoice" role="group" aria-label="区分">
+                    <button type="button" class="choice-btn active" data-value="work">💼 仕事</button>
+                    <button type="button" class="choice-btn" data-value="personal">🏠 私用</button>
+                  </div>
+                </div>
+                <div class="field-group field-choice">
+                  <span class="field-label">繰り返し</span>
+                  <div class="choice-group" id="recurChoice" role="group" aria-label="繰り返し">
+                    <button type="button" class="choice-btn active" data-value="none">なし</button>
+                    <button type="button" class="choice-btn" data-value="weekly">毎週</button>
+                    <button type="button" class="choice-btn" data-value="monthly">毎月</button>
+                  </div>
+                </div>
+                <button type="submit" class="primary-btn">追加</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="stats" id="stats">
+      <div class="stat-card">
+        <span class="stat-value" id="statTotal">0</span>
+        <span class="stat-label">全タスク</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="statActive">0</span>
+        <span class="stat-label">未完了</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="statDone">0</span>
+        <span class="stat-label">完了</span>
+      </div>
+      <div class="stat-card" id="statOverdueCard">
+        <span class="stat-value" id="statOverdue">0</span>
+        <span class="stat-label">期限超過</span>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <select id="filterStatus" class="toolbar-select" aria-label="ステータス">
+        <option value="all">すべて</option>
+        <option value="active" selected>未完了</option>
+        <option value="done">完了</option>
+      </select>
+      <select id="filterSpace" class="toolbar-select" aria-label="区分">
+        <option value="all">すべて</option>
+        <option value="work" selected>仕事</option>
+        <option value="personal">私用</option>
+      </select>
+      <select id="sortSelect" class="toolbar-select" aria-label="並び替え">
+        <option value="created">作成日順</option>
+        <option value="due" selected>期限順</option>
+        <option value="priority">優先度順</option>
+      </select>
+      <input type="search" id="searchInput" placeholder="検索…" />
+    </section>
+
+    <ul id="taskList" class="task-list"></ul>
+    <p id="emptyState" class="empty-state" hidden>タスクがありません。右上の「＋」から追加してください。</p>
+  </div>
+
+  <template id="taskItemTemplate">
+    <li class="task-item" draggable="true">
+      <label class="task-check">
+        <input type="checkbox" class="task-done-checkbox" />
+        <span class="checkmark"></span>
+      </label>
+      <div class="task-body">
+        <div class="task-title-row">
+          <span class="task-title" tabindex="0"></span>
+          <span class="space-badge"></span>
+          <span class="priority-badge"></span>
+        </div>
+        <div class="task-meta">
+          <span class="task-category"></span>
+          <span class="task-due"></span>
+          <span class="task-recur"></span>
+        </div>
+      </div>
+      <div class="task-actions">
+        <button class="icon-btn edit-btn" title="編集" type="button">✏️</button>
+        <button class="icon-btn delete-btn" title="削除" type="button">🗑️</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
