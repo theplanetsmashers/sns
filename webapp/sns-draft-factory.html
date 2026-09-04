@@ -187,6 +187,12 @@
     cursor: pointer;
     padding: 2px;
     font-size: 9px;
+    white-space: nowrap;
+  }
+
+  .row-delete.confirm {
+    color: var(--danger);
+    font-weight: 700;
   }
 
   .excerpt {
@@ -535,6 +541,10 @@
   var history = loadHistory();
   var draftLoading = false;
   var sampleFn = null;
+  var pendingDeleteId = null;
+  var pendingDeleteTimer = null;
+  var pendingClearArmed = false;
+  var pendingClearTimer = null;
 
   function saveHistory() {
     while (history.length > MAX_HISTORY) history.shift();
@@ -614,7 +624,8 @@
     if (e.example) badges += '<span class="row-badge example">例</span>';
     else if (isLatest) badges += '<span class="row-badge latest">最新</span>';
     var dateLabel = e.example ? "" : '<span class="row-date">' + formatDate(e.createdAt) + "</span>";
-    var deleteBtn = e.example ? "" : '<button type="button" class="row-delete" data-action="delete" data-id="' + e.id + '">削除</button>';
+    var deleting = pendingDeleteId === e.id;
+    var deleteBtn = e.example ? "" : '<button type="button" class="row-delete' + (deleting ? " confirm" : "") + '" data-action="delete" data-id="' + e.id + '">' + (deleting ? "本当に削除?" : "削除") + '</button>';
 
     return (
       '<div class="cell' + completeClass + '">' +
@@ -841,9 +852,19 @@
     var id = target.getAttribute("data-id");
 
     if (action === "delete") {
-      if (window.confirm("この履歴を削除しますか?")) {
+      if (pendingDeleteId === id) {
+        window.clearTimeout(pendingDeleteTimer);
+        pendingDeleteId = null;
         history = history.filter(function (e) { return e.id !== id; });
         saveHistory();
+        renderHistoryRows();
+      } else {
+        pendingDeleteId = id;
+        window.clearTimeout(pendingDeleteTimer);
+        pendingDeleteTimer = window.setTimeout(function () {
+          pendingDeleteId = null;
+          renderHistoryRows();
+        }, 3000);
         renderHistoryRows();
       }
     } else if (action === "copy") {
@@ -866,12 +887,24 @@
     renderHistoryRows();
   });
 
-  document.getElementById("clearHistoryBtn").addEventListener("click", function () {
+  var clearHistoryBtn = document.getElementById("clearHistoryBtn");
+  clearHistoryBtn.addEventListener("click", function () {
     if (history.length === 0) return;
-    if (window.confirm("すべての履歴を削除します。よろしいですか?")) {
+    if (pendingClearArmed) {
+      window.clearTimeout(pendingClearTimer);
+      pendingClearArmed = false;
+      clearHistoryBtn.textContent = "履歴をすべて削除";
       history = [];
       saveHistory();
       renderHistoryRows();
+    } else {
+      pendingClearArmed = true;
+      clearHistoryBtn.textContent = "本当にすべて削除しますか？もう一度タップ";
+      window.clearTimeout(pendingClearTimer);
+      pendingClearTimer = window.setTimeout(function () {
+        pendingClearArmed = false;
+        clearHistoryBtn.textContent = "履歴をすべて削除";
+      }, 3000);
     }
   });
 
