@@ -4,8 +4,7 @@
   "description": "note/SNS投稿の下書きを自動生成するツール群",
   "main": "generate-posts.js",
   "scripts": {
-    "generate": "node generate-posts.js",
-    "drafts": "node generate-sns-drafts.js"
+    "generate": "node generate-posts.js"
   },
   "engines": {
     "node": ">=18"
