@@ -51,6 +51,25 @@ Google Drive に新しい記事を追加した場合、`data/articles.json` は�
 Claude Code（このリポジトリのセッション）に「Google Driveの記事データを最新化して」と
 依頼すれば、Drive連携ツールで最新記事を再取得し、`data/articles.json` を再生成できます。
 
+### note.comへの公開リンクの同期
+
+`data/articles.json` の各記事は、Google Driveの下書きがnote.com（kotolog_note）で
+実際に公開されると、`url` フィールドがそのnote.com記事のURLに差し替わる。
+
+```bash
+cd advice-app
+npm run sync-note
+```
+
+タイトルはnote.com公開時に書き換えられることが多いため、本文テキストの重なり具合で
+記事を照合している（タイトルの文字列一致では判定しない）。まだGoogle Drive側にしか
+存在しない記事（未公開の予定稿、または意図的にnote化しない記事）は、対応するnote.com
+記事が見つからない限りDriveのリンクのまま変わらない。
+
+このリポジトリでは、noteへの新規投稿に合わせて定期的にこのスクリプトを実行し、
+`data/articles.json` の更新と、公開中のArtifact（相談アプリのUI）への反映を
+Claude Codeの定期実行タスクで自動化している。
+
 `data/articles.json` の構造:
 
 ```json
