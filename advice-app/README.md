@@ -78,6 +78,13 @@ Claude Codeの定期実行タスクで自動化している。
 
 ### Artifact（裏設定相談室）のビルドと公開
 
+Artifactは「悩みを書く→関連する記録が自動で並ぶ」というシンプルな検索専用ツール。
+AIによるアドバイス生成（Claudeの `sample` capability）はあえて使っていない
+（宣言するだけで「This artifact uses connectors」という許可ポップアップが全訪問者に
+出てしまい、Claudeアカウントを持たない一般読者には価値もないため）。capabilitiesは
+`{}`（なし）で公開する。AI生成付きの体験は、認証・課金基盤を整える②のフェーズで
+別途検討する。
+
 Artifactの実体は `advice-app/artifact/template.html`（見た目・ロジック。プレースホルダー
 `__ARTICLES_DATA_JSON__` を含む）と、そこに埋め込む記事データの2つから成る。
 
