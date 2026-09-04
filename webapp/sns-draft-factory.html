@@ -1,0 +1,764 @@
+<title>SNS下書き工場</title>
+<style>
+  :root {
+    --bg: #F1F2ED;
+    --surface: #FFFFFF;
+    --surface-2: #E8EAE1;
+    --ink: #1E2A22;
+    --ink-soft: #5B6B5F;
+    --line: #DCE0D5;
+    --accent: #B87A16;
+    --accent-ink: #FFFFFF;
+    --threads: #A66D14;
+    --threads-bg: #FBF1DE;
+    --x: #206863;
+    --x-bg: #E7F2F0;
+    --danger: #A5372F;
+    --danger-bg: #FBEAE7;
+    --font-display: 'Zen Old Mincho', serif;
+    --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14171A;
+      --surface: #1D2225;
+      --surface-2: #242A2D;
+      --ink: #ECEEE7;
+      --ink-soft: #9BA79E;
+      --line: #2B3033;
+      --accent: #E3A83D;
+      --accent-ink: #241800;
+      --threads: #E3A83D;
+      --threads-bg: #2C2313;
+      --x: #4FAFA6;
+      --x-bg: #122725;
+      --danger: #E28E86;
+      --danger-bg: #2C1917;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #14171A;
+    --surface: #1D2225;
+    --surface-2: #242A2D;
+    --ink: #ECEEE7;
+    --ink-soft: #9BA79E;
+    --line: #2B3033;
+    --accent: #E3A83D;
+    --accent-ink: #241800;
+    --threads: #E3A83D;
+    --threads-bg: #2C2313;
+    --x: #4FAFA6;
+    --x-bg: #122725;
+    --danger: #E28E86;
+    --danger-bg: #2C1917;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 20px 64px;
+  }
+
+  header.hero {
+    margin-bottom: 28px;
+  }
+
+  header.hero .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+
+  header.hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 6vw, 36px);
+    margin: 6px 0 8px;
+    text-wrap: balance;
+  }
+
+  header.hero p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  section.card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .compose {
+    margin-bottom: 20px;
+  }
+
+  .compose label.field-label {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  textarea#article {
+    width: 100%;
+    min-height: 190px;
+    resize: vertical;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.75;
+  }
+
+  textarea#article:focus-visible,
+  textarea.style-example:focus-visible,
+  button:focus-visible,
+  details summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .compose-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    gap: 12px;
+  }
+
+  .char-count {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .link-btn {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .compose-actions {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  button.primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    border-radius: 999px;
+    padding: 13px 26px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  button.primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .status {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status.status-loading { color: var(--ink-soft); }
+  .status.status-error { color: var(--danger); }
+
+  .dot-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ink-soft);
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot-pulse { animation: none; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+  }
+
+  .results {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  @media (min-width: 720px) {
+    .results { grid-template-columns: 1fr 1fr; }
+  }
+
+  .draft-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .draft-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .platform-pill {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+  }
+
+  .platform-pill.threads { background: var(--threads-bg); color: var(--threads); }
+  .platform-pill.x { background: var(--x-bg); color: var(--x); }
+
+  .draft-head .right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .example-badge {
+    font-size: 11px;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+
+  .draft-count {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .draft-text {
+    white-space: pre-wrap;
+    font-size: 15px;
+    line-height: 1.8;
+    min-height: 96px;
+  }
+
+  button.copy-btn {
+    background: transparent;
+    border: 1.5px solid currentColor;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .draft-card.threads button.copy-btn { color: var(--threads); }
+  .draft-card.x button.copy-btn { color: var(--x); }
+
+  .reminder {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  details.style-editor {
+    margin-top: 22px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 4px 20px;
+    background: var(--surface);
+  }
+
+  details.style-editor summary {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 14px 0;
+    list-style: none;
+  }
+
+  details.style-editor summary::-webkit-details-marker { display: none; }
+
+  details.style-editor summary::before {
+    content: "▸ ";
+    color: var(--ink-soft);
+  }
+
+  details.style-editor[open] summary::before {
+    content: "▾ ";
+  }
+
+  .style-editor-body {
+    padding-bottom: 18px;
+  }
+
+  .style-editor-body p.hint {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 0;
+  }
+
+  .style-field { margin-bottom: 14px; }
+
+  .style-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  textarea.style-example {
+    width: 100%;
+    min-height: 100px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .style-editor-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  button.secondary {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+  }
+
+  footer.app-footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">note → Threads / X</div>
+    <h1>SNS下書き工場</h1>
+    <p>note記事を貼り付けて「生成する」を押すと、フックの効いたThreads投稿文とX投稿文ができます。投稿はどれも手動・好きなタイミングで。</p>
+  </header>
+
+  <section class="card compose">
+    <label class="field-label" for="article">note記事の本文</label>
+    <textarea id="article" maxlength="20000" placeholder="書き終えたnote記事の本文をここに貼り付けてください"></textarea>
+    <div class="compose-meta">
+      <span class="char-count" id="articleCount">0 / 20000字</span>
+      <button type="button" class="link-btn" id="clearBtn">クリア</button>
+    </div>
+    <div class="compose-actions">
+      <button type="button" class="primary" id="generateBtn">生成する</button>
+      <span class="status" id="statusEl" role="status" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <div class="results">
+    <article class="draft-card threads" id="threadsCard">
+      <div class="draft-head">
+        <span class="platform-pill threads">Threads用</span>
+        <span class="right">
+          <span class="example-badge" id="threadsExampleBadge">例</span>
+          <span class="draft-count" id="threadsCount">0字</span>
+        </span>
+      </div>
+      <p class="draft-text" id="threadsText"></p>
+      <button type="button" class="copy-btn" id="threadsCopy" data-label="タップでコピー">タップでコピー</button>
+    </article>
+
+    <article class="draft-card x" id="xCard">
+      <div class="draft-head">
+        <span class="platform-pill x">X用</span>
+        <span class="right">
+          <span class="example-badge" id="xExampleBadge">例</span>
+          <span class="draft-count" id="xCount">0字</span>
+        </span>
+      </div>
+      <p class="draft-text" id="xText"></p>
+      <button type="button" class="copy-btn" id="xCopy" data-label="タップでコピー">タップでコピー</button>
+    </article>
+  </div>
+
+  <p class="reminder">上の2枚は文体の例です。記事を貼って生成すると、その記事の内容に書き換わります。note・Threads・Xへの実際の投稿は、それぞれ手動で行ってください。</p>
+
+  <details class="style-editor" id="styleEditor">
+    <summary>文体サンプルを編集する</summary>
+    <div class="style-editor-body">
+      <p class="hint">生成されるThreads/X投稿は、ここに登録した例文の文体・リズム・長さに合わせて作られます。自分のアカウントの実際の投稿に差し替えると、より本人らしい文章になります。</p>
+      <div class="style-field">
+        <label for="threadsExample">Threads参考例</label>
+        <textarea class="style-example" id="threadsExample"></textarea>
+      </div>
+      <div class="style-field">
+        <label for="xExample">X参考例</label>
+        <textarea class="style-example" id="xExample"></textarea>
+      </div>
+      <div class="style-editor-actions">
+        <button type="button" class="secondary" id="saveStyleBtn">保存</button>
+        <button type="button" class="secondary" id="resetStyleBtn">デフォルトに戻す</button>
+      </div>
+    </div>
+  </details>
+
+  <footer class="app-footer">note記事はここには保存されません。ページを閉じると入力内容は消えます。</footer>
+</div>
+
+<span class="sr-only" id="liveRegion" role="status" aria-live="polite"></span>
+
+<script>
+(function () {
+  "use strict";
+
+  var THREADS_DEFAULT_EXAMPLE = "正直、自分でも驚いています。プログラム未経験の私が、ClaudeというAIとチャットするだけで「悩みを書くと近い記事を自動で探してくれるツール」を作ってしまいました。\n\nコードは一切書いていません。「こういうのが欲しい」と伝え続けただけです。\n\n会社の裏設定161本から、あなたの状況に近いエピソードが見つかります。試しに一言書いてみてください。";
+  var X_DEFAULT_EXAMPLE = "「頑張ってるアピール」が上手い人ほど、実際は一番何もしてない説。\n発言は多い、会議では目立つ、報告は丁寧。\nでも成果物を見ると、一番動いてるのは黙って作業してる人だったりする。\nアピール力と実務力、比例しないこと多すぎる";
+
+  var STORAGE_THREADS = "sdf_threads_example_v1";
+  var STORAGE_X = "sdf_x_example_v1";
+
+  var articleEl = document.getElementById("article");
+  var articleCountEl = document.getElementById("articleCount");
+  var clearBtn = document.getElementById("clearBtn");
+  var generateBtn = document.getElementById("generateBtn");
+  var statusEl = document.getElementById("statusEl");
+  var liveRegion = document.getElementById("liveRegion");
+
+  var threadsTextEl = document.getElementById("threadsText");
+  var threadsCountEl = document.getElementById("threadsCount");
+  var threadsCopyBtn = document.getElementById("threadsCopy");
+  var threadsExampleBadge = document.getElementById("threadsExampleBadge");
+
+  var xTextEl = document.getElementById("xText");
+  var xCountEl = document.getElementById("xCount");
+  var xCopyBtn = document.getElementById("xCopy");
+  var xExampleBadge = document.getElementById("xExampleBadge");
+
+  var threadsExampleInput = document.getElementById("threadsExample");
+  var xExampleInput = document.getElementById("xExample");
+  var saveStyleBtn = document.getElementById("saveStyleBtn");
+  var resetStyleBtn = document.getElementById("resetStyleBtn");
+
+  function safeGet(key, fallback) {
+    try {
+      var v = localStorage.getItem(key);
+      return v === null ? fallback : v;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  function safeSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) { /* ignore */ }
+  }
+
+  function getExamples() {
+    return {
+      threads: safeGet(STORAGE_THREADS, THREADS_DEFAULT_EXAMPLE),
+      x: safeGet(STORAGE_X, X_DEFAULT_EXAMPLE)
+    };
+  }
+
+  function renderDraft(kind, text) {
+    var textEl = kind === "threads" ? threadsTextEl : xTextEl;
+    var countEl = kind === "threads" ? threadsCountEl : xCountEl;
+    var badgeEl = kind === "threads" ? threadsExampleBadge : xExampleBadge;
+    textEl.textContent = text;
+    countEl.textContent = text.length + "字";
+    badgeEl.hidden = true;
+  }
+
+  function initExamples() {
+    var ex = getExamples();
+    threadsExampleInput.value = ex.threads;
+    xExampleInput.value = ex.x;
+    renderDraft("threads", ex.threads);
+    renderDraft("x", ex.x);
+    threadsExampleBadge.hidden = false;
+    xExampleBadge.hidden = false;
+  }
+
+  function updateArticleCount() {
+    articleCountEl.textContent = articleEl.value.length + " / 20000字";
+  }
+
+  articleEl.addEventListener("input", updateArticleCount);
+  clearBtn.addEventListener("click", function () {
+    articleEl.value = "";
+    updateArticleCount();
+    articleEl.focus();
+  });
+
+  saveStyleBtn.addEventListener("click", function () {
+    safeSet(STORAGE_THREADS, threadsExampleInput.value.trim() || THREADS_DEFAULT_EXAMPLE);
+    safeSet(STORAGE_X, xExampleInput.value.trim() || X_DEFAULT_EXAMPLE);
+    announce("文体サンプルを保存しました");
+  });
+
+  resetStyleBtn.addEventListener("click", function () {
+    threadsExampleInput.value = THREADS_DEFAULT_EXAMPLE;
+    xExampleInput.value = X_DEFAULT_EXAMPLE;
+    safeSet(STORAGE_THREADS, THREADS_DEFAULT_EXAMPLE);
+    safeSet(STORAGE_X, X_DEFAULT_EXAMPLE);
+    announce("デフォルトの文体サンプルに戻しました");
+  });
+
+  function announce(msg) {
+    liveRegion.textContent = "";
+    window.setTimeout(function () { liveRegion.textContent = msg; }, 30);
+  }
+
+  function setStatus(text, kind) {
+    statusEl.textContent = "";
+    statusEl.className = "status" + (kind ? " status-" + kind : "");
+    if (kind === "loading") {
+      var dot = document.createElement("span");
+      dot.className = "dot-pulse";
+      statusEl.appendChild(dot);
+      var label = document.createElement("span");
+      label.textContent = text;
+      statusEl.appendChild(label);
+    } else if (text) {
+      statusEl.textContent = text;
+    }
+  }
+
+  function copyForErrorCode(code) {
+    switch (code) {
+      case "not_granted":
+        return "Claudeの利用が許可されていません。ページを開き直して許可してください。";
+      case "sampling_disabled":
+      case "not_declared":
+      case "capability_disabled":
+      case "capability_removed":
+        return "このページではAI生成が利用できません。";
+      case "rate_limited":
+        return "少し混み合っています。しばらくしてからもう一度お試しください。";
+      case "session_expired":
+        return "セッションが切れました。ページを開き直してください。";
+      case "prompt_too_large":
+        return "記事が長すぎるようです。前半だけ貼るなど、短くしてお試しください。";
+      case "refused":
+        return "この内容では生成できませんでした。文章を少し変えてもう一度お試しください。";
+      case "invalid_json":
+      case "empty_completion":
+        return "うまく生成できませんでした。もう一度お試しください。";
+      case "cancelled":
+        return "";
+      default:
+        return "通信エラーが起きました。もう一度お試しください。";
+    }
+  }
+
+  function buildPrompt(articleBody) {
+    var ex = getExamples();
+    return [
+      "あなたはnote記事の内容を元に、Threads・X(旧Twitter)向けの告知投稿を作るアシスタントです。",
+      "",
+      "【note記事】",
+      articleBody,
+      "",
+      "【依頼内容】",
+      "この記事を要約し、フックの効いたThreads投稿文とX投稿文をそれぞれ1本ずつ作成してください。",
+      "文体・リズム・長さ・構成は、以下の参考例に合わせてください(参考例の内容自体はコピーしない。あくまで書き方の見本)。",
+      "",
+      "【Threads参考例】",
+      ex.threads,
+      "",
+      "【X参考例】",
+      ex.x,
+      "",
+      "【共通条件】",
+      "- 冒頭1行で興味を引く(体験談・結論・問いかけなど)",
+      "- 記事の一番面白い/役に立つポイントを先出しする",
+      "- 「続きはnoteで」等、note記事へ誘導する一言を末尾に入れる(URLは書かなくてよい)",
+      "- ハッシュタグは付けない",
+      "- Markdown記号(#や*など)は使わない",
+      "",
+      "【Threads投稿の条件】",
+      "- 日本語で150〜200文字程度",
+      "- 参考例のように、空行で2〜3段落に分ける",
+      "",
+      "【X投稿の条件】",
+      "- 日本語で100〜130文字程度",
+      "- 参考例のように、短い文を改行で区切ってリズムよく書く",
+      "",
+      "【出力形式】",
+      "以下のJSON形式のみを出力してください。説明や前置きは不要です。",
+      '{"threads": "投稿文", "x": "投稿文"}'
+    ].join("\n");
+  }
+
+  var sampleFn = null;
+
+  function initSample() {
+    if (typeof window.claude === "undefined" || typeof window.claude.use !== "function") {
+      return Promise.resolve(null);
+    }
+    return window.claude.use("sample").catch(function () { return null; });
+  }
+
+  initSample().then(function (fn) {
+    sampleFn = fn;
+    if (!sampleFn) {
+      generateBtn.disabled = true;
+      setStatus("このページではAI生成が利用できません(Claudeのビューア内で開いてください)。", "error");
+    }
+  });
+
+  generateBtn.addEventListener("click", function () {
+    var body = articleEl.value.trim();
+    if (!body) {
+      articleEl.focus();
+      setStatus("note記事の本文を貼り付けてください", "error");
+      return;
+    }
+    if (!sampleFn) {
+      setStatus("AI生成が利用できません。", "error");
+      return;
+    }
+
+    generateBtn.disabled = true;
+    setStatus("考え中…(数十秒かかることがあります)", "loading");
+
+    sampleFn.json(buildPrompt(body), { modelTier: "default", cache: false })
+      .then(function (data) {
+        if (!data || typeof data.threads !== "string" || typeof data.x !== "string") {
+          throw { code: "invalid_json" };
+        }
+        renderDraft("threads", data.threads.trim());
+        renderDraft("x", data.x.trim());
+        setStatus("", null);
+        generateBtn.textContent = "作り直す";
+        announce("下書きができました");
+      })
+      .catch(function (err) {
+        var code = err && err.code;
+        var msg = copyForErrorCode(code);
+        if (msg) setStatus(msg, "error");
+        else setStatus("", null);
+      })
+      .finally(function () {
+        generateBtn.disabled = false;
+      });
+  });
+
+  function copyText(btn, text) {
+    var restore = function () {
+      window.setTimeout(function () {
+        btn.textContent = btn.getAttribute("data-label");
+      }, 1600);
+    };
+    var onSuccess = function () {
+      btn.textContent = "✓ コピーしました";
+      announce("コピーしました");
+      restore();
+    };
+    var onFailure = function () {
+      btn.textContent = "コピーできませんでした。長押しで選択してください";
+      restore();
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onSuccess, function () {
+        legacyCopy(text) ? onSuccess() : onFailure();
+      });
+    } else {
+      legacyCopy(text) ? onSuccess() : onFailure();
+    }
+  }
+
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  threadsCopyBtn.addEventListener("click", function () {
+    copyText(threadsCopyBtn, threadsTextEl.textContent);
+  });
+  xCopyBtn.addEventListener("click", function () {
+    copyText(xCopyBtn, xTextEl.textContent);
+  });
+
+  updateArticleCount();
+  initExamples();
+})();
+</script>
