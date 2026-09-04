@@ -1,0 +1,36 @@
+name: Daily Threads Post Draft Generator
+
+on:
+  schedule:
+    # 毎日 21:00 UTC = 日本時間 6:00 に実行(必要に応じて時刻を調整してください)
+    - cron: "0 21 * * *"
+  workflow_dispatch: {} # 手動実行用ボタンをGitHub上に表示する
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # state/ 配下の使用済みテーマ記録をコミットし直すために必要
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate today's post drafts
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          POSTS_PER_DAY: "3"
+        run: node generate-posts.js
+
+      - name: Commit updated state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/
+          git diff --staged --quiet || git commit -m "chore: update used themes / generated drafts $(date -u +%Y-%m-%d)"
+          git push
