@@ -423,11 +423,15 @@
   var counterEl = document.getElementById("counter");
   var refListEl = document.getElementById("refList");
 
-  function renderRefs(matches) {
+  function renderRefs(matches, query) {
     refListEl.innerHTML = "";
     if (matches.length === 0) {
+      var message = query
+        ? "関連する記録が見つかりませんでした。表現を変えてみてください。"
+        : "困りごとを入力すると、ここに関連する記録が表示されます。";
       var li = document.createElement("li");
-      li.innerHTML = '<span></span><span class="empty-refs">関連する記録が見つかりませんでした。表現を変えてみてください。</span>';
+      li.innerHTML = '<span></span><span class="empty-refs"></span>';
+      li.querySelector(".empty-refs").textContent = message;
       refListEl.appendChild(li);
       return;
     }
@@ -478,7 +482,7 @@
   }
 
   function updateRefsFor(query) {
-    renderRefs(search(query, 4));
+    renderRefs(search(query, 4), query);
   }
 
   var debounceTimer = null;
@@ -492,10 +496,7 @@
 
   concernEl.addEventListener("input", scheduleSearch);
 
-  var exampleConcern = "部下から突然、辞めたいと言われた。引き止めるべきか、どう向き合えばいいか分からない。";
-  concernEl.value = exampleConcern;
-  counterEl.textContent = exampleConcern.length + " / 600";
-  updateRefsFor(exampleConcern);
+  renderRefs([], "");
 })();
 </script>
 
