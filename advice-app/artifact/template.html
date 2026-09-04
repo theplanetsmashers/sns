@@ -561,15 +561,39 @@
 
     var listening = false;
     var baseText = "";
+    var hintResetTimer = null;
+    var gotResult = false;
+
+    var errorMessages = {
+      "not-allowed": "マイクの使用が許可されていません。ブラウザの設定でマイクへのアクセスを許可してください。",
+      "service-not-allowed": "この端末・ブラウザでは音声入力サービスが利用できませんでした。iOSの場合はキーボードのマイクボタンをお試しください。",
+      "audio-capture": "マイクを利用できませんでした。他のアプリがマイクを使用していないか確認してください。",
+      "network": "音声認識サービスに接続できませんでした。通信環境を確認してもう一度お試しください。",
+      "no-speech": "音声を検知できませんでした。もう一度お試しください。",
+    };
+
+    function showTemporaryHint(text) {
+      clearTimeout(hintResetTimer);
+      hintEl.textContent = text;
+      hintResetTimer = setTimeout(function () {
+        hintEl.textContent = defaultHint;
+      }, 5000);
+    }
 
     function setListening(next) {
       listening = next;
       micBtn.classList.toggle("listening", listening);
       micBtn.setAttribute("aria-label", listening ? "音声入力を停止" : "音声入力");
-      hintEl.textContent = listening ? "聞き取り中… もう一度押すと止まります" : defaultHint;
+      if (listening) {
+        clearTimeout(hintResetTimer);
+        hintEl.textContent = "聞き取り中… もう一度押すと止まります";
+      } else {
+        hintEl.textContent = defaultHint;
+      }
     }
 
     recognition.addEventListener("result", function (e) {
+      gotResult = true;
       var transcript = "";
       for (var i = 0; i < e.results.length; i++) {
         transcript += e.results[i][0].transcript;
@@ -580,10 +604,15 @@
 
     recognition.addEventListener("end", function () {
       setListening(false);
+      if (!gotResult) {
+        showTemporaryHint("音声入力が反応しませんでした。iOSの場合はキーボードのマイクボタンをお試しください。");
+      }
     });
 
-    recognition.addEventListener("error", function () {
+    recognition.addEventListener("error", function (e) {
       setListening(false);
+      var msg = errorMessages[e.error] || ("音声入力でエラーが発生しました（" + e.error + "）。");
+      showTemporaryHint(msg);
     });
 
     micBtn.addEventListener("click", function () {
@@ -592,11 +621,13 @@
         return;
       }
       baseText = concernEl.value.trim();
+      gotResult = false;
       try {
         recognition.start();
         setListening(true);
       } catch (e) {
         setListening(false);
+        showTemporaryHint("音声入力を開始できませんでした。");
       }
     });
   }
