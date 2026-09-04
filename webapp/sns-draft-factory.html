@@ -15,6 +15,7 @@
     --x-bg: #E7F2F0;
     --danger: #A5372F;
     --danger-bg: #FBEAE7;
+    --done-bg: #E6F1E4;
     --font-display: 'Zen Old Mincho', serif;
     --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -36,6 +37,7 @@
       --x-bg: #122725;
       --danger: #E28E86;
       --danger-bg: #2C1917;
+      --done-bg: #17281B;
     }
   }
 
@@ -54,6 +56,7 @@
     --x-bg: #122725;
     --danger: #E28E86;
     --danger-bg: #2C1917;
+    --done-bg: #17281B;
   }
 
   * { box-sizing: border-box; }
@@ -69,12 +72,10 @@
   .page {
     max-width: 900px;
     margin: 0 auto;
-    padding: 28px 20px 64px;
+    padding: 24px 16px 56px;
   }
 
-  header.hero {
-    margin-bottom: 24px;
-  }
+  header.hero { margin-bottom: 20px; }
 
   header.hero .eyebrow {
     font-family: var(--font-mono);
@@ -87,20 +88,21 @@
   header.hero h1 {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(28px, 6vw, 36px);
+    font-size: clamp(26px, 6vw, 34px);
     margin: 6px 0 8px;
     text-wrap: balance;
   }
 
   header.hero p {
     color: var(--ink-soft);
-    font-size: 15px;
+    font-size: 14px;
     max-width: 60ch;
     margin: 0;
   }
 
   button:focus-visible,
   textarea:focus-visible,
+  input:focus-visible,
   details summary:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
@@ -115,10 +117,9 @@
 
   .history-grid {
     display: grid;
-    grid-template-columns: minmax(190px, 1fr) minmax(250px, 1.3fr) minmax(210px, 1fr);
-    min-width: 700px;
+    grid-template-columns: 1.1fr 1.1fr 1.1fr 0.9fr;
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 12px;
   }
 
   .head-cell {
@@ -126,48 +127,51 @@
     top: 0;
     z-index: 3;
     background: var(--surface-2);
-    padding: 10px 16px;
+    padding: 8px 6px;
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    font-size: 10px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-soft);
     border-bottom: 1px solid var(--line);
+    text-align: center;
   }
 
-  .head-cell.corner-tl { border-top-left-radius: 14px; }
-  .head-cell.corner-tr { border-top-right-radius: 14px; }
+  .head-cell.corner-tl { border-top-left-radius: 12px; }
+  .head-cell.corner-tr { border-top-right-radius: 12px; }
 
   .cell {
     background: var(--surface);
-    padding: 16px;
+    padding: 8px 6px;
     border-bottom: 1px solid var(--line);
     border-right: 1px solid var(--line);
+    min-width: 0;
   }
 
   .cell.cell-last { border-right: none; }
+  .cell.row-complete { background: var(--done-bg); }
 
   .row-meta {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    min-height: 20px;
+    gap: 4px;
+    margin-bottom: 4px;
+    min-height: 14px;
+    font-size: 9px;
   }
 
   .row-date {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
-    font-size: 11px;
     color: var(--ink-soft);
   }
 
   .row-badge {
-    font-size: 11px;
     border-radius: 999px;
-    padding: 2px 8px;
+    padding: 1px 5px;
     border: 1px solid var(--line);
     color: var(--ink-soft);
+    white-space: nowrap;
   }
 
   .row-badge.latest { color: var(--accent); border-color: var(--accent); }
@@ -179,58 +183,31 @@
     background: none;
     border: none;
     color: var(--ink-soft);
-    font-size: 11px;
     text-decoration: underline;
     cursor: pointer;
     padding: 2px;
+    font-size: 9px;
   }
 
-  .note-excerpt {
-    font-size: 14px;
-    line-height: 1.7;
-    white-space: pre-wrap;
+  .excerpt {
+    font-size: 13px;
     margin: 0;
-  }
-
-  .toggle-btn {
-    display: inline-block;
-    margin-top: 6px;
-    background: none;
-    border: none;
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 2px 0;
-  }
-
-  .draft-text-sm {
-    white-space: pre-wrap;
-    font-size: 14px;
-    line-height: 1.75;
-    margin: 0 0 10px;
-  }
-
-  .draft-count {
-    display: block;
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   button.copy-btn {
     background: transparent;
-    border: 1.3px solid currentColor;
-    border-radius: 9px;
-    padding: 8px 12px;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    padding: 2px 4px;
     font-family: var(--font-body);
     font-weight: 700;
-    font-size: 13px;
+    font-size: 10px;
     cursor: pointer;
     width: 100%;
+    margin-top: 4px;
   }
 
   button.copy-btn.threads { color: var(--threads); }
@@ -238,19 +215,21 @@
 
   .placeholder-cell {
     border: 1.5px dashed var(--line);
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 13px;
+    border-radius: 8px;
+    padding: 8px 4px;
+    font-size: 11px;
     color: var(--ink-soft);
-    min-height: 72px;
+    min-height: 30px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
   }
 
   .dot-pulse {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--ink-soft);
     animation: pulse 1s ease-in-out infinite;
@@ -266,22 +245,53 @@
     50% { opacity: 1; }
   }
 
-  /* compose row */
+  /* checklist column */
 
-  .compose-cell { background: var(--surface-2); }
+  .checklist { display: flex; flex-direction: column; gap: 3px; }
+
+  .checklist label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  .checklist input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex: none;
+  }
+
+  .checklist label.done { color: var(--ink); font-weight: 700; }
+
+  /* ---- compose card (below the table) ---- */
+
+  .compose-card {
+    margin-top: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .compose-card .row-meta { font-size: 11px; margin-bottom: 10px; }
 
   textarea#article {
     width: 100%;
-    min-height: 120px;
+    min-height: 150px;
     resize: vertical;
-    background: var(--surface);
+    background: var(--surface-2);
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 10px 12px;
+    padding: 12px;
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: 15px;
     color: var(--ink);
-    line-height: 1.7;
+    line-height: 1.75;
   }
 
   .compose-meta {
@@ -302,19 +312,16 @@
     color: var(--accent-ink);
     border: none;
     border-radius: 999px;
-    padding: 10px 20px;
+    padding: 12px 22px;
     font-family: var(--font-body);
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 12px;
   }
 
-  button.primary:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-  }
+  button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
 
   .status {
     display: block;
@@ -352,15 +359,8 @@
   }
 
   details.style-editor summary::-webkit-details-marker { display: none; }
-
-  details.style-editor summary::before {
-    content: "▸ ";
-    color: var(--ink-soft);
-  }
-
-  details.style-editor[open] summary::before {
-    content: "▾ ";
-  }
+  details.style-editor summary::before { content: "▸ "; color: var(--ink-soft); }
+  details.style-editor[open] summary::before { content: "▾ "; }
 
   .style-editor-body { padding-bottom: 18px; }
 
@@ -438,14 +438,22 @@
   <header class="hero">
     <div class="eyebrow">note / Threads / X</div>
     <h1>SNS下書き工場</h1>
-    <p>note記事を貼って生成すると、Threads・Xの下書きが横に並びます。上から下へ、前回・今回・次回の履歴として並ぶので、これまで書いた分もいつでも見返せます。</p>
+    <p>note記事を貼って生成すると、note・Threads・Xが横並びの表に積み上がります。右端のチェックで、どこまで投稿し終えたか一目で分かります。</p>
   </header>
 
   <div class="table-wrap">
     <div class="history-grid" id="grid"></div>
   </div>
 
-  <p class="reminder">note・Threads・Xへの実際の投稿は、それぞれ手動で行ってください。履歴はこの端末のブラウザだけに保存され、他の端末とは共有されません。</p>
+  <div class="compose-card">
+    <div class="row-meta"><span class="row-badge next">次回</span></div>
+    <textarea id="article" maxlength="20000" placeholder="書き終えたnote記事の本文をここに貼り付け"></textarea>
+    <div class="compose-meta"><span class="char-count" id="articleCount">0 / 20000字</span></div>
+    <button type="button" class="primary" id="generateBtn">生成する</button>
+    <span class="status" id="statusEl" role="status" aria-live="polite"></span>
+  </div>
+
+  <p class="reminder">note・Threads・Xへの実際の投稿は、それぞれ手動で行ってください。履歴・チェックはこの端末のブラウザだけに保存され、他の端末とは共有されません。</p>
 
   <details class="style-editor" id="styleEditor">
     <summary>文体サンプルを編集する</summary>
@@ -483,7 +491,7 @@
 
   var STORAGE_THREADS = "sdf_threads_example_v1";
   var STORAGE_X = "sdf_x_example_v1";
-  var STORAGE_HISTORY = "sdf_history_v2";
+  var STORAGE_HISTORY = "sdf_history_v3";
   var MAX_HISTORY = 30;
 
   function safeGet(key, fallback) {
@@ -517,15 +525,15 @@
       createdAt: Date.now(),
       articleText: EXAMPLE_ARTICLE,
       threadsText: THREADS_DEFAULT_EXAMPLE,
-      xText: X_DEFAULT_EXAMPLE
+      xText: X_DEFAULT_EXAMPLE,
+      doneNote: false,
+      doneThreads: false,
+      doneX: false
     }];
   }
 
   var history = loadHistory();
-  var expandedIds = {};
   var draftLoading = false;
-  var statusMessage = "";
-  var statusKind = null;
   var sampleFn = null;
 
   function saveHistory() {
@@ -547,6 +555,11 @@
       .replace(/"/g, "&quot;");
   }
 
+  function truncate10(text) {
+    var t = text.trim().replace(/\s+/g, " ");
+    return t.length > 10 ? t.slice(0, 10) + "…" : t;
+  }
+
   function formatDate(ts) {
     try {
       return new Intl.DateTimeFormat("ja-JP", { month: "numeric", day: "numeric" }).format(new Date(ts));
@@ -565,26 +578,37 @@
 
   function buildStaticShell() {
     gridEl.innerHTML =
-      '<div class="head-cell corner-tl">note記事</div>' +
+      '<div class="head-cell corner-tl">note</div>' +
       '<div class="head-cell">Threads</div>' +
-      '<div class="head-cell corner-tr">X</div>' +
-      '<div id="historyRows" style="display:contents"></div>' +
-      '<div class="cell compose-cell">' +
-        '<div class="row-meta"><span class="row-badge next">次回</span></div>' +
-        '<textarea id="article" maxlength="20000" placeholder="書き終えたnote記事の本文をここに貼り付け"></textarea>' +
-        '<div class="compose-meta"><span class="char-count" id="articleCount">0 / 20000字</span></div>' +
-        '<button type="button" class="primary" id="generateBtn">生成する</button>' +
-        '<span class="status" id="statusEl" role="status" aria-live="polite"></span>' +
-      '</div>' +
-      '<div class="cell compose-cell" id="composeThreadsCell"></div>' +
-      '<div class="cell cell-last compose-cell" id="composeXCell"></div>';
+      '<div class="head-cell">X</div>' +
+      '<div class="head-cell corner-tr">投稿状況</div>' +
+      '<div id="historyRows" style="display:contents"></div>';
+  }
+
+  function checklistCell(e, complete) {
+    var items = [
+      ["doneNote", "note"],
+      ["doneThreads", "Threads"],
+      ["doneX", "X"]
+    ];
+    var html = '<div class="checklist">';
+    for (var i = 0; i < items.length; i++) {
+      var field = items[i][0];
+      var label = items[i][1];
+      var checked = !!e[field];
+      html +=
+        '<label class="' + (checked ? "done" : "") + '">' +
+          '<input type="checkbox" data-action="check" data-id="' + e.id + '" data-field="' + field + '"' + (checked ? " checked" : "") + '>' +
+          label +
+        '</label>';
+    }
+    html += '</div>';
+    return '<div class="cell cell-last' + (complete ? " row-complete" : "") + '">' + html + '</div>';
   }
 
   function renderRow(e, isLatest) {
-    var expanded = !!expandedIds[e.id];
-    var trimmed = e.articleText.trim();
-    var needsToggle = trimmed.length > 70;
-    var shown = (expanded || !needsToggle) ? trimmed : trimmed.slice(0, 70) + "…";
+    var complete = !e.example && e.doneNote && e.doneThreads && e.doneX;
+    var completeClass = complete ? " row-complete" : "";
 
     var badges = "";
     if (e.example) badges += '<span class="row-badge example">例</span>';
@@ -593,21 +617,19 @@
     var deleteBtn = e.example ? "" : '<button type="button" class="row-delete" data-action="delete" data-id="' + e.id + '">削除</button>';
 
     return (
-      '<div class="cell">' +
+      '<div class="cell' + completeClass + '">' +
         '<div class="row-meta">' + dateLabel + badges + deleteBtn + '</div>' +
-        '<p class="note-excerpt">' + escapeHtml(shown) + '</p>' +
-        (needsToggle ? '<button type="button" class="toggle-btn" data-action="toggle" data-id="' + e.id + '">' + (expanded ? "閉じる" : "続きを見る") + '</button>' : '') +
+        '<p class="excerpt" title="' + escapeHtml(e.articleText.trim()) + '">' + escapeHtml(truncate10(e.articleText)) + '</p>' +
       '</div>' +
-      '<div class="cell">' +
-        '<p class="draft-text-sm">' + escapeHtml(e.threadsText) + '</p>' +
-        '<span class="draft-count">' + e.threadsText.length + '字</span>' +
-        '<button type="button" class="copy-btn threads" data-action="copy" data-target="threads" data-id="' + e.id + '" data-label="タップでコピー">タップでコピー</button>' +
+      '<div class="cell' + completeClass + '">' +
+        '<p class="excerpt" title="' + escapeHtml(e.threadsText.trim()) + '">' + escapeHtml(truncate10(e.threadsText)) + '</p>' +
+        '<button type="button" class="copy-btn threads" data-action="copy" data-target="threads" data-id="' + e.id + '" data-label="コピー">コピー</button>' +
       '</div>' +
-      '<div class="cell cell-last">' +
-        '<p class="draft-text-sm">' + escapeHtml(e.xText) + '</p>' +
-        '<span class="draft-count">' + e.xText.length + '字</span>' +
-        '<button type="button" class="copy-btn x" data-action="copy" data-target="x" data-id="' + e.id + '" data-label="タップでコピー">タップでコピー</button>' +
-      '</div>'
+      '<div class="cell' + completeClass + '">' +
+        '<p class="excerpt" title="' + escapeHtml(e.xText.trim()) + '">' + escapeHtml(truncate10(e.xText)) + '</p>' +
+        '<button type="button" class="copy-btn x" data-action="copy" data-target="x" data-id="' + e.id + '" data-label="コピー">コピー</button>' +
+      '</div>' +
+      checklistCell(e, complete)
     );
   }
 
@@ -620,21 +642,7 @@
     document.getElementById("historyRows").innerHTML = html;
   }
 
-  function renderComposeResultCells() {
-    var threadsCell = document.getElementById("composeThreadsCell");
-    var xCell = document.getElementById("composeXCell");
-    if (draftLoading) {
-      threadsCell.innerHTML = '<div class="placeholder-cell"><span class="dot-pulse"></span>考え中…</div>';
-      xCell.innerHTML = '<div class="placeholder-cell"><span class="dot-pulse"></span>考え中…</div>';
-    } else {
-      threadsCell.innerHTML = '<div class="placeholder-cell">生成するとここに表示されます</div>';
-      xCell.innerHTML = '<div class="placeholder-cell">生成するとここに表示されます</div>';
-    }
-  }
-
   function setStatus(text, kind) {
-    statusMessage = text || "";
-    statusKind = kind || null;
     var el = document.getElementById("statusEl");
     if (!el) return;
     el.className = "status" + (kind ? " status-" + kind : "");
@@ -750,7 +758,6 @@
     btn.disabled = true;
     btn.textContent = "生成中…";
     setStatus("考え中…(数十秒かかることがあります)", "loading");
-    renderComposeResultCells();
 
     sampleFn.json(buildPrompt(body), { modelTier: "default", cache: false })
       .then(function (data) {
@@ -763,7 +770,10 @@
           createdAt: Date.now(),
           articleText: body,
           threadsText: data.threads.trim(),
-          xText: data.x.trim()
+          xText: data.x.trim(),
+          doneNote: false,
+          doneThreads: false,
+          doneX: false
         });
         articleEl.value = "";
         updateArticleCount();
@@ -780,7 +790,6 @@
         draftLoading = false;
         btn.disabled = false;
         btn.textContent = "生成する";
-        renderComposeResultCells();
       });
   }
 
@@ -803,15 +812,15 @@
 
   function copyText(btn, text) {
     var restore = function () {
-      window.setTimeout(function () { btn.textContent = btn.getAttribute("data-label"); }, 1600);
+      window.setTimeout(function () { btn.textContent = btn.getAttribute("data-label"); }, 1400);
     };
     var onSuccess = function () {
-      btn.textContent = "✓ コピーしました";
+      btn.textContent = "✓";
       announce("コピーしました");
       restore();
     };
     var onFailure = function () {
-      btn.textContent = "長押しで選択してください";
+      btn.textContent = "長押しで";
       restore();
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -831,10 +840,7 @@
     var action = target.getAttribute("data-action");
     var id = target.getAttribute("data-id");
 
-    if (action === "toggle") {
-      expandedIds[id] = !expandedIds[id];
-      renderHistoryRows();
-    } else if (action === "delete") {
+    if (action === "delete") {
       if (window.confirm("この履歴を削除しますか?")) {
         history = history.filter(function (e) { return e.id !== id; });
         saveHistory();
@@ -846,6 +852,18 @@
       var text = target.getAttribute("data-target") === "threads" ? entry.threadsText : entry.xText;
       copyText(target, text);
     }
+  });
+
+  gridEl.addEventListener("change", function (evt) {
+    var target = evt.target.closest('[data-action="check"]');
+    if (!target) return;
+    var id = target.getAttribute("data-id");
+    var field = target.getAttribute("data-field");
+    var entry = history.filter(function (e) { return e.id === id; })[0];
+    if (!entry) return;
+    entry[field] = target.checked;
+    saveHistory();
+    renderHistoryRows();
   });
 
   document.getElementById("clearHistoryBtn").addEventListener("click", function () {
@@ -883,7 +901,6 @@
 
   buildStaticShell();
   renderHistoryRows();
-  renderComposeResultCells();
   updateArticleCount();
   document.getElementById("article").addEventListener("input", updateArticleCount);
   document.getElementById("generateBtn").addEventListener("click", handleGenerate);
