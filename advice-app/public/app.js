@@ -42,6 +42,12 @@
       a.rel = 'noopener noreferrer';
       a.textContent = `${label}${ref.title}`;
       li.appendChild(a);
+      if (ref.paid) {
+        const badge = document.createElement('span');
+        badge.className = 'ref-badge';
+        badge.textContent = '続きは有料';
+        li.appendChild(badge);
+      }
       referencesList.appendChild(li);
     });
     referencesBox.hidden = false;

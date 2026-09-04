@@ -44,7 +44,12 @@ function load() {
   }
 
   const raw = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
-  const articles = Array.isArray(raw.articles) ? raw.articles : [];
+  const allArticles = Array.isArray(raw.articles) ? raw.articles : [];
+  // note.comで実際に公開されている記事だけを検索対象にする。Google Driveにしか
+  // ない記事(未公開、または意図的に非公開の記事)は参照候補から除く。
+  const articles = allArticles.filter(
+    (a) => typeof a.url === 'string' && a.url.startsWith('https://note.com/')
+  );
 
   const indexed = articles.map((article) => ({
     article,

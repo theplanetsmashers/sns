@@ -98,6 +98,7 @@ async function handleAdvice(req, res) {
     title: m.article.title,
     articleNumber: m.article.articleNumber,
     url: m.article.url,
+    paid: Boolean(m.article.notePrice) && m.article.notePrice > 0,
     score: Number(m.score.toFixed(3)),
   }));
 

@@ -5,9 +5,11 @@
 // URLをひもづける。note.com公開時にタイトルが書き換えられることが多いため、
 // 本文テキストの重なり具合で照合する（タイトルの文字列一致は使わない）。
 //
-// 既に note.com の URL が入っている記事はスキップする（冪等）。Google Drive の
-// URL のままの記事だけを対象に、新しく公開されたものがあれば note.com の URL に
-// 差し替える。まだ公開されていない記事は Drive の URL のまま変更しない。
+// 既に note.com の URL が入っている記事は URL の照合をスキップする（冪等）。
+// Google Drive の URL のままの記事だけを対象に、新しく公開されたものがあれば
+// note.com の URL に差し替える。まだ公開されていない記事は Drive の URL のまま
+// 変更しない。note.com側の価格（price）は毎回上書きし、無料/有料記事の記事を
+// 常に最新化する（notePrice フィールド）。
 
 const fs = require('fs');
 const path = require('path');
@@ -55,7 +57,7 @@ async function fetchAllNoteArticles(username) {
     const data = json.data || {};
     const contents = data.contents || [];
     for (const c of contents) {
-      results.push({ id: c.id, name: c.name, url: c.noteUrl, body: c.body || '' });
+      results.push({ id: c.id, name: c.name, url: c.noteUrl, body: c.body || '', price: c.price || 0 });
     }
     if (data.isLastPage || contents.length === 0) break;
     page++;
@@ -102,6 +104,8 @@ async function main() {
   const noteArticles = await fetchAllNoteArticles(NOTE_USERNAME);
   console.log(`fetched ${noteArticles.length} published note.com articles`);
 
+  const priceByUrl = new Map(noteArticles.map((a) => [a.url, a.price]));
+
   const notePool = noteArticles
     .filter((a) => !usedNoteUrls.has(a.url))
     .map((a) => ({ ...a, normBody: normalize(a.body) }));
@@ -110,28 +114,39 @@ async function main() {
   const newlyMatched = [];
 
   for (const article of articles) {
-    if (!isDriveUrl(article.url)) continue; // already mapped, or some other url type
+    if (isDriveUrl(article.url)) {
+      const idx = findMatch(article.body, notePool);
+      if (idx === -1) continue;
 
-    const idx = findMatch(article.body, notePool);
-    if (idx === -1) continue;
+      const match = notePool[idx];
+      article.url = match.url;
+      article.notePrice = match.price;
+      notePool.splice(idx, 1); // claim it, don't let another drive article reuse it
+      updated++;
+      newlyMatched.push({
+        articleNumber: article.articleNumber,
+        title: article.title,
+        noteTitle: match.name,
+        noteUrl: match.url,
+      });
+      continue;
+    }
 
-    const match = notePool[idx];
-    article.url = match.url;
-    notePool.splice(idx, 1); // claim it, don't let another drive article reuse it
-    updated++;
-    newlyMatched.push({
-      articleNumber: article.articleNumber,
-      title: article.title,
-      noteTitle: match.name,
-      noteUrl: match.url,
-    });
+    // already on note.com: keep the price fresh (it can change after publish)
+    if (article.url && article.url.includes('note.com/') && priceByUrl.has(article.url)) {
+      const price = priceByUrl.get(article.url);
+      if (article.notePrice !== price) {
+        article.notePrice = price;
+        updated++;
+      }
+    }
   }
 
   if (updated > 0) {
     fs.writeFileSync(DATA_PATH, `${JSON.stringify(raw, null, 2)}\n`, 'utf8');
   }
 
-  console.log(`\nnewly matched: ${updated}`);
+  console.log(`\nnewly matched: ${newlyMatched.length} (plus ${updated - newlyMatched.length} price refresh(es))`);
   for (const m of newlyMatched) {
     console.log(`  #${m.articleNumber} ${m.title} -> ${m.noteUrl}`);
   }

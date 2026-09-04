@@ -164,3 +164,52 @@ button:disabled {
 .references-box a:hover {
   text-decoration: underline;
 }
+
+.ref-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 1px 8px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.note-link {
+  margin: 0 0 4px;
+}
+
+.note-link a {
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.note-link a:hover {
+  text-decoration: underline;
+}
+
+.note-cta {
+  margin-top: 16px;
+  padding: 16px;
+  text-align: center;
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+}
+
+.note-cta p {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+}
+
+.note-cta a {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 8px 18px;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+}

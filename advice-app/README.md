@@ -54,7 +54,8 @@ Claude Code（このリポジトリのセッション）に「Google Driveの記
 ### note.comへの公開リンクの同期
 
 `data/articles.json` の各記事は、Google Driveの下書きがnote.com（kotolog_note）で
-実際に公開されると、`url` フィールドがそのnote.com記事のURLに差し替わる。
+実際に公開されると、`url` フィールドがそのnote.com記事のURLに差し替わり、
+`notePrice` フィールドにnote.com側の価格（0なら無料記事）が入る。
 
 ```bash
 cd advice-app
@@ -66,9 +67,35 @@ npm run sync-note
 存在しない記事（未公開の予定稿、または意図的にnote化しない記事）は、対応するnote.com
 記事が見つからない限りDriveのリンクのまま変わらない。
 
-このリポジトリでは、noteへの新規投稿に合わせて定期的にこのスクリプトを実行し、
+**検索・参照の対象は note.com で公開済みの記事だけ**（`lib/retrieval.js` と、Artifact用
+データセット生成の両方で `url` が `https://note.com/` で始まる記事だけにフィルタしている）。
+Google Driveにしかない記事（未公開/非公開）は `data/articles.json` には残るが、検索候補にも
+Artifactの参照リストにも出てこない。
+
+このリポジトリでは、noteへの新規投稿に合わせて定期的に `npm run sync-note` を実行し、
 `data/articles.json` の更新と、公開中のArtifact（相談アプリのUI）への反映を
 Claude Codeの定期実行タスクで自動化している。
+
+### Artifact（裏設定相談室）のビルドと公開
+
+Artifactの実体は `advice-app/artifact/template.html`（見た目・ロジック。プレースホルダー
+`__ARTICLES_DATA_JSON__` を含む）と、そこに埋め込む記事データの2つから成る。
+
+```bash
+cd advice-app
+npm run build-artifact
+```
+
+を実行すると、
+1. `scripts/build-artifact-data.js` が `data/articles.json` からnote.com公開済みの記事だけを
+   抜き出し、Artifact用の軽量データ（`dist/articles-data.json`）を生成する（各記事に
+   `paid: true/false` フラグを付与）。
+2. `scripts/build-artifact-html.js` がテンプレートとそのデータを合成し、
+   `dist/urasettei-artifact.html` を書き出す。
+
+このファイルをArtifactとして公開すればよい（`dist/` はビルド生成物なのでgit管理外）。
+UI側の変更（CTAリンク、有料記事バッジ、AI利用許可のタイミングなど）は
+`advice-app/artifact/template.html` を直接編集する。
 
 `data/articles.json` の構造:
 

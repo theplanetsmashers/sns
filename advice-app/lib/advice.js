@@ -11,8 +11,9 @@ function truncate(text, max) {
 
 function buildArticleBlock(article, index) {
   const label = article.articleNumber ? `#${article.articleNumber} ` : '';
+  const paidNote = article.notePrice > 0 ? '（note.com有料記事）' : '';
   return [
-    `[記事${index + 1}] ${label}${article.title}`,
+    `[記事${index + 1}] ${label}${article.title}${paidNote}`,
     `URL: ${article.url}`,
     '本文:',
     truncate(article.body, MAX_BODY_CHARS),

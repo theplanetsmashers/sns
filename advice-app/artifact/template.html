@@ -1,0 +1,775 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>裏設定相談室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=BIZ+UDPGothic:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #f2efe6;
+    --surface: #fbf9f3;
+    --surface-2: #eeeae0;
+    --ink: #1c2024;
+    --ink-muted: #6b6f75;
+    --ink-faint: #9a9d9a;
+    --accent: #9c6a28;
+    --accent-strong: #7d551f;
+    --accent-soft: rgba(156, 106, 40, 0.12);
+    --border: rgba(28, 32, 36, 0.14);
+    --border-strong: rgba(28, 32, 36, 0.28);
+    --danger: #b3261e;
+    --danger-soft: rgba(179, 38, 30, 0.1);
+    --shadow: 0 1px 2px rgba(28, 24, 16, 0.06), 0 6px 16px rgba(28, 24, 16, 0.06);
+    --radius: 10px;
+    --font-display: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+    --font-body: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #12151a;
+      --surface: #1b2029;
+      --surface-2: #232a35;
+      --ink: #eae7de;
+      --ink-muted: #a3a7ad;
+      --ink-faint: #767c86;
+      --accent: #c2883f;
+      --accent-strong: #e0a45c;
+      --accent-soft: rgba(194, 136, 63, 0.16);
+      --border: rgba(234, 231, 222, 0.12);
+      --border-strong: rgba(234, 231, 222, 0.24);
+      --danger: #e2857c;
+      --danger-soft: rgba(226, 133, 124, 0.14);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #12151a;
+    --surface: #1b2029;
+    --surface-2: #232a35;
+    --ink: #eae7de;
+    --ink-muted: #a3a7ad;
+    --ink-faint: #767c86;
+    --accent: #c2883f;
+    --accent-strong: #e0a45c;
+    --accent-soft: rgba(194, 136, 63, 0.16);
+    --border: rgba(234, 231, 222, 0.12);
+    --border-strong: rgba(234, 231, 222, 0.24);
+    --danger: #e2857c;
+    --danger-soft: rgba(226, 133, 124, 0.14);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 28px 20px 90px;
+  }
+
+  .masthead {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 18px;
+    margin-bottom: 26px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .eyebrow .tag {
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 3px 10px;
+    color: var(--accent-strong);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.02em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+
+  .lede {
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    margin-top: 12px;
+  }
+
+  section.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .slip {
+    padding: 20px;
+    margin-bottom: 22px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .slip-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .slip-label label {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .slip-label .counter {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 110px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface-2);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .slip-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    gap: 12px;
+  }
+
+  .hint {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+
+  button.submit {
+    flex: none;
+    border: none;
+    border-radius: 999px;
+    padding: 11px 24px;
+    background: var(--accent);
+    color: #fff8ee;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+    box-shadow: 0 2px 8px var(--accent-soft);
+  }
+
+  button.submit:hover { background: var(--accent-strong); }
+  button.submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  button.stop {
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--ink-muted);
+    border-radius: 999px;
+    padding: 11px 18px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+  }
+
+  .section-title::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  .refs {
+    padding: 18px 20px 20px;
+  }
+
+  .ref-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ref-list li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .ref-list li:first-child { border-top: none; padding-top: 4px; }
+
+  .ref-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    padding-top: 3px;
+  }
+
+  .ref-body a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .ref-body a:hover { color: var(--accent-strong); text-decoration: underline; }
+
+  .ref-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .ref-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--surface-2);
+    overflow: hidden;
+    max-width: 120px;
+  }
+
+  .ref-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .ref-score-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+  }
+
+  .empty-refs {
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+
+  .advice {
+    padding: 20px;
+    margin-bottom: 22px;
+  }
+
+  .advice-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .advice-status {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+  }
+
+  .advice-body {
+    white-space: pre-wrap;
+    font-size: 0.95rem;
+    line-height: 1.85;
+    min-height: 2.4em;
+  }
+
+  .advice-body.idle {
+    color: var(--ink-faint);
+    font-style: normal;
+  }
+
+  .advice-body.thinking::after {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-left: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 1.1s ease-in-out infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.25; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  .notice {
+    font-size: 0.85rem;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--ink);
+    margin-top: 12px;
+  }
+
+  .notice.error {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .advice-body.thinking::after { animation: none; }
+  }
+
+  footer {
+    margin-top: 30px;
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    line-height: 1.7;
+  }
+
+  .note-link {
+    margin: 0 0 26px;
+  }
+
+  .note-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--accent-strong);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .note-link a:hover {
+    border-bottom-color: var(--accent-strong);
+  }
+
+  .ref-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .note-cta {
+    margin-top: 22px;
+    padding: 18px 20px;
+    text-align: center;
+    background: var(--accent-soft);
+  }
+
+  .note-cta p {
+    margin: 0 0 12px;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+
+  .note-cta a {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 9px 20px;
+    background: var(--accent);
+    color: #fff8ee;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .note-cta a:hover { background: var(--accent-strong); }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">
+      <span id="metaLine">DATASET LOADING…</span>
+      <span class="tag">現場記録アーカイブ</span>
+    </div>
+    <h1>裏設定相談室</h1>
+    <p class="lede">製造業の管理職として書きためた実体験エッセイ「会社の裏設定」を読み込み、いまの困りごとに近い記録を探して、それを踏まえたアドバイスを作ります。</p>
+    <p class="note-link"><a href="https://note.com/kotolog_note" target="_blank" rel="noopener noreferrer">「会社の裏設定」をnote.comで読む・フォローする →</a></p>
+  </header>
+
+  <main>
+    <section class="card slip">
+      <div class="slip-label">
+        <label for="concern">今の困りごとを書いてください</label>
+        <span class="counter" id="counter">0 / 600</span>
+      </div>
+      <textarea id="concern" maxlength="600" placeholder="例）部下から突然、辞めたいと言われた。引き止めるべきか、どう向き合えばいいか分からない。"></textarea>
+      <div class="slip-footer">
+        <span class="hint" id="hint">Enterで送信 / Shift+Enterで改行</span>
+        <button class="submit" id="submitBtn" type="button">アドバイスを作る</button>
+      </div>
+    </section>
+
+    <section class="card advice">
+      <div class="advice-header">
+        <p class="section-title" style="margin:0">アドバイス</p>
+        <span class="advice-status" id="adviceStatus"></span>
+      </div>
+      <div class="advice-body idle" id="adviceBody">左の相談票に困りごとを書いて「アドバイスを作る」を押すと、ここに回答が表示されます。</div>
+      <div id="adviceNotice"></div>
+    </section>
+
+    <section class="card refs">
+      <p class="section-title">参照した記録</p>
+      <ul class="ref-list" id="refList"></ul>
+      <div class="note-cta">
+        <p>「会社の裏設定」は、noteで随時更新中です。</p>
+        <a href="https://note.com/kotolog_note" target="_blank" rel="noopener noreferrer">note.comで全記事を読む</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    ここでの回答は、実在する社内エッセイ「会社の裏設定」を要約・引用しながらClaudeが作成する一つの見立てです。最終判断はご自身の状況に合わせて行ってください。回答生成にはご自身のClaude利用枠を使用します。
+  </footer>
+</div>
+
+<script type="application/json" id="articles-data">__ARTICLES_DATA_JSON__</script>
+<script>
+(function () {
+  "use strict";
+
+  var raw = document.getElementById("articles-data").textContent;
+  var dataset = JSON.parse(raw);
+  var articles = dataset.articles || [];
+
+  var metaLine = document.getElementById("metaLine");
+  metaLine.textContent = articles.length + "件の記録を参照可能";
+
+  function normalize(text) {
+    return String(text || "").replace(/\s+/g, "").toLowerCase();
+  }
+
+  function toBigrams(text) {
+    var norm = normalize(text);
+    var set = new Set();
+    for (var i = 0; i < norm.length - 1; i++) set.add(norm.slice(i, i + 2));
+    return set;
+  }
+
+  function overlapScore(a, b) {
+    if (a.size === 0 || b.size === 0) return 0;
+    var small = a.size <= b.size ? a : b;
+    var large = a.size <= b.size ? b : a;
+    var shared = 0;
+    small.forEach(function (g) { if (large.has(g)) shared++; });
+    return shared / Math.sqrt(a.size * b.size);
+  }
+
+  var indexed = articles.map(function (a) {
+    return {
+      article: a,
+      titleGrams: toBigrams(a.title),
+      bodyGrams: toBigrams(a.title + " " + a.body),
+    };
+  });
+
+  function search(query, topK) {
+    var qGrams = toBigrams(query);
+    if (qGrams.size === 0) return [];
+    var scored = indexed.map(function (entry) {
+      var bodyScore = overlapScore(qGrams, entry.bodyGrams);
+      var titleScore = overlapScore(qGrams, entry.titleGrams);
+      return { article: entry.article, score: bodyScore + titleScore * 1.5 };
+    });
+    scored = scored.filter(function (s) { return s.score > 0; });
+    scored.sort(function (x, y) { return y.score - x.score; });
+    return scored.slice(0, topK);
+  }
+
+  var concernEl = document.getElementById("concern");
+  var counterEl = document.getElementById("counter");
+  var refListEl = document.getElementById("refList");
+  var adviceBodyEl = document.getElementById("adviceBody");
+  var adviceStatusEl = document.getElementById("adviceStatus");
+  var adviceNoticeEl = document.getElementById("adviceNotice");
+  var submitBtn = document.getElementById("submitBtn");
+
+  var lastMatches = [];
+  var currentController = null;
+
+  function renderRefs(matches) {
+    refListEl.innerHTML = "";
+    if (matches.length === 0) {
+      var li = document.createElement("li");
+      li.innerHTML = '<span></span><span class="empty-refs">関連する記録が見つかりませんでした。表現を変えてみてください。</span>';
+      refListEl.appendChild(li);
+      return;
+    }
+    var maxScore = matches[0].score || 1;
+    matches.forEach(function (m, i) {
+      var li = document.createElement("li");
+      var num = document.createElement("span");
+      num.className = "ref-num";
+      num.textContent = m.article.n ? "#" + m.article.n : "—";
+
+      var body = document.createElement("div");
+      body.className = "ref-body";
+
+      var a = document.createElement("a");
+      a.href = m.article.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = m.article.title;
+      body.appendChild(a);
+
+      if (m.article.paid) {
+        var badge = document.createElement("span");
+        badge.className = "ref-badge";
+        badge.textContent = "続きは有料";
+        body.appendChild(badge);
+      }
+
+      var meta = document.createElement("div");
+      meta.className = "ref-meta";
+      var bar = document.createElement("div");
+      bar.className = "ref-bar";
+      var fill = document.createElement("div");
+      fill.className = "ref-bar-fill";
+      var pct = Math.max(8, Math.round((m.score / maxScore) * 100));
+      fill.style.width = pct + "%";
+      bar.appendChild(fill);
+      var label = document.createElement("span");
+      label.className = "ref-score-label";
+      label.textContent = "関連度 " + (i === 0 ? "高" : pct > 60 ? "中" : "低");
+      meta.appendChild(bar);
+      meta.appendChild(label);
+      body.appendChild(meta);
+
+      li.appendChild(num);
+      li.appendChild(body);
+      refListEl.appendChild(li);
+    });
+  }
+
+  function updateRefsFor(query) {
+    lastMatches = search(query, 4);
+    renderRefs(lastMatches);
+    return lastMatches;
+  }
+
+  function truncate(text, max) {
+    if (!text || text.length <= max) return text || "";
+    return text.slice(0, max) + "…";
+  }
+
+  function buildPrompt(concern, matches) {
+    var blocks = matches.map(function (m, i) {
+      var label = m.article.n ? "#" + m.article.n + " " : "";
+      return "[記録" + (i + 1) + "] " + label + m.article.title + "\n" + truncate(m.article.body, 1800);
+    }).join("\n\n---\n\n");
+
+    return [
+      "あなたは、製造業の管理職としての実体験エッセイ「会社の裏設定」を踏まえて、仕事の悩みにアドバイスするアシスタントです。",
+      "以下は、相談者の悩みに関連すると判断された実際の記録です。これらの記録の具体的なエピソードに必ず言及しながら、一般論だけで終わらせずに実践的なアドバイスを日本語で書いてください。",
+      "",
+      "# 参考記録",
+      blocks,
+      "",
+      "# 相談者の悩み",
+      concern,
+      "",
+      "# 出力ルール",
+      "- 最初に一言、状況への共感を添える。",
+      "- 参考記録のどの部分が今回の悩みに関係するかを具体的に触れながら説明する。",
+      "- 記録の考え方を、相談者の状況にどう当てはめられるか具体的に提案する。",
+      "- Markdownの見出し記号(#)は使わず、地の文と箇条書きで書く。",
+      "- 400〜600字程度でまとめる。",
+      "- 参考記録にない一般論に頼りすぎない。根拠がない場合は正直にそう述べる。",
+    ].join("\n");
+  }
+
+  var errorCopy = {
+    not_granted: "この回答生成にはClaudeの利用許可が必要です。許可を確認してから再度お試しください。",
+    rate_limited: "リクエストが混み合っています。少し時間をおいて再度お試しください。",
+    refused: "この内容については回答を作成できませんでした。表現を変えて試してください。",
+    empty_completion: "回答を生成できませんでした。表現を変えて再度お試しください。",
+    session_expired: "セッションの有効期限が切れました。ページを再読み込みしてください。",
+    sampling_disabled: "この環境ではAI回答生成が利用できません。上の参照記録を参考にしてください。",
+    not_declared: "AI回答生成が利用できない状態です。上の参照記録を参考にしてください。",
+    prompt_too_large: "相談内容が長すぎます。もう少し短くまとめてみてください。",
+    invalid_request: "リクエストに問題がありました。もう一度お試しください。",
+  };
+
+  function setAdviceIdle(text) {
+    adviceBodyEl.className = "advice-body idle";
+    adviceBodyEl.textContent = text;
+    adviceStatusEl.textContent = "";
+  }
+
+  function setAdviceThinking() {
+    adviceBodyEl.className = "advice-body thinking";
+    adviceBodyEl.textContent = "考えています";
+    adviceStatusEl.textContent = "生成中…";
+  }
+
+  function setAdviceText(text, done) {
+    adviceBodyEl.className = "advice-body";
+    adviceBodyEl.textContent = text;
+    adviceStatusEl.textContent = done ? "" : "生成中…";
+  }
+
+  function showNotice(message, isError) {
+    adviceNoticeEl.innerHTML = "";
+    if (!message) return;
+    var div = document.createElement("div");
+    div.className = "notice" + (isError ? " error" : "");
+    div.textContent = message;
+    adviceNoticeEl.appendChild(div);
+  }
+
+  async function runAdvice() {
+    var concern = concernEl.value.trim();
+    if (!concern) {
+      concernEl.focus();
+      return;
+    }
+
+    var matches = updateRefsFor(concern);
+    showNotice("");
+
+    if (matches.length === 0) {
+      setAdviceIdle("関連する記録が見つからなかったため、アドバイスを作成できませんでした。困りごとをもう少し具体的に書いてみてください。");
+      return;
+    }
+
+    var sample = null;
+    try {
+      sample = await window.claude.use("sample");
+    } catch (e) {
+      sample = null;
+    }
+
+    if (!sample) {
+      setAdviceIdle("AIによる要約は今は使えませんが、上の「参照した記録」に近いエピソードをピックアップしています。気になる記録はそのまま開いて読めます。");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "生成中…";
+    setAdviceThinking();
+
+    var controller = new AbortController();
+    currentController = controller;
+
+    try {
+      var result = await sample(buildPrompt(concern, matches), {
+        signal: controller.signal,
+        modelTier: "default",
+        cache: false,
+        onText: function (update) {
+          setAdviceText(update.text, false);
+        },
+      });
+      setAdviceText(result.text, true);
+      if (result.truncated) {
+        showNotice("回答が長さの上限で途中までになりました。", false);
+      }
+    } catch (e) {
+      if (e && e.code === "cancelled") {
+        setAdviceIdle("生成を中止しました。");
+      } else {
+        var msg = (e && errorCopy[e.code]) || "エラーが発生しました。もう一度お試しください。";
+        if (e && e.text) {
+          setAdviceText(e.text, true);
+          showNotice(msg, true);
+        } else {
+          setAdviceIdle(msg);
+          showNotice(msg, true);
+        }
+      }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "アドバイスを作る";
+      currentController = null;
+    }
+  }
+
+  submitBtn.addEventListener("click", runAdvice);
+
+  concernEl.addEventListener("input", function () {
+    counterEl.textContent = concernEl.value.length + " / 600";
+  });
+
+  concernEl.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      runAdvice();
+    }
+  });
+
+  var exampleConcern = "部下から突然、辞めたいと言われた。引き止めるべきか、どう向き合えばいいか分からない。";
+  concernEl.value = exampleConcern;
+  counterEl.textContent = exampleConcern.length + " / 600";
+  updateRefsFor(exampleConcern);
+})();
+</script>
+
+</body></html>
