@@ -260,10 +260,33 @@
     color: var(--ink-faint);
   }
 
+  .ref-excerpt {
+    margin: 4px 0 0;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    line-height: 1.6;
+  }
+
   .empty-refs {
     color: var(--ink-faint);
     font-size: 0.85rem;
   }
+
+  .more-btn {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--ink-muted);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .more-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
 
   footer {
     margin-top: 30px;
@@ -354,6 +377,7 @@
     <section class="card refs">
       <p class="section-title">関連する記録</p>
       <ul class="ref-list" id="refList"></ul>
+      <button class="more-btn" id="moreBtn" type="button" hidden>もっと見る</button>
       <div class="note-cta">
         <p>「会社の裏設定」は、noteで随時更新中です。</p>
         <a href="https://note.com/kotolog_note" target="_blank" rel="noopener noreferrer">note.comで全記事を読む</a>
@@ -406,6 +430,9 @@
     };
   });
 
+  var MAX_RESULTS = 12;
+  var PAGE_SIZE = 4;
+
   function search(query, topK) {
     var qGrams = toBigrams(query);
     if (qGrams.size === 0) return [];
@@ -419,24 +446,68 @@
     return scored.slice(0, topK);
   }
 
+  function truncate(text, max) {
+    if (!text || text.length <= max) return text || "";
+    return text.slice(0, max) + "…";
+  }
+
+  function splitSentences(text) {
+    return String(text || "")
+      .split(/(?<=[。!?！？\n])/)
+      .map(function (s) { return s.replace(/\s+/g, " ").trim(); })
+      .filter(function (s) { return s.length > 0; });
+  }
+
+  function pickExcerpt(article, queryGrams) {
+    var sentences = splitSentences(article.body);
+    // 短すぎる文はビグラム比較でスコアが不当に高く出やすいので除外する
+    var candidates = sentences.filter(function (s) { return s.length >= 15; });
+    if (candidates.length === 0) candidates = sentences;
+
+    var best = "";
+    var bestScore = 0;
+    candidates.forEach(function (s) {
+      var score = overlapScore(queryGrams, toBigrams(s));
+      if (score > bestScore) {
+        bestScore = score;
+        best = s;
+      }
+    });
+    return truncate(best || sentences[0] || "", 70);
+  }
+
   var concernEl = document.getElementById("concern");
   var counterEl = document.getElementById("counter");
   var refListEl = document.getElementById("refList");
+  var moreBtn = document.getElementById("moreBtn");
 
-  function renderRefs(matches, query) {
+  var lastMatches = [];
+  var lastQuery = "";
+  var visibleCount = PAGE_SIZE;
+
+  function renderRefs() {
+    var queryGrams = toBigrams(lastQuery);
     refListEl.innerHTML = "";
-    if (matches.length === 0) {
-      var message = query
+
+    if (lastMatches.length === 0) {
+      var message = lastQuery
         ? "関連する記録が見つかりませんでした。表現を変えてみてください。"
         : "困りごとを入力すると、ここに関連する記録が表示されます。";
-      var li = document.createElement("li");
-      li.innerHTML = '<span></span><span class="empty-refs"></span>';
-      li.querySelector(".empty-refs").textContent = message;
-      refListEl.appendChild(li);
+      var emptyLi = document.createElement("li");
+      var emptySpan = document.createElement("span");
+      emptySpan.className = "empty-refs";
+      emptySpan.textContent = message;
+      emptyLi.appendChild(document.createElement("span"));
+      emptyLi.appendChild(emptySpan);
+      refListEl.appendChild(emptyLi);
+      moreBtn.hidden = true;
       return;
     }
-    var maxScore = matches[0].score || 1;
-    matches.forEach(function (m, i) {
+
+    var maxScore = lastMatches[0].score || 1;
+    var shown = lastMatches.slice(0, visibleCount);
+
+    shown.forEach(function (m, i) {
       var li = document.createElement("li");
       var num = document.createElement("span");
       num.className = "ref-num";
@@ -459,6 +530,14 @@
         body.appendChild(badge);
       }
 
+      var excerptText = pickExcerpt(m.article, queryGrams);
+      if (excerptText) {
+        var excerpt = document.createElement("p");
+        excerpt.className = "ref-excerpt";
+        excerpt.textContent = excerptText;
+        body.appendChild(excerpt);
+      }
+
       var meta = document.createElement("div");
       meta.className = "ref-meta";
       var bar = document.createElement("div");
@@ -479,10 +558,20 @@
       li.appendChild(body);
       refListEl.appendChild(li);
     });
+
+    moreBtn.hidden = visibleCount >= lastMatches.length;
   }
 
+  moreBtn.addEventListener("click", function () {
+    visibleCount += PAGE_SIZE;
+    renderRefs();
+  });
+
   function updateRefsFor(query) {
-    renderRefs(search(query, 4), query);
+    lastQuery = query;
+    lastMatches = search(query, MAX_RESULTS);
+    visibleCount = PAGE_SIZE;
+    renderRefs();
   }
 
   var debounceTimer = null;
@@ -496,7 +585,7 @@
 
   concernEl.addEventListener("input", scheduleSearch);
 
-  renderRefs([], "");
+  renderRefs();
 })();
 </script>
 
