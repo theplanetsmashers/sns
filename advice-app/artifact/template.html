@@ -164,52 +164,10 @@
     box-shadow: 0 0 0 3px var(--accent-soft);
   }
 
-  .slip-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 12px;
-  }
-
   .hint {
     font-size: 0.78rem;
     color: var(--ink-faint);
-  }
-
-  button.mic {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    border: 1px solid var(--border-strong);
-    background: var(--surface-2);
-    color: var(--ink-muted);
-    cursor: pointer;
-    padding: 0;
-  }
-
-  button.mic:hover { border-color: var(--accent); color: var(--accent-strong); }
-
-  button.mic svg { width: 18px; height: 18px; }
-
-  button.mic.listening {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff8ee;
-    animation: mic-pulse 1.1s ease-in-out infinite;
-  }
-
-  @keyframes mic-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 var(--accent-soft); }
-    50% { box-shadow: 0 0 0 8px var(--accent-soft); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    button.mic.listening { animation: none; }
+    margin-top: 12px;
   }
 
   .section-title {
@@ -390,17 +348,7 @@
         <span class="counter" id="counter">0 / 600</span>
       </div>
       <textarea id="concern" maxlength="600" placeholder="例）部下から突然、辞めたいと言われた。引き止めるべきか、どう向き合えばいいか分からない。"></textarea>
-      <div class="slip-footer">
-        <p class="hint" id="hint">入力すると、関連する記録が自動で下に並びます。</p>
-        <button class="mic" id="micBtn" type="button" hidden aria-label="音声入力">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-            <path d="M19 10v1a7 7 0 0 1-14 0v-1"></path>
-            <line x1="12" y1="18" x2="12" y2="22"></line>
-            <line x1="8" y1="22" x2="16" y2="22"></line>
-          </svg>
-        </button>
-      </div>
+      <p class="hint">入力すると、関連する記録が自動で下に並びます。キーボードのマイクボタンで音声入力もできます。</p>
     </section>
 
     <section class="card refs">
@@ -543,94 +491,6 @@
   }
 
   concernEl.addEventListener("input", scheduleSearch);
-
-  // 音声入力（対応ブラウザのみ。Web Speech APIはClaudeの許可とは無関係で、
-  // ブラウザ標準のマイク許可ダイアログが出るだけ）
-  var micBtn = document.getElementById("micBtn");
-  var hintEl = document.getElementById("hint");
-  var defaultHint = hintEl.textContent;
-  var SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  if (SpeechRecognitionCtor) {
-    micBtn.hidden = false;
-
-    var recognition = new SpeechRecognitionCtor();
-    recognition.lang = "ja-JP";
-    recognition.continuous = true;
-    recognition.interimResults = true;
-
-    var listening = false;
-    var baseText = "";
-    var hintResetTimer = null;
-    var gotResult = false;
-
-    var errorMessages = {
-      "not-allowed": "マイクの使用が許可されていません。ブラウザの設定でマイクへのアクセスを許可してください。",
-      "service-not-allowed": "この端末・ブラウザでは音声入力サービスが利用できませんでした。iOSの場合はキーボードのマイクボタンをお試しください。",
-      "audio-capture": "マイクを利用できませんでした。他のアプリがマイクを使用していないか確認してください。",
-      "network": "音声認識サービスに接続できませんでした。通信環境を確認してもう一度お試しください。",
-      "no-speech": "音声を検知できませんでした。もう一度お試しください。",
-    };
-
-    function showTemporaryHint(text) {
-      clearTimeout(hintResetTimer);
-      hintEl.textContent = text;
-      hintResetTimer = setTimeout(function () {
-        hintEl.textContent = defaultHint;
-      }, 5000);
-    }
-
-    function setListening(next) {
-      listening = next;
-      micBtn.classList.toggle("listening", listening);
-      micBtn.setAttribute("aria-label", listening ? "音声入力を停止" : "音声入力");
-      if (listening) {
-        clearTimeout(hintResetTimer);
-        hintEl.textContent = "聞き取り中… もう一度押すと止まります";
-      } else {
-        hintEl.textContent = defaultHint;
-      }
-    }
-
-    recognition.addEventListener("result", function (e) {
-      gotResult = true;
-      var transcript = "";
-      for (var i = 0; i < e.results.length; i++) {
-        transcript += e.results[i][0].transcript;
-      }
-      concernEl.value = (baseText ? baseText + " " : "") + transcript;
-      scheduleSearch();
-    });
-
-    recognition.addEventListener("end", function () {
-      setListening(false);
-      if (!gotResult) {
-        showTemporaryHint("音声入力が反応しませんでした。iOSの場合はキーボードのマイクボタンをお試しください。");
-      }
-    });
-
-    recognition.addEventListener("error", function (e) {
-      setListening(false);
-      var msg = errorMessages[e.error] || ("音声入力でエラーが発生しました（" + e.error + "）。");
-      showTemporaryHint(msg);
-    });
-
-    micBtn.addEventListener("click", function () {
-      if (listening) {
-        recognition.stop();
-        return;
-      }
-      baseText = concernEl.value.trim();
-      gotResult = false;
-      try {
-        recognition.start();
-        setListening(true);
-      } catch (e) {
-        setListening(false);
-        showTemporaryHint("音声入力を開始できませんでした。");
-      }
-    });
-  }
 
   var exampleConcern = "部下から突然、辞めたいと言われた。引き止めるべきか、どう向き合えばいいか分からない。";
   concernEl.value = exampleConcern;
