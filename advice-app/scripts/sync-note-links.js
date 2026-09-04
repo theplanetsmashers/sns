@@ -8,8 +8,9 @@
 // 既に note.com の URL が入っている記事は URL の照合をスキップする（冪等）。
 // Google Drive の URL のままの記事だけを対象に、新しく公開されたものがあれば
 // note.com の URL に差し替える。まだ公開されていない記事は Drive の URL のまま
-// 変更しない。note.com側の価格（price）は毎回上書きし、無料/有料記事の記事を
-// 常に最新化する（notePrice フィールド）。
+// 変更しない。note.com側の価格（price）と記事番号（本文中の「会社の裏設定 #NNN」の
+// #NNN）は毎回上書きする（notePrice, noteNumber フィールド）。note.comの番号は
+// Google Drive側のarticleNumberとズレることがあるため、表示にはnoteNumberを使う。
 
 const fs = require('fs');
 const path = require('path');
@@ -33,6 +34,13 @@ function toBigrams(text) {
   const grams = new Set();
   for (let i = 0; i < text.length - 1; i++) grams.add(text.slice(i, i + 2));
   return grams;
+}
+
+const NOTE_NUMBER_RE = /#0*(\d+)/;
+
+function extractNoteNumber(name) {
+  const m = NOTE_NUMBER_RE.exec(String(name || ''));
+  return m ? Number(m[1]) : null;
 }
 
 function bigramScore(a, b) {
@@ -104,7 +112,9 @@ async function main() {
   const noteArticles = await fetchAllNoteArticles(NOTE_USERNAME);
   console.log(`fetched ${noteArticles.length} published note.com articles`);
 
-  const priceByUrl = new Map(noteArticles.map((a) => [a.url, a.price]));
+  const metaByUrl = new Map(
+    noteArticles.map((a) => [a.url, { price: a.price, number: extractNoteNumber(a.name) }])
+  );
 
   const notePool = noteArticles
     .filter((a) => !usedNoteUrls.has(a.url))
@@ -121,6 +131,7 @@ async function main() {
       const match = notePool[idx];
       article.url = match.url;
       article.notePrice = match.price;
+      article.noteNumber = extractNoteNumber(match.name);
       notePool.splice(idx, 1); // claim it, don't let another drive article reuse it
       updated++;
       newlyMatched.push({
@@ -132,11 +143,12 @@ async function main() {
       continue;
     }
 
-    // already on note.com: keep the price fresh (it can change after publish)
-    if (article.url && article.url.includes('note.com/') && priceByUrl.has(article.url)) {
-      const price = priceByUrl.get(article.url);
-      if (article.notePrice !== price) {
-        article.notePrice = price;
+    // already on note.com: keep price and article number fresh
+    if (article.url && article.url.includes('note.com/') && metaByUrl.has(article.url)) {
+      const meta = metaByUrl.get(article.url);
+      if (article.notePrice !== meta.price || article.noteNumber !== meta.number) {
+        article.notePrice = meta.price;
+        article.noteNumber = meta.number;
         updated++;
       }
     }

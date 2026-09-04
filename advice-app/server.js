@@ -96,7 +96,8 @@ async function handleAdvice(req, res) {
 
   const references = matches.map((m) => ({
     title: m.article.title,
-    articleNumber: m.article.articleNumber,
+    // note.com側の記事番号を表示に使う（Google Drive側のarticleNumberとはズレることがある）
+    articleNumber: m.article.noteNumber,
     url: m.article.url,
     paid: Boolean(m.article.notePrice) && m.article.notePrice > 0,
     score: Number(m.score.toFixed(3)),

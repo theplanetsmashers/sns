@@ -20,7 +20,9 @@ function main() {
     .map((a) => ({
       id: a.id,
       title: a.title,
-      n: a.articleNumber,
+      // note.com側の記事番号(本文中の「会社の裏設定 #NNN」)を表示に使う。
+      // Google Drive側のarticleNumberは下書き時点の番号で、公開時にズレることがある。
+      n: a.noteNumber,
       url: a.url,
       body: a.body,
       paid: Boolean(a.notePrice) && a.notePrice > 0,
