@@ -188,4 +188,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { aggregate, loadSessions };
+module.exports = { aggregate, loadSessions, renderHtml };

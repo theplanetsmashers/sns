@@ -10,6 +10,7 @@
     "template": "node generate-template.js",
     "dashboard": "node generate-dashboard.js",
     "slack-bot": "node slack-bot/server.js",
+    "web": "node web/server.js",
     "test": "node --test"
   },
   "engines": {

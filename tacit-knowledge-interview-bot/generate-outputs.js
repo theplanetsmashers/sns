@@ -170,12 +170,10 @@ async function uploadToDriveIfConfigured(sessionPath, session, outDir) {
   console.log("Google Driveへのアップロードが完了しました。");
 }
 
-async function main() {
-  const sessionArg = process.argv[2];
-  if (!sessionArg) {
-    throw new Error("使い方: node generate-outputs.js <セッションJSONのパス>");
-  }
-  const sessionPath = path.resolve(sessionArg);
+// セッションJSONから3種類のアウトプットを生成する中核処理。CLI(main())と
+// web/server.js の両方から呼ばれるため、argv解析やCLI向けの案内メッセージ出力とは
+// 分離してある。
+async function generateOutputsForSession(sessionPath, { dryRun: forceDryRun, forceReal = false } = {}) {
   if (!fs.existsSync(sessionPath)) {
     throw new Error(`セッションファイルが見つかりません: ${sessionPath}`);
   }
@@ -184,15 +182,10 @@ async function main() {
   const consent = session.consent || { internal: false, public: false };
 
   if (!consent.internal) {
-    console.log(
-      "このセッションは社内利用への同意が記録されていないため、アウトプット生成を中止します。"
-    );
-    return;
+    return { skipped: true, reason: "consent-missing" };
   }
 
-  const cliArgs = process.argv.slice(3);
-  const forceReal = cliArgs.includes("--real");
-  const dryRun = cliArgs.includes("--dry-run") || (!!session.dry_run && !forceReal);
+  const dryRun = forceDryRun !== undefined ? forceDryRun : !!session.dry_run && !forceReal;
 
   if (dryRun) {
     console.log("🔧 ドライランモード: Claude APIを呼ばず、構造だけのプレースホルダーを生成します(無料)。");
@@ -246,12 +239,37 @@ async function main() {
     console.log("社外公開への同意がないため、note/ブログ記事の生成はスキップします。");
   }
 
-  console.log(`\n生成完了: ${outDir}`);
-  for (const g of generated) console.log(`  - ${g}`);
-
   await notifyDiscord(session, generated);
   await notifySlack(session, generated);
   await uploadToDriveIfConfigured(sessionPath, session, outDir);
+
+  return { outDir, generated };
+}
+
+async function main() {
+  const sessionArg = process.argv[2];
+  if (!sessionArg) {
+    throw new Error("使い方: node generate-outputs.js <セッションJSONのパス>");
+  }
+  const sessionPath = path.resolve(sessionArg);
+  const cliArgs = process.argv.slice(3);
+  const forceReal = cliArgs.includes("--real");
+  const dryRunFlag = cliArgs.includes("--dry-run");
+
+  const result = await generateOutputsForSession(sessionPath, {
+    dryRun: dryRunFlag ? true : undefined,
+    forceReal,
+  });
+
+  if (result.skipped) {
+    console.log(
+      "このセッションは社内利用への同意が記録されていないため、アウトプット生成を中止します。"
+    );
+    return;
+  }
+
+  console.log(`\n生成完了: ${result.outDir}`);
+  for (const g of result.generated) console.log(`  - ${g}`);
 }
 
 if (require.main === module) {
@@ -261,4 +279,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { buildTranscript, buildOfflinePreview };
+module.exports = { buildTranscript, buildOfflinePreview, generateOutputsForSession };

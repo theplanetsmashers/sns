@@ -8,7 +8,7 @@
 
 の3種類を自動生成するMVPです。`threads-post-generator` と同じく、Node.jsからClaude APIを直接呼び出すシンプルな構成で、依存パッケージなし(Node.js 18+ 標準の `fetch` / `crypto` / `http` のみ)で動きます。
 
-CLI(ターミナル)とSlack Botの両方から同じインタビューを実施でき、対話ロジックは `lib/interview-engine.js` に共通化されています。
+CLI(ターミナル)・Slack Bot・ブラウザ(Webアプリ)のいずれからも同じインタビューを実施でき、対話ロジックは `lib/interview-engine.js` に共通化されています。
 
 ## セットアップ
 
@@ -19,7 +19,8 @@ CLI(ターミナル)とSlack Botの両方から同じインタビューを実施
 2. (任意)生成完了をDiscord/Slackに通知したい場合は `DISCORD_WEBHOOK_URL` / `SLACK_WEBHOOK_URL` も設定する
 3. (任意)Google Driveへの自動アップロードを使う場合は下記「Google Drive連携」を参照
 4. (任意)Slack Bot経由でインタビューしたい場合は下記「Slack Bot」を参照
-5. このディレクトリで `npm install` は不要
+5. (任意)ブラウザから使いたい場合は下記「Webアプリ」を参照
+6. このディレクトリで `npm install` は不要
 
 ## まずは無料で試す(ドライランモード)
 
@@ -150,6 +151,25 @@ npm run dashboard
 
 Slackでの流れ: `/interview` (または `/interview <テンプレート名>`) でBotとのDMにインタビューが開始され、以降はDMで質問に答えていくだけでCLIと同じ「深掘り判定→要約→濃さ評価」が行われます。`/interview cancel` で中断できます。
 
+## Webアプリ(任意)
+
+ターミナル・Slackの代わりに、ブラウザからインタビュー実施→アウトプット生成→閲覧までを一通り行えます。ロジックはCLI/Slack Botと共通(`lib/interview-engine.js`)で、依存パッケージなし(Node標準の`http`/`crypto`/`fs`のみ)です。
+
+```
+npm run web
+```
+
+デフォルトで `http://localhost:3002` が起動します(`WEB_PORT` 環境変数でポート変更可)。
+
+- **アカウントは自己登録制**です。`/register` から誰でも登録できますが、**最初に登録したアカウントが自動的に管理者(admin)になります**。社外にも公開する場合は、サービス起動後まず自分がアクセスして最初の管理者アカウントを作成してください。
+- 一般ユーザー(role: user)は自分が作成したインタビューのみ閲覧・回答・アウトプット生成ができます。
+- 管理者(role: admin)は全ユーザーのインタビューを閲覧でき、`/dashboard`(組織横断の暗黙知マップ)にもアクセスできます。
+- パスワードはNode標準の`crypto.scrypt`でハッシュ化して`web/data/users.json`に保存します(gitignore対象)。ログインセッションはCookie(`HttpOnly`・`SameSite=Lax`、HTTPS時は`Secure`)で管理し、フォーム送信はdouble-submit cookie方式のCSRFトークンで保護されます。
+- ログイン試行にはレート制限(15分間に8回まで)がかかります。
+- 新規インタビュー作成時に「ドライランで実行する」を選べます(Claude APIを呼ばず無料で流れを試せる)。実際の文章化を行うにはサーバーの環境変数に `ANTHROPIC_API_KEY` を設定してください。
+
+インターネットに公開する場合は、TLS終端(リバースプロキシ等でのHTTPS化)を別途用意することを推奨します。
+
 ## ファイル構成
 
 - `lib/interview-engine.js` — 対話ロジックの中核(テンプレート読み込み・Claude呼び出し・回答分析)。CLIとSlack Botで共有
@@ -161,6 +181,7 @@ Slackでの流れ: `/interview` (または `/interview <テンプレート名>`)
 - `generate-dashboard.js` — 全セッション横断の暗黙知マップHTMLダッシュボードを生成
 - `list-sessions.js` — セッション一覧・進捗確認用ユーティリティ
 - `slack-bot/` — Slack Bot本体(`server.js` = HTTPサーバー, `conversation.js` = 会話状態機械, `slack-client.js` = Slack Web APIラッパー)
+- `web/` — ブラウザ向けWebアプリ(`server.js` = HTTPサーバー・ルーティング, `lib/auth.js` = 登録・ログイン・セッション・CSRF, `lib/render.js` = Markdown表示・共通レイアウト, `data/` = ユーザー/セッション情報の保存先・gitignore対象)
 - `examples/sample-answers.json` — 非対話モード用の回答サンプル(動作確認・自動テストにも利用)
 - `sessions/` — インタビュー記録(gitignore対象。個人情報・社外秘の可能性があるためコミットしない)
 - `outputs/` — 生成されたマニュアル/ケース/記事/ダッシュボード(同上、gitignore対象)
