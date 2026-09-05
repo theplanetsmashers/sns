@@ -153,7 +153,9 @@ async function main() {
   }
 
   if (!ANTHROPIC_API_KEY) {
-    throw new Error("ANTHROPIC_API_KEY が設定されていません。");
+    console.log(
+      "(注意: ANTHROPIC_API_KEY が環境変数に見つかりません。プロキシ経由の認証を使う場合はそのまま進みます)"
+    );
   }
 
   if (!fs.existsSync(engine.SESSIONS_DIR)) fs.mkdirSync(engine.SESSIONS_DIR, { recursive: true });

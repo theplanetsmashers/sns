@@ -46,16 +46,18 @@ function slugify(text) {
 }
 
 async function callClaude(prompt, maxTokens = 1000, apiKey = process.env.ANTHROPIC_API_KEY) {
-  if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY が設定されていません。");
-  }
+  // ANTHROPIC_API_KEYが環境変数として渡されていない場合でも、外部プロキシ/ゲートウェイが
+  // api.anthropic.com宛てのリクエストにx-api-keyを自動付与する運用があり得るため、
+  // ここでは事前に弾かず、キーが無いままリクエストしてみる(失敗すればAPI側のエラーで分かる)。
+  const headers = {
+    "Content-Type": "application/json",
+    "anthropic-version": "2023-06-01",
+  };
+  if (apiKey) headers["x-api-key"] = apiKey;
+
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-    },
+    headers,
     body: JSON.stringify({
       model: CLAUDE_MODEL,
       max_tokens: maxTokens,
