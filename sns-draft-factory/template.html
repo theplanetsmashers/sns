@@ -1,0 +1,1088 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>SNS下書き工場</title>
+<style>
+  :root {
+    --bg: #F1F2ED;
+    --surface: #FFFFFF;
+    --surface-2: #E8EAE1;
+    --ink: #1E2A22;
+    --ink-soft: #5B6B5F;
+    --line: #DCE0D5;
+    --accent: #B87A16;
+    --accent-ink: #FFFFFF;
+    --threads: #A66D14;
+    --threads-bg: #FBF1DE;
+    --x: #206863;
+    --x-bg: #E7F2F0;
+    --danger: #A5372F;
+    --danger-bg: #FBEAE7;
+    --done-bg: #E6F1E4;
+    --font-display: 'Zen Old Mincho', serif;
+    --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14171A;
+      --surface: #1D2225;
+      --surface-2: #242A2D;
+      --ink: #ECEEE7;
+      --ink-soft: #9BA79E;
+      --line: #2B3033;
+      --accent: #E3A83D;
+      --accent-ink: #241800;
+      --threads: #E3A83D;
+      --threads-bg: #2C2313;
+      --x: #4FAFA6;
+      --x-bg: #122725;
+      --danger: #E28E86;
+      --danger-bg: #2C1917;
+      --done-bg: #17281B;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #14171A;
+    --surface: #1D2225;
+    --surface-2: #242A2D;
+    --ink: #ECEEE7;
+    --ink-soft: #9BA79E;
+    --line: #2B3033;
+    --accent: #E3A83D;
+    --accent-ink: #241800;
+    --threads: #E3A83D;
+    --threads-bg: #2C2313;
+    --x: #4FAFA6;
+    --x-bg: #122725;
+    --danger: #E28E86;
+    --danger-bg: #2C1917;
+    --done-bg: #17281B;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 56px;
+  }
+
+  header.hero { margin-bottom: 20px; }
+
+  header.hero .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+
+  header.hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(26px, 6vw, 34px);
+    margin: 6px 0 8px;
+    text-wrap: balance;
+  }
+
+  header.hero p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  button:focus-visible,
+  textarea:focus-visible,
+  input:focus-visible,
+  details summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ---- history table ---- */
+
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .history-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr 1.1fr 0.9fr;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+
+  .head-cell {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: var(--surface-2);
+    padding: 8px 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .head-cell.corner-tl { border-top-left-radius: 12px; }
+  .head-cell.corner-tr { border-top-right-radius: 12px; }
+
+  .cell {
+    background: var(--surface);
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    min-width: 0;
+  }
+
+  .cell.cell-last { border-right: none; }
+  .cell.row-complete { background: var(--done-bg); }
+
+  .row-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+    min-height: 14px;
+    font-size: 9px;
+  }
+
+  .row-date {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+  }
+
+  .row-badge {
+    border-radius: 999px;
+    padding: 1px 5px;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .row-badge.latest { color: var(--accent); border-color: var(--accent); }
+  .row-badge.next { color: var(--ink-soft); border-style: dashed; }
+  .row-badge.example { color: var(--ink-soft); }
+
+  .row-delete {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 2px;
+    font-size: 9px;
+    white-space: nowrap;
+  }
+
+  .row-delete.confirm {
+    color: var(--danger);
+    font-weight: 700;
+  }
+
+  .excerpt {
+    font-size: 13px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  button.copy-btn {
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    padding: 2px 4px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 10px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  button.copy-btn.threads { color: var(--threads); }
+  button.copy-btn.x { color: var(--x); }
+
+  .placeholder-cell {
+    border: 1.5px dashed var(--line);
+    border-radius: 8px;
+    padding: 8px 4px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+  }
+
+  .dot-pulse {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--ink-soft);
+    animation: pulse 1s ease-in-out infinite;
+    flex: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot-pulse { animation: none; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+  }
+
+  /* checklist column */
+
+  .checklist { display: flex; flex-direction: column; gap: 3px; }
+
+  .checklist label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  .checklist input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex: none;
+  }
+
+  .checklist label.done { color: var(--ink); font-weight: 700; }
+
+  /* ---- compose card (below the table) ---- */
+
+  .compose-card {
+    margin-top: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .compose-card .row-meta { font-size: 11px; margin-bottom: 10px; }
+
+  textarea#article {
+    width: 100%;
+    min-height: 150px;
+    resize: vertical;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.75;
+  }
+
+  .compose-meta {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+  }
+
+  .char-count {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+  button.primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .status {
+    display: block;
+    font-size: 12px;
+    margin-top: 8px;
+    min-height: 16px;
+  }
+
+  .status.status-error { color: var(--danger); }
+  .status.status-loading { color: var(--ink-soft); }
+
+  /* ---- below table ---- */
+
+  .reminder {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  details.style-editor {
+    margin-top: 22px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 4px 20px;
+    background: var(--surface);
+  }
+
+  details.style-editor summary {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 14px 0;
+    list-style: none;
+  }
+
+  details.style-editor summary::-webkit-details-marker { display: none; }
+  details.style-editor summary::before { content: "▸ "; color: var(--ink-soft); }
+  details.style-editor[open] summary::before { content: "▾ "; }
+
+  .style-editor-body { padding-bottom: 18px; }
+
+  .style-editor-body p.hint {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 0;
+  }
+
+  .style-field { margin-bottom: 14px; }
+
+  .style-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  textarea.style-example {
+    width: 100%;
+    min-height: 100px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .style-editor-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  button.secondary {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  button.link-btn {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+  }
+
+  footer.app-footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">note / Threads / X</div>
+    <h1>SNS下書き工場</h1>
+    <p>note記事を貼って生成すると、note・Threads・Xが横並びの表に積み上がります。右端のチェックで、どこまで投稿し終えたか一目で分かります。</p>
+  </header>
+
+  <div class="table-wrap">
+    <div class="history-grid" id="grid"></div>
+  </div>
+
+  <div class="compose-card">
+    <div class="row-meta"><span class="row-badge next">次回</span></div>
+    <textarea id="article" maxlength="20000" placeholder="書き終えたnote記事の本文をここに貼り付け"></textarea>
+    <div class="compose-meta"><span class="char-count" id="articleCount">0 / 20000字</span></div>
+    <button type="button" class="primary" id="generateBtn">生成する</button>
+    <span class="status" id="statusEl" role="status" aria-live="polite"></span>
+  </div>
+
+  <p class="reminder">note・Threads・Xへの実際の投稿は、それぞれ手動で行ってください。履歴・チェックはこのアプリのデータとして保存され、時間が空いても消えません。</p>
+
+  <details class="style-editor" id="styleEditor">
+    <summary>文体サンプルを編集する</summary>
+    <div class="style-editor-body">
+      <p class="hint">生成されるThreads/X投稿は、ここに登録した例文の文体・リズム・長さに合わせて作られます。自分のアカウントの実際の投稿に差し替えると、より本人らしい文章になります。</p>
+      <div class="style-field">
+        <label for="threadsExample">Threads参考例</label>
+        <textarea class="style-example" id="threadsExample"></textarea>
+      </div>
+      <div class="style-field">
+        <label for="xExample">X参考例</label>
+        <textarea class="style-example" id="xExample"></textarea>
+      </div>
+      <div class="style-editor-actions">
+        <button type="button" class="secondary" id="saveStyleBtn">保存</button>
+        <button type="button" class="secondary" id="resetStyleBtn">デフォルトに戻す</button>
+      </div>
+    </div>
+  </details>
+
+  <footer class="app-footer">
+    <button type="button" class="link-btn" id="clearHistoryBtn">履歴をすべて削除</button>
+  </footer>
+</div>
+
+<span class="sr-only" id="liveRegion" role="status" aria-live="polite"></span>
+
+<script>
+(function () {
+  "use strict";
+
+  var THREADS_DEFAULT_EXAMPLE = "正直、自分でも驚いています。プログラム未経験の私が、ClaudeというAIとチャットするだけで「悩みを書くと近い記事を自動で探してくれるツール」を作ってしまいました。\n\nコードは一切書いていません。「こういうのが欲しい」と伝え続けただけです。\n\n会社の裏設定161本から、あなたの状況に近いエピソードが見つかります。試しに一言書いてみてください。";
+  var X_DEFAULT_EXAMPLE = "「頑張ってるアピール」が上手い人ほど、実際は一番何もしてない説。\n発言は多い、会議では目立つ、報告は丁寧。\nでも成果物を見ると、一番動いてるのは黙って作業してる人だったりする。\nアピール力と実務力、比例しないこと多すぎる";
+  var EXAMPLE_ARTICLE = "なぜ、あの人ばかり仕事を頼まれるのか。信頼は能力だけでなく、報告・相談・期限遵守で作られる。ただし何でも抱え込まず、自分を守る断り方も必要——という「会社の裏設定」シリーズの記事。";
+
+  var STORAGE_THREADS = "sdf_threads_example_v1";
+  var STORAGE_X = "sdf_x_example_v1";
+  var STORAGE_HISTORY = "sdf_history_v3";
+
+  function safeGet(key, fallback) {
+    try {
+      var v = localStorage.getItem(key);
+      return v === null ? fallback : v;
+    } catch (e) { return fallback; }
+  }
+  function safeSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) { /* ignore */ }
+  }
+
+  function getExamples() {
+    return {
+      threads: safeGet(STORAGE_THREADS, THREADS_DEFAULT_EXAMPLE),
+      x: safeGet(STORAGE_X, X_DEFAULT_EXAMPLE)
+    };
+  }
+
+  function loadHistory() {
+    var raw = safeGet(STORAGE_HISTORY, null);
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) { /* fall through to seed */ }
+    }
+    return [{
+      id: "example",
+      example: true,
+      createdAt: Date.now(),
+      articleText: EXAMPLE_ARTICLE,
+      threadsText: THREADS_DEFAULT_EXAMPLE,
+      xText: X_DEFAULT_EXAMPLE,
+      doneNote: false,
+      doneThreads: false,
+      doneX: false
+    }];
+  }
+
+  var history = loadHistory();
+  var draftLoading = false;
+  var sampleFn = null;
+  var db = null;
+  var useDb = false;
+  var pendingDeleteId = null;
+  var pendingDeleteTimer = null;
+  var pendingClearArmed = false;
+  var pendingClearTimer = null;
+
+  // localStorage is only a fast local cache now; db (when available) is the
+  // durable copy, since browsers can and do evict localStorage over time.
+  function saveHistoryLocal() {
+    safeSet(STORAGE_HISTORY, JSON.stringify(history));
+  }
+
+  function entryToDoc(e) {
+    return {
+      createdAt: e.createdAt,
+      articleText: e.articleText,
+      threadsText: e.threadsText,
+      xText: e.xText,
+      doneNote: !!e.doneNote,
+      doneThreads: !!e.doneThreads,
+      doneX: !!e.doneX
+    };
+  }
+
+  function persistCreate(entry) {
+    saveHistoryLocal();
+    if (useDb) db.collection("entries").doc(entry.id).set(entryToDoc(entry)).catch(function () {});
+  }
+
+  function persistPatch(id, patch) {
+    saveHistoryLocal();
+    if (useDb) db.doc("entries/" + id).update(patch).catch(function () {});
+  }
+
+  function persistDelete(id) {
+    saveHistoryLocal();
+    if (useDb) db.doc("entries/" + id).delete().catch(function () {});
+  }
+
+  function addEntry(entry) {
+    history = history.filter(function (e) { return !e.example; });
+    history.push(entry);
+    persistCreate(entry);
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function truncate10(text) {
+    var t = text.trim().replace(/\s+/g, " ");
+    return t.length > 10 ? t.slice(0, 10) + "…" : t;
+  }
+
+  function formatDate(ts) {
+    try {
+      return new Intl.DateTimeFormat("ja-JP", { month: "numeric", day: "numeric" }).format(new Date(ts));
+    } catch (e) { return ""; }
+  }
+
+  function announce(msg) {
+    var el = document.getElementById("liveRegion");
+    el.textContent = "";
+    window.setTimeout(function () { el.textContent = msg; }, 30);
+  }
+
+  // ---- rendering ----
+
+  var gridEl = document.getElementById("grid");
+
+  function buildStaticShell() {
+    gridEl.innerHTML =
+      '<div class="head-cell corner-tl">note</div>' +
+      '<div class="head-cell">Threads</div>' +
+      '<div class="head-cell">X</div>' +
+      '<div class="head-cell corner-tr">投稿状況</div>' +
+      '<div id="historyRows" style="display:contents"></div>';
+  }
+
+  function checklistCell(e, complete) {
+    var items = [
+      ["doneNote", "note"],
+      ["doneThreads", "Threads"],
+      ["doneX", "X"]
+    ];
+    var html = '<div class="checklist">';
+    for (var i = 0; i < items.length; i++) {
+      var field = items[i][0];
+      var label = items[i][1];
+      var checked = !!e[field];
+      html +=
+        '<label class="' + (checked ? "done" : "") + '">' +
+          '<input type="checkbox" data-action="check" data-id="' + e.id + '" data-field="' + field + '"' + (checked ? " checked" : "") + '>' +
+          label +
+        '</label>';
+    }
+    html += '</div>';
+    return '<div class="cell cell-last' + (complete ? " row-complete" : "") + '">' + html + '</div>';
+  }
+
+  function renderRow(e, isLatest) {
+    var complete = !e.example && e.doneNote && e.doneThreads && e.doneX;
+    var completeClass = complete ? " row-complete" : "";
+
+    var badges = "";
+    if (e.example) badges += '<span class="row-badge example">例</span>';
+    else if (isLatest) badges += '<span class="row-badge latest">最新</span>';
+    var dateLabel = e.example ? "" : '<span class="row-date">' + formatDate(e.createdAt) + "</span>";
+    var deleting = pendingDeleteId === e.id;
+    var deleteBtn = e.example ? "" : '<button type="button" class="row-delete' + (deleting ? " confirm" : "") + '" data-action="delete" data-id="' + e.id + '">' + (deleting ? "本当に削除?" : "削除") + '</button>';
+
+    return (
+      '<div class="cell' + completeClass + '">' +
+        '<div class="row-meta">' + dateLabel + badges + deleteBtn + '</div>' +
+        '<p class="excerpt" title="' + escapeHtml(e.articleText.trim()) + '">' + escapeHtml(truncate10(e.articleText)) + '</p>' +
+      '</div>' +
+      '<div class="cell' + completeClass + '">' +
+        '<p class="excerpt" title="' + escapeHtml(e.threadsText.trim()) + '">' + escapeHtml(truncate10(e.threadsText)) + '</p>' +
+        '<button type="button" class="copy-btn threads" data-action="copy" data-target="threads" data-id="' + e.id + '" data-label="コピー">コピー</button>' +
+      '</div>' +
+      '<div class="cell' + completeClass + '">' +
+        '<p class="excerpt" title="' + escapeHtml(e.xText.trim()) + '">' + escapeHtml(truncate10(e.xText)) + '</p>' +
+        '<button type="button" class="copy-btn x" data-action="copy" data-target="x" data-id="' + e.id + '" data-label="コピー">コピー</button>' +
+      '</div>' +
+      checklistCell(e, complete)
+    );
+  }
+
+  function renderHistoryRows() {
+    var html = "";
+    for (var i = 0; i < history.length; i++) {
+      var isLatest = !history[i].example && i === history.length - 1;
+      html += renderRow(history[i], isLatest);
+    }
+    document.getElementById("historyRows").innerHTML = html;
+  }
+
+  function setStatus(text, kind) {
+    var el = document.getElementById("statusEl");
+    if (!el) return;
+    el.className = "status" + (kind ? " status-" + kind : "");
+    el.textContent = "";
+    if (kind === "loading") {
+      var dot = document.createElement("span");
+      dot.className = "dot-pulse";
+      el.appendChild(dot);
+      var label = document.createElement("span");
+      label.textContent = " " + text;
+      el.appendChild(label);
+    } else if (text) {
+      el.textContent = text;
+    }
+  }
+
+  function updateArticleCount() {
+    var articleEl = document.getElementById("article");
+    var countEl = document.getElementById("articleCount");
+    if (articleEl && countEl) countEl.textContent = articleEl.value.length + " / 20000字";
+  }
+
+  // ---- Claude sample capability ----
+
+  function initSample() {
+    if (typeof window.claude === "undefined" || typeof window.claude.use !== "function") {
+      return Promise.resolve(null);
+    }
+    return window.claude.use("sample").catch(function () { return null; });
+  }
+
+  function copyForErrorCode(code) {
+    switch (code) {
+      case "not_granted":
+        return "Claudeの利用が許可されていません。ページを開き直して許可してください。";
+      case "sampling_disabled":
+      case "not_declared":
+      case "capability_disabled":
+      case "capability_removed":
+        return "このページではAI生成が利用できません。";
+      case "rate_limited":
+        return "少し混み合っています。しばらくしてからもう一度お試しください。";
+      case "session_expired":
+        return "セッションが切れました。ページを開き直してください。";
+      case "prompt_too_large":
+        return "記事が長すぎるようです。短くしてお試しください。";
+      case "refused":
+        return "この内容では生成できませんでした。文章を少し変えてもう一度お試しください。";
+      case "invalid_json":
+      case "empty_completion":
+        return "うまく生成できませんでした。もう一度お試しください。";
+      case "cancelled":
+        return "";
+      default:
+        return "通信エラーが起きました。もう一度お試しください。";
+    }
+  }
+
+  // ---- 投稿の「型」。毎回同じ構成にならないよう、生成のたびにランダムで選ぶ ----
+  // (直近使った型はThreads/Xそれぞれ別に記憶し、連続で同じ型にならないようにする)
+
+  var POST_PATTERNS = [
+    { name: "告白型", instruction: "「正直〜」「実は〜」など、本音をこっそり打ち明けるようなトーンで書き出す。" },
+    { name: "問いかけ型", instruction: "読者に直接問いかける一文から始める(「〜だと思いませんか」「〜したこと、ありませんか」など)。答えは急がず、共感してから展開する。" },
+    { name: "ビフォーアフター型", instruction: "「昔は〜だと思っていた。でも〜だと分かった」という、自分の中の変化を軸に書く。" },
+    { name: "セリフ再現型", instruction: "記事中に出てくる/暗示される誰かの一言をカギカッコで冒頭に置き、その場面から話を展開する。" },
+    { name: "毒舌型", instruction: "冒頭であえて厳しめの本音・皮肉を一言だけ置く(例:「優しい上司ほど、実は部下を潰す」)。ただし攻撃的になりすぎないよう、そのあとの展開と着地は必ず前向きにする。多用すると嫌味に見えるので、鋭さは一箇所だけに留める。" },
+    { name: "数字型", instruction: "件数・年数・回数など具体的な数字を冒頭に置き、意外性で興味を引く。" },
+    { name: "対比型", instruction: "「Aだと思われがちだが、実際はBだ」という一見意外な対比を最初に提示し、そのギャップを埋める形で書く。" }
+  ];
+
+  var STORAGE_RECENT_THREADS_PATTERNS = "sdf_recent_threads_patterns_v1";
+  var STORAGE_RECENT_X_PATTERNS = "sdf_recent_x_patterns_v1";
+  var RECENT_PATTERNS_TO_AVOID = 3;
+
+  function getRecentPatternNames(storageKey) {
+    try {
+      var parsed = JSON.parse(safeGet(storageKey, "[]"));
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+
+  function rememberPattern(storageKey, patternName) {
+    var recent = getRecentPatternNames(storageKey);
+    recent.push(patternName);
+    while (recent.length > RECENT_PATTERNS_TO_AVOID) recent.shift();
+    safeSet(storageKey, JSON.stringify(recent));
+  }
+
+  function pickPattern(storageKey) {
+    var recent = getRecentPatternNames(storageKey);
+    var pool = POST_PATTERNS.filter(function (p) { return recent.indexOf(p.name) === -1; });
+    if (pool.length === 0) pool = POST_PATTERNS;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function buildPrompt(articleBody, threadsPattern, xPattern) {
+    var ex = getExamples();
+    return [
+      "あなたはnote記事の内容を元に、Threads・X(旧Twitter)向けの告知投稿を作るアシスタントです。",
+      "",
+      "【note記事】",
+      articleBody,
+      "",
+      "【依頼内容】",
+      "この記事を要約し、フックの効いたThreads投稿文とX投稿文をそれぞれ1本ずつ作成してください。",
+      "文体・リズム・長さ・構成は、以下の参考例に合わせてください(参考例の内容自体はコピーしない。あくまで書き方の見本)。",
+      "",
+      "【Threads参考例】",
+      ex.threads,
+      "",
+      "【X参考例】",
+      ex.x,
+      "",
+      "【文章の質に関する共通条件(人間らしく、記憶に残る文章にするため)】",
+      "- 抽象論で終わらせず、記事の中の具体的な場面・数字・セリフを拾って使う",
+      "- 一文を短く区切り、体言止めや言い切りも交ぜて、AIが書いたような滑らかすぎる文章にしない",
+      "- 上から目線の説教にならないよう共感ベースで書く。ただし予定調和にせず、どこか一箇所だけ本音・皮肉の効いた一言を混ぜてよい(毒を出しすぎて攻撃的にならないよう、着地は必ず前向きにする)",
+      "- 読んだ人が「あるある、わかる」と思うか「え、そうなの」と驚くかのどちらかを狙う",
+      "",
+      "【共通条件】",
+      "- 冒頭1行で興味を引く(体験談・結論・問いかけなど)",
+      "- 記事の一番面白い/役に立つポイントを先出しする",
+      "- 「続きはnoteで」等、note記事へ誘導する一言を末尾に入れる(URLは書かなくてよい)",
+      "- ハッシュタグは付けない",
+      "- Markdown記号(#や*など)は使わない",
+      "",
+      "【Threads投稿の条件】",
+      "- 日本語で150〜200文字程度",
+      "- 参考例のように、空行で2〜3段落に分ける",
+      "- 今回の構成の型「" + threadsPattern.name + "」: " + threadsPattern.instruction,
+      "",
+      "【X投稿の条件】",
+      "- 日本語で100〜130文字程度",
+      "- 参考例のように、短い文を改行で区切ってリズムよく書く",
+      "- 今回の構成の型「" + xPattern.name + "」: " + xPattern.instruction,
+      "",
+      "【出力形式】",
+      "以下のJSON形式のみを出力してください。説明や前置きは不要です。",
+      '{"threads": "投稿文", "x": "投稿文"}'
+    ].join("\n");
+  }
+
+  function handleGenerate() {
+    var articleEl = document.getElementById("article");
+    var body = articleEl.value.trim();
+    if (!body) {
+      articleEl.focus();
+      setStatus("note記事の本文を貼り付けてください", "error");
+      return;
+    }
+    if (!sampleFn) {
+      setStatus("AI生成が利用できません。", "error");
+      return;
+    }
+
+    draftLoading = true;
+    var btn = document.getElementById("generateBtn");
+    btn.disabled = true;
+    btn.textContent = "生成中…";
+    setStatus("考え中…(数十秒かかることがあります)", "loading");
+
+    var threadsPattern = pickPattern(STORAGE_RECENT_THREADS_PATTERNS);
+    var xPattern = pickPattern(STORAGE_RECENT_X_PATTERNS);
+
+    sampleFn.json(buildPrompt(body, threadsPattern, xPattern), { modelTier: "default", cache: false })
+      .then(function (data) {
+        if (!data || typeof data.threads !== "string" || typeof data.x !== "string") {
+          throw { code: "invalid_json" };
+        }
+        addEntry({
+          id: "e" + Date.now() + Math.random().toString(36).slice(2, 7),
+          example: false,
+          createdAt: Date.now(),
+          articleText: body,
+          threadsText: data.threads.trim(),
+          xText: data.x.trim(),
+          doneNote: false,
+          doneThreads: false,
+          doneX: false
+        });
+        rememberPattern(STORAGE_RECENT_THREADS_PATTERNS, threadsPattern.name);
+        rememberPattern(STORAGE_RECENT_X_PATTERNS, xPattern.name);
+        articleEl.value = "";
+        updateArticleCount();
+        setStatus("", null);
+        announce("下書きができました");
+        renderHistoryRows();
+      })
+      .catch(function (err) {
+        var code = err && err.code;
+        var msg = copyForErrorCode(code);
+        if (msg) setStatus(msg, "error"); else setStatus("", null);
+      })
+      .finally(function () {
+        draftLoading = false;
+        btn.disabled = false;
+        btn.textContent = "生成する";
+      });
+  }
+
+  // ---- copy ----
+
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  function copyText(btn, text) {
+    var restore = function () {
+      window.setTimeout(function () { btn.textContent = btn.getAttribute("data-label"); }, 1400);
+    };
+    var onSuccess = function () {
+      btn.textContent = "✓";
+      announce("コピーしました");
+      restore();
+    };
+    var onFailure = function () {
+      btn.textContent = "長押しで";
+      restore();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onSuccess, function () {
+        legacyCopy(text) ? onSuccess() : onFailure();
+      });
+    } else {
+      legacyCopy(text) ? onSuccess() : onFailure();
+    }
+  }
+
+  // ---- delegated events within the table ----
+
+  gridEl.addEventListener("click", function (evt) {
+    var target = evt.target.closest("[data-action]");
+    if (!target) return;
+    var action = target.getAttribute("data-action");
+    var id = target.getAttribute("data-id");
+
+    if (action === "delete") {
+      if (pendingDeleteId === id) {
+        window.clearTimeout(pendingDeleteTimer);
+        pendingDeleteId = null;
+        history = history.filter(function (e) { return e.id !== id; });
+        persistDelete(id);
+        renderHistoryRows();
+      } else {
+        pendingDeleteId = id;
+        window.clearTimeout(pendingDeleteTimer);
+        pendingDeleteTimer = window.setTimeout(function () {
+          pendingDeleteId = null;
+          renderHistoryRows();
+        }, 3000);
+        renderHistoryRows();
+      }
+    } else if (action === "copy") {
+      var entry = history.filter(function (e) { return e.id === id; })[0];
+      if (!entry) return;
+      var text = target.getAttribute("data-target") === "threads" ? entry.threadsText : entry.xText;
+      copyText(target, text);
+    }
+  });
+
+  gridEl.addEventListener("change", function (evt) {
+    var target = evt.target.closest('[data-action="check"]');
+    if (!target) return;
+    var id = target.getAttribute("data-id");
+    var field = target.getAttribute("data-field");
+    var entry = history.filter(function (e) { return e.id === id; })[0];
+    if (!entry) return;
+    entry[field] = target.checked;
+    var patch = {};
+    patch[field] = target.checked;
+    persistPatch(id, patch);
+    renderHistoryRows();
+  });
+
+  var clearHistoryBtn = document.getElementById("clearHistoryBtn");
+  clearHistoryBtn.addEventListener("click", function () {
+    if (history.length === 0) return;
+    if (pendingClearArmed) {
+      window.clearTimeout(pendingClearTimer);
+      pendingClearArmed = false;
+      clearHistoryBtn.textContent = "履歴をすべて削除";
+      var idsToDelete = history.map(function (e) { return e.id; });
+      history = [];
+      saveHistoryLocal();
+      if (useDb) {
+        idsToDelete.forEach(function (id) {
+          db.doc("entries/" + id).delete().catch(function () {});
+        });
+      }
+      renderHistoryRows();
+    } else {
+      pendingClearArmed = true;
+      clearHistoryBtn.textContent = "本当にすべて削除しますか？もう一度タップ";
+      window.clearTimeout(pendingClearTimer);
+      pendingClearTimer = window.setTimeout(function () {
+        pendingClearArmed = false;
+        clearHistoryBtn.textContent = "履歴をすべて削除";
+      }, 3000);
+    }
+  });
+
+  // ---- style sample editor ----
+
+  var threadsExampleInput = document.getElementById("threadsExample");
+  var xExampleInput = document.getElementById("xExample");
+  var ex0 = getExamples();
+  threadsExampleInput.value = ex0.threads;
+  xExampleInput.value = ex0.x;
+
+  document.getElementById("saveStyleBtn").addEventListener("click", function () {
+    safeSet(STORAGE_THREADS, threadsExampleInput.value.trim() || THREADS_DEFAULT_EXAMPLE);
+    safeSet(STORAGE_X, xExampleInput.value.trim() || X_DEFAULT_EXAMPLE);
+    announce("文体サンプルを保存しました");
+  });
+
+  document.getElementById("resetStyleBtn").addEventListener("click", function () {
+    threadsExampleInput.value = THREADS_DEFAULT_EXAMPLE;
+    xExampleInput.value = X_DEFAULT_EXAMPLE;
+    safeSet(STORAGE_THREADS, THREADS_DEFAULT_EXAMPLE);
+    safeSet(STORAGE_X, X_DEFAULT_EXAMPLE);
+    announce("デフォルトの文体サンプルに戻しました");
+  });
+
+  // ---- db (durable storage; localStorage alone can be evicted by the browser) ----
+
+  function initDb() {
+    if (typeof window.claude === "undefined" || typeof window.claude.use !== "function") {
+      return Promise.resolve(null);
+    }
+    return window.claude.use("db").catch(function () { return null; });
+  }
+
+  function loadFromDb() {
+    db.collection("entries").orderBy("createdAt", "asc").limit(500).get()
+      .then(function (snap) {
+        if (snap.docs.length > 0) {
+          history = snap.docs.map(function (d) {
+            var data = d.data() || {};
+            return {
+              id: d.id,
+              example: false,
+              createdAt: data.createdAt || 0,
+              articleText: data.articleText || "",
+              threadsText: data.threadsText || "",
+              xText: data.xText || "",
+              doneNote: !!data.doneNote,
+              doneThreads: !!data.doneThreads,
+              doneX: !!data.doneX
+            };
+          });
+          saveHistoryLocal();
+          renderHistoryRows();
+        } else {
+          // db has nothing yet: migrate any real (non-example) entries this
+          // browser already has, so nothing typed before today is lost.
+          var realLocal = history.filter(function (e) { return !e.example; });
+          realLocal.forEach(function (e) {
+            db.collection("entries").doc(e.id).set(entryToDoc(e)).catch(function () {});
+          });
+        }
+      })
+      .catch(function () { /* keep working from the local cache */ });
+  }
+
+  // ---- init ----
+
+  buildStaticShell();
+  renderHistoryRows();
+  updateArticleCount();
+  document.getElementById("article").addEventListener("input", updateArticleCount);
+  document.getElementById("generateBtn").addEventListener("click", handleGenerate);
+
+  initSample().then(function (fn) {
+    sampleFn = fn;
+    if (!sampleFn) {
+      document.getElementById("generateBtn").disabled = true;
+      setStatus("このページではAI生成が利用できません(Claudeのビューア内で開いてください)。", "error");
+    }
+  });
+
+  initDb().then(function (resolved) {
+    if (!resolved) return;
+    db = resolved;
+    useDb = true;
+    loadFromDb();
+  });
+})();
+</script>
+
+</body></html>
