@@ -11,6 +11,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const OUTPUTS_DIR = path.join(__dirname, "outputs");
 
 async function callClaude(prompt, maxTokens = 2000) {
@@ -114,6 +115,20 @@ ${transcript}
   return callClaude(prompt, 3000);
 }
 
+async function notifyDiscord(session, generated) {
+  if (!DISCORD_WEBHOOK_URL) return;
+  const lines = [
+    `📚 インタビューからアウトプットを生成しました`,
+    `対象者: ${session.interviewee} / テーマ: ${session.topic}`,
+    ...generated.map((g) => `・${g}`),
+  ];
+  await fetch(DISCORD_WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content: lines.join("\n") }),
+  });
+}
+
 async function main() {
   const sessionArg = process.argv[2];
   if (!sessionArg) {
@@ -125,28 +140,46 @@ async function main() {
   }
 
   const session = JSON.parse(fs.readFileSync(sessionPath, "utf-8"));
+  const consent = session.consent || { internal: false, public: false };
+
+  if (!consent.internal) {
+    console.log(
+      "このセッションは社内利用への同意が記録されていないため、アウトプット生成を中止します。"
+    );
+    return;
+  }
+
   const transcript = buildTranscript(session);
 
   const baseName = path.basename(sessionPath, ".json");
   const outDir = path.join(OUTPUTS_DIR, baseName);
   fs.mkdirSync(outDir, { recursive: true });
 
+  const generated = [];
+
   console.log("マニュアルを生成中...");
   const manual = await generateManual(session, transcript);
   fs.writeFileSync(path.join(outDir, "manual.md"), manual, "utf-8");
+  generated.push("manual.md      (社内向け技術継承マニュアル)");
 
   console.log("研修用ケーススタディを生成中...");
   const caseStudy = await generateCaseStudy(session, transcript);
   fs.writeFileSync(path.join(outDir, "case-study.md"), caseStudy, "utf-8");
+  generated.push("case-study.md  (研修用ケーススタディ)");
 
-  console.log("note/ブログ記事を生成中...");
-  const article = await generateArticle(session, transcript);
-  fs.writeFileSync(path.join(outDir, "article.md"), article, "utf-8");
+  if (consent.public) {
+    console.log("note/ブログ記事を生成中...");
+    const article = await generateArticle(session, transcript);
+    fs.writeFileSync(path.join(outDir, "article.md"), article, "utf-8");
+    generated.push("article.md     (note/ブログ用記事)");
+  } else {
+    console.log("社外公開への同意がないため、note/ブログ記事の生成はスキップします。");
+  }
 
   console.log(`\n生成完了: ${outDir}`);
-  console.log("  - manual.md      (社内向け技術継承マニュアル)");
-  console.log("  - case-study.md  (研修用ケーススタディ)");
-  console.log("  - article.md     (note/ブログ用記事)");
+  for (const g of generated) console.log(`  - ${g}`);
+
+  await notifyDiscord(session, generated);
 }
 
 main().catch((err) => {

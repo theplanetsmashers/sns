@@ -5,7 +5,8 @@
   "main": "interview.js",
   "scripts": {
     "interview": "node interview.js",
-    "outputs": "node generate-outputs.js"
+    "outputs": "node generate-outputs.js",
+    "sessions": "node list-sessions.js"
   },
   "engines": {
     "node": ">=18"
