@@ -261,4 +261,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { buildTranscript };
+module.exports = { buildTranscript, buildOfflinePreview };
