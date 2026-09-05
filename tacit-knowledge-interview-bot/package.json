@@ -9,7 +9,8 @@
     "sessions": "node list-sessions.js",
     "template": "node generate-template.js",
     "dashboard": "node generate-dashboard.js",
-    "slack-bot": "node slack-bot/server.js"
+    "slack-bot": "node slack-bot/server.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18"

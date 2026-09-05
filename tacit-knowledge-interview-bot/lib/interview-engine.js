@@ -106,6 +106,28 @@ async function analyzeAnswer(category, question, answer) {
   }
 }
 
+// analyzeAnswerのオフライン版。Claude APIを一切呼ばず、回答の長さだけで濃さを
+// 機械的に見積もる簡易ロジック。API課金なしでインタビュー〜アウトプット生成の
+// 一連の流れ(フォルダ構成・同意ゲート・ダッシュボード集計など)を無料で体験するための
+// 「ドライランモード」で使う。精度は本番のClaude版に劣るため、本番運用では使わないこと。
+function analyzeAnswerOffline(category, question, answer) {
+  const length = answer.trim().length;
+  let richness_score;
+  if (length < 20) richness_score = 1;
+  else if (length < 50) richness_score = 2;
+  else if (length < 100) richness_score = 3;
+  else if (length < 200) richness_score = 4;
+  else richness_score = 5;
+
+  const preview = answer.length > 60 ? `${answer.slice(0, 60)}…` : answer;
+  return {
+    needs_followup: false,
+    followup_question: "",
+    summary: `(ドライラン要約・簡易版) ${preview}`,
+    richness_score,
+  };
+}
+
 function saveSession(sessionPath, session) {
   fs.writeFileSync(sessionPath, JSON.stringify(session, null, 2), "utf-8");
 }
@@ -128,6 +150,7 @@ module.exports = {
   callClaude,
   stripJsonFence,
   analyzeAnswer,
+  analyzeAnswerOffline,
   saveSession,
   newSessionPath,
 };

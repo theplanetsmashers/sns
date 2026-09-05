@@ -10,6 +10,7 @@
 //   node interview.js --resume=sessions/xxx.json        中断したインタビューを再開
 //   node interview.js --answers=examples/sample-answers.json --interviewee=... --topic=... \
 //       --consent-internal=yes --consent-public=no      非対話モード(CI・自動テスト・外部連携向け)
+//   node interview.js --dry-run [他のオプションと併用可]  Claude APIを呼ばずに無料で一連の流れを試す
 //
 // 保存したセッションは generate-outputs.js に渡すと、マニュアル/研修ケース/note記事の
 // 3種類のアウトプットを自動生成できる。
@@ -60,7 +61,8 @@ async function askMultiline(rl, prompt) {
   return lines.join("\n").trim();
 }
 
-async function runInterviewLoop(rl, session, template, answersBook, sessionPath) {
+async function runInterviewLoop(rl, session, template, answersBook, sessionPath, dryRun = false) {
+  const analyze = dryRun ? engine.analyzeAnswerOffline : engine.analyzeAnswer;
   const answeredIds = new Set(session.records.map((r) => r.id));
 
   for (const q of template) {
@@ -88,7 +90,7 @@ async function runInterviewLoop(rl, session, template, answersBook, sessionPath)
     }
 
     console.log("...回答を分析中...");
-    const analysis = await engine.analyzeAnswer(q.category, q.question, answer);
+    const analysis = await analyze(q.category, q.question, answer);
 
     let followupQuestion = "";
     let followupAnswer = "";
@@ -107,7 +109,7 @@ async function runInterviewLoop(rl, session, template, answersBook, sessionPath)
     let richnessScore = analysis.richness_score;
     if (followupAnswer) {
       console.log("...深掘り回答を踏まえて要約を更新中...");
-      const combined = await engine.analyzeAnswer(
+      const combined = await analyze(
         q.category,
         `${q.question}\n(深掘り) ${followupQuestion}`,
         `${answer}\n(深掘り回答) ${followupAnswer}`
@@ -152,7 +154,13 @@ async function main() {
     return;
   }
 
-  if (!ANTHROPIC_API_KEY) {
+  const dryRun = !!args["dry-run"];
+
+  if (dryRun) {
+    console.log(
+      "🔧 ドライランモード: Claude APIを呼び出さず、回答の長さだけで濃さを見積もる簡易ロジックで進めます(無料・オフライン)。"
+    );
+  } else if (!ANTHROPIC_API_KEY) {
     console.log(
       "(注意: ANTHROPIC_API_KEY が環境変数に見つかりません。プロキシ経由の認証を使う場合はそのまま進みます)"
     );
@@ -215,6 +223,7 @@ async function main() {
       template: templateName,
       created_at: new Date().toISOString(),
       consent: { internal: consentInternal, public: consentPublic },
+      dry_run: dryRun,
       records: [],
     };
 
@@ -231,7 +240,7 @@ async function main() {
     answersBook = JSON.parse(fs.readFileSync(answersPath, "utf-8"));
   }
 
-  await runInterviewLoop(rl, session, template, answersBook, sessionPath);
+  await runInterviewLoop(rl, session, template, answersBook, sessionPath, dryRun);
 
   if (rl) rl.close();
 

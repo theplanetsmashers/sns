@@ -21,6 +21,24 @@ CLI(ターミナル)とSlack Botの両方から同じインタビューを実施
 4. (任意)Slack Bot経由でインタビューしたい場合は下記「Slack Bot」を参照
 5. このディレクトリで `npm install` は不要
 
+## まずは無料で試す(ドライランモード)
+
+`ANTHROPIC_API_KEY` が無くても(あっても課金せずに)、パイプライン全体の動きだけを無料で確認できます。`--dry-run` を付けると、Claude APIを一切呼ばず、回答の長さだけで「濃さ」を機械的に見積もる簡易ロジックで進みます。
+
+```
+npm run interview -- --dry-run --answers=examples/sample-answers.json \
+  --interviewee="テスト太郎" --topic="動作確認" \
+  --consent-internal=yes --consent-public=yes
+
+npm run outputs -- sessions/生成されたファイル.json   # dry-runで作ったセッションは自動でドライラン出力になる
+npm run dashboard
+npm run sessions
+```
+
+ドライランで作ったセッションは `dry_run: true` が記録され、`generate-outputs.js` はそれを見て自動的に(Claude APIを呼ばない)プレースホルダー版のマニュアル・ケース・記事を生成します。実際の文章化を試したくなったら `npm run outputs -- <セッション> --real` でその場だけ本番生成に切り替えられます。
+
+対話モードでも `npm run interview -- --dry-run` とすれば、質問に答えながら無料で流れを体験できます(要約は簡易版になります)。
+
 ## 使い方
 
 ### 1. インタビューを実施する(対話モード)
@@ -146,6 +164,17 @@ Slackでの流れ: `/interview` (または `/interview <テンプレート名>`)
 - `examples/sample-answers.json` — 非対話モード用の回答サンプル(動作確認・自動テストにも利用)
 - `sessions/` — インタビュー記録(gitignore対象。個人情報・社外秘の可能性があるためコミットしない)
 - `outputs/` — 生成されたマニュアル/ケース/記事/ダッシュボード(同上、gitignore対象)
+- `test/` — 自動テスト(`node:test`、依存パッケージ不要)。`test/helpers/mock-fetch.js` でClaude/Slack/Google APIをスタブ化し、API課金なしでロジックを検証する
+
+## 開発者向け: 自動テスト(無料・API課金なし)
+
+```
+npm test
+```
+
+`lib/interview-engine.js`(テンプレート読み込み・回答分析・濃さスコア)、`generate-dashboard.js`(集計ロジック)、`generate-template.js`(テンプレート検証)、`slack-bot/conversation.js`(会話状態機械の全フロー・深掘り分岐)、`slack-bot/slack-client.js`(リクエスト署名検証)を、実際のAPIを一切呼ばずに検証します。
+
+`.github/workflows/test-tacit-knowledge-interview-bot.yml` により、`tacit-knowledge-interview-bot/` に変更をpushするたびGitHub Actions上で自動実行されます(GitHub Actionsの無料枠内)。
 
 ## プライバシー・同意の扱い
 
