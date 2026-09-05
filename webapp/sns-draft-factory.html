@@ -459,7 +459,7 @@
     <span class="status" id="statusEl" role="status" aria-live="polite"></span>
   </div>
 
-  <p class="reminder">note・Threads・Xへの実際の投稿は、それぞれ手動で行ってください。履歴・チェックはこの端末のブラウザだけに保存され、他の端末とは共有されません。</p>
+  <p class="reminder">note・Threads・Xへの実際の投稿は、それぞれ手動で行ってください。履歴・チェックはこのアプリのデータとして保存され、時間が空いても消えません。</p>
 
   <details class="style-editor" id="styleEditor">
     <summary>文体サンプルを編集する</summary>
@@ -498,7 +498,6 @@
   var STORAGE_THREADS = "sdf_threads_example_v1";
   var STORAGE_X = "sdf_x_example_v1";
   var STORAGE_HISTORY = "sdf_history_v3";
-  var MAX_HISTORY = 30;
 
   function safeGet(key, fallback) {
     try {
@@ -541,20 +540,50 @@
   var history = loadHistory();
   var draftLoading = false;
   var sampleFn = null;
+  var db = null;
+  var useDb = false;
   var pendingDeleteId = null;
   var pendingDeleteTimer = null;
   var pendingClearArmed = false;
   var pendingClearTimer = null;
 
-  function saveHistory() {
-    while (history.length > MAX_HISTORY) history.shift();
+  // localStorage is only a fast local cache now; db (when available) is the
+  // durable copy, since browsers can and do evict localStorage over time.
+  function saveHistoryLocal() {
     safeSet(STORAGE_HISTORY, JSON.stringify(history));
+  }
+
+  function entryToDoc(e) {
+    return {
+      createdAt: e.createdAt,
+      articleText: e.articleText,
+      threadsText: e.threadsText,
+      xText: e.xText,
+      doneNote: !!e.doneNote,
+      doneThreads: !!e.doneThreads,
+      doneX: !!e.doneX
+    };
+  }
+
+  function persistCreate(entry) {
+    saveHistoryLocal();
+    if (useDb) db.collection("entries").doc(entry.id).set(entryToDoc(entry)).catch(function () {});
+  }
+
+  function persistPatch(id, patch) {
+    saveHistoryLocal();
+    if (useDb) db.doc("entries/" + id).update(patch).catch(function () {});
+  }
+
+  function persistDelete(id) {
+    saveHistoryLocal();
+    if (useDb) db.doc("entries/" + id).delete().catch(function () {});
   }
 
   function addEntry(entry) {
     history = history.filter(function (e) { return !e.example; });
     history.push(entry);
-    saveHistory();
+    persistCreate(entry);
   }
 
   function escapeHtml(s) {
@@ -856,7 +885,7 @@
         window.clearTimeout(pendingDeleteTimer);
         pendingDeleteId = null;
         history = history.filter(function (e) { return e.id !== id; });
-        saveHistory();
+        persistDelete(id);
         renderHistoryRows();
       } else {
         pendingDeleteId = id;
@@ -883,7 +912,9 @@
     var entry = history.filter(function (e) { return e.id === id; })[0];
     if (!entry) return;
     entry[field] = target.checked;
-    saveHistory();
+    var patch = {};
+    patch[field] = target.checked;
+    persistPatch(id, patch);
     renderHistoryRows();
   });
 
@@ -894,8 +925,14 @@
       window.clearTimeout(pendingClearTimer);
       pendingClearArmed = false;
       clearHistoryBtn.textContent = "履歴をすべて削除";
+      var idsToDelete = history.map(function (e) { return e.id; });
       history = [];
-      saveHistory();
+      saveHistoryLocal();
+      if (useDb) {
+        idsToDelete.forEach(function (id) {
+          db.doc("entries/" + id).delete().catch(function () {});
+        });
+      }
       renderHistoryRows();
     } else {
       pendingClearArmed = true;
@@ -930,6 +967,47 @@
     announce("デフォルトの文体サンプルに戻しました");
   });
 
+  // ---- db (durable storage; localStorage alone can be evicted by the browser) ----
+
+  function initDb() {
+    if (typeof window.claude === "undefined" || typeof window.claude.use !== "function") {
+      return Promise.resolve(null);
+    }
+    return window.claude.use("db").catch(function () { return null; });
+  }
+
+  function loadFromDb() {
+    db.collection("entries").orderBy("createdAt", "asc").limit(500).get()
+      .then(function (snap) {
+        if (snap.docs.length > 0) {
+          history = snap.docs.map(function (d) {
+            var data = d.data() || {};
+            return {
+              id: d.id,
+              example: false,
+              createdAt: data.createdAt || 0,
+              articleText: data.articleText || "",
+              threadsText: data.threadsText || "",
+              xText: data.xText || "",
+              doneNote: !!data.doneNote,
+              doneThreads: !!data.doneThreads,
+              doneX: !!data.doneX
+            };
+          });
+          saveHistoryLocal();
+          renderHistoryRows();
+        } else {
+          // db has nothing yet: migrate any real (non-example) entries this
+          // browser already has, so nothing typed before today is lost.
+          var realLocal = history.filter(function (e) { return !e.example; });
+          realLocal.forEach(function (e) {
+            db.collection("entries").doc(e.id).set(entryToDoc(e)).catch(function () {});
+          });
+        }
+      })
+      .catch(function () { /* keep working from the local cache */ });
+  }
+
   // ---- init ----
 
   buildStaticShell();
@@ -944,6 +1022,13 @@
       document.getElementById("generateBtn").disabled = true;
       setStatus("このページではAI生成が利用できません(Claudeのビューア内で開いてください)。", "error");
     }
+  });
+
+  initDb().then(function (resolved) {
+    if (!resolved) return;
+    db = resolved;
+    useDb = true;
+    loadFromDb();
   });
 })();
 </script>

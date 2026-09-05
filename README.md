@@ -57,4 +57,4 @@ GitHubの操作(Secrets登録やActionsの実行)は一切不要で、スマホ�
 
 - ソース: `webapp/sns-draft-factory.html`(Claude Artifactとして公開。同じファイルを再公開すると同じURLが更新される)
 - 文体・長さの見本(Threads/X参考例)は画面下部の「文体サンプルを編集する」から差し替え可能
-- 履歴はブラウザのlocalStorageに保存されるため、この端末・このブラウザだけのものです(他の端末とは共有されません)
+- 履歴・チェック状態はArtifactのdb機能(サーバー側)に保存され、時間が空いても消えません。ブラウザのlocalStorageは高速表示用のキャッシュとして併用しているだけです
