@@ -6,7 +6,10 @@
   "scripts": {
     "interview": "node interview.js",
     "outputs": "node generate-outputs.js",
-    "sessions": "node list-sessions.js"
+    "sessions": "node list-sessions.js",
+    "template": "node generate-template.js",
+    "dashboard": "node generate-dashboard.js",
+    "slack-bot": "node slack-bot/server.js"
   },
   "engines": {
     "node": ">=18"

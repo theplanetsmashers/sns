@@ -1,2 +1,3 @@
 sessions/*.json
 outputs/*/
+outputs/*.html

@@ -1,55 +1,25 @@
 // generate-outputs.js
 // interview.js が保存したセッションJSONを読み込み、以下3種類のアウトプットを
 // Claude APIで生成してMarkdownファイルに書き出すスクリプト。
-//   1. 社内向け技術継承マニュアル(PFMEA的な留意点込み)
+//   1. 社内向け技術継承マニュアル(PFMEA的な留意点込み、ハルシネーション検査つき二段階生成)
 //   2. 研修用ケーススタディ(判断プロセスを追体験できる形式)
 //   3. note/ブログ用の一般公開記事
+// 生成後、設定されていればDiscord/Slackへの通知とGoogle Driveへのアップロードも行う。
 //
 // 使い方: node generate-outputs.js sessions/xxxx.json
 
 const fs = require("fs");
 const path = require("path");
+const engine = require("./lib/interview-engine");
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 const OUTPUTS_DIR = path.join(__dirname, "outputs");
-
-async function callClaude(prompt, maxTokens = 2000) {
-  if (!ANTHROPIC_API_KEY) {
-    throw new Error("ANTHROPIC_API_KEY が設定されていません。");
-  }
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: maxTokens,
-      messages: [{ role: "user", content: prompt }],
-    }),
-  });
-
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Claude API error: ${response.status} ${errText}`);
-  }
-
-  const data = await response.json();
-  const textBlock = data.content.find((c) => c.type === "text");
-  return textBlock ? textBlock.text.trim() : "";
-}
 
 function buildTranscript(session) {
   return session.records
     .map((r) => {
-      const parts = [
-        `【${r.category}】`,
-        `Q: ${r.question}`,
-        `A: ${r.answer}`,
-      ];
+      const parts = [`【${r.category}】`, `Q: ${r.question}`, `A: ${r.answer}`];
       if (r.followup_question) {
         parts.push(`深掘りQ: ${r.followup_question}`);
         parts.push(`深掘りA: ${r.followup_answer}`);
@@ -60,7 +30,7 @@ function buildTranscript(session) {
     .join("\n\n");
 }
 
-async function generateManual(session, transcript) {
+async function generateManualDraft(session, transcript) {
   const prompt = `以下は製造業の技能者「${session.interviewee}」への、テーマ「${session.topic}」に関する暗黙知インタビューの記録です。
 この内容を、社内向けの技術継承マニュアルとしてMarkdown形式でまとめてください。
 
@@ -75,7 +45,28 @@ async function generateManual(session, transcript) {
 ${transcript}
 
 Markdownのみを出力してください。前置きは不要です。`;
-  return callClaude(prompt, 2500);
+  return engine.callClaude(prompt, 2500);
+}
+
+// 二段階生成のレビュー段階: ドラフトがインタビュー記録に基づかない事実を
+// 「本人の発言であるかのように」追加(ハルシネーション)していないかを別呼び出しで検査させる
+async function reviewManual(session, transcript, draft) {
+  const prompt = `あなたは技術文書のレビュアーです。以下の「インタビュー記録原文」と、それを元に生成された「マニュアルのドラフト」を比較してください。
+
+【チェック項目】
+- ドラフト中に、インタビュー記録に書かれていない具体的な数値・手順・固有名詞が、あたかも本人の発言のように追加されていないか
+- PFMEAの失敗モード表に、記録から読み取れない失敗モードが「事実」として断定的に書かれていないか(一般的な注意点として書く場合は問題ないが、その旨を明示すべき)
+
+問題があれば、該当箇所を「インタビュー記録に基づく内容」と「一般的な注意点として補足した内容」が区別できるように修正してください。問題がなければドラフトをそのまま出力してください。
+
+出力は必ずマニュアルの最終版Markdown全文のみ。レビューコメントや前置きは含めないでください。
+
+【インタビュー記録原文】
+${transcript}
+
+【マニュアルのドラフト】
+${draft}`;
+  return engine.callClaude(prompt, 2500);
 }
 
 async function generateCaseStudy(session, transcript) {
@@ -94,7 +85,7 @@ async function generateCaseStudy(session, transcript) {
 ${transcript}
 
 Markdownのみを出力してください。前置きは不要です。`;
-  return callClaude(prompt, 2500);
+  return engine.callClaude(prompt, 2500);
 }
 
 async function generateArticle(session, transcript) {
@@ -112,7 +103,7 @@ async function generateArticle(session, transcript) {
 ${transcript}
 
 記事本文のみを出力してください。前置きは不要です。`;
-  return callClaude(prompt, 3000);
+  return engine.callClaude(prompt, 3000);
 }
 
 async function notifyDiscord(session, generated) {
@@ -127,6 +118,28 @@ async function notifyDiscord(session, generated) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content: lines.join("\n") }),
   });
+}
+
+async function notifySlack(session, generated) {
+  if (!SLACK_WEBHOOK_URL) return;
+  const lines = [
+    `📚 インタビューからアウトプットを生成しました`,
+    `対象者: ${session.interviewee} / テーマ: ${session.topic}`,
+    ...generated.map((g) => `・${g}`),
+  ];
+  await fetch(SLACK_WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: lines.join("\n") }),
+  });
+}
+
+async function uploadToDriveIfConfigured(sessionPath, session, outDir) {
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT_KEY || !process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID) return;
+  console.log("Google Driveへアップロード中...");
+  const { uploadSessionOutputs } = require("./lib/google-drive");
+  await uploadSessionOutputs(sessionPath, session, outDir);
+  console.log("Google Driveへのアップロードが完了しました。");
 }
 
 async function main() {
@@ -157,10 +170,13 @@ async function main() {
 
   const generated = [];
 
-  console.log("マニュアルを生成中...");
-  const manual = await generateManual(session, transcript);
-  fs.writeFileSync(path.join(outDir, "manual.md"), manual, "utf-8");
-  generated.push("manual.md      (社内向け技術継承マニュアル)");
+  console.log("マニュアルのドラフトを生成中...");
+  const manualDraft = await generateManualDraft(session, transcript);
+  console.log("マニュアルをレビュー中(記録にない記述の混入チェック)...");
+  const manualFinal = await reviewManual(session, transcript, manualDraft);
+  fs.writeFileSync(path.join(outDir, "manual.draft.md"), manualDraft, "utf-8");
+  fs.writeFileSync(path.join(outDir, "manual.md"), manualFinal, "utf-8");
+  generated.push("manual.md      (社内向け技術継承マニュアル / レビュー済み)");
 
   console.log("研修用ケーススタディを生成中...");
   const caseStudy = await generateCaseStudy(session, transcript);
@@ -180,9 +196,15 @@ async function main() {
   for (const g of generated) console.log(`  - ${g}`);
 
   await notifyDiscord(session, generated);
+  await notifySlack(session, generated);
+  await uploadToDriveIfConfigured(sessionPath, session, outDir);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = { buildTranscript };
