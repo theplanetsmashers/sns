@@ -1,0 +1,13 @@
+{
+  "name": "tacit-knowledge-interview-bot",
+  "version": "1.0.0",
+  "description": "製造業管理職の暗黙知・技能継承ノウハウを対話形式で引き出し、マニュアル/研修ケース/note記事を自動生成するMVP",
+  "main": "interview.js",
+  "scripts": {
+    "interview": "node interview.js",
+    "outputs": "node generate-outputs.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
