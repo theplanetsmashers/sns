@@ -39,6 +39,13 @@ describe("templates", () => {
   test("loadTemplate throws a helpful error for an unknown template", () => {
     assert.throws(() => engine.loadTemplate("does-not-exist"), /見つかりません/);
   });
+
+  test("loadTemplate rejects a name that would escape TEMPLATES_DIR", () => {
+    // Slack's /interview <template> passes free text straight into loadTemplate,
+    // so path-traversal-style names must be rejected before path.join.
+    assert.throws(() => engine.loadTemplate("../../etc/passwd"), /使用できない文字/);
+    assert.throws(() => engine.loadTemplate("foo/bar"), /使用できない文字/);
+  });
 });
 
 describe("analyzeAnswerOffline (dry-run, no network)", () => {

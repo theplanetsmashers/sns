@@ -19,7 +19,17 @@ function listTemplateNames() {
     .map((f) => f.replace(/\.json$/, ""));
 }
 
+// テンプレート名はファイルパスの一部になる(templates/<name>.json)。Slackの
+// スラッシュコマンド経由では任意の文字列が渡ってくるため、"../"のようなパス脱出
+// 文字列を含む名前はここで弾き、TEMPLATES_DIR配下から出られないようにする。
+function assertValidTemplateName(name) {
+  if (!/^[a-zA-Z0-9_-]+$/.test(name)) {
+    throw new Error(`テンプレート名 "${name}" に使用できない文字が含まれています。`);
+  }
+}
+
 function loadTemplate(name) {
+  assertValidTemplateName(name);
   const filePath = path.join(TEMPLATES_DIR, `${name}.json`);
   if (!fs.existsSync(filePath)) {
     throw new Error(
@@ -30,6 +40,7 @@ function loadTemplate(name) {
 }
 
 function saveTemplate(name, questions) {
+  assertValidTemplateName(name);
   if (!fs.existsSync(TEMPLATES_DIR)) fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
   const filePath = path.join(TEMPLATES_DIR, `${name}.json`);
   fs.writeFileSync(filePath, JSON.stringify(questions, null, 2), "utf-8");

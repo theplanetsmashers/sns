@@ -6,14 +6,16 @@
 
 const fs = require("fs");
 const path = require("path");
+const engine = require("./lib/interview-engine");
 
 const SESSIONS_DIR = path.join(__dirname, "sessions");
-const TEMPLATES_DIR = path.join(__dirname, "templates");
 
 function templateLength(templateName) {
-  const filePath = path.join(TEMPLATES_DIR, `${templateName}.json`);
-  if (!fs.existsSync(filePath)) return "?";
-  return JSON.parse(fs.readFileSync(filePath, "utf-8")).length;
+  try {
+    return engine.loadTemplate(templateName).length;
+  } catch (e) {
+    return "?";
+  }
 }
 
 function main() {
