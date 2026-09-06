@@ -1,0 +1,8 @@
+# SNS運用自動化ツール
+
+Threads運用を楽にするための小さなツール群です。
+
+- [`threads-post-generator/`](threads-post-generator/) — 毎日の投稿案をClaude APIで自動生成し、Discordに通知するツール(フェーズ1)。GitHub Actionsで毎日自動実行。
+- [`comment-generator/`](comment-generator/) — 他の人の投稿に対する返信コメント案を、貼り付けた本文からClaude APIで自動生成するWebアプリ(フェーズ2)。ローカルで起動して都度使う運用。
+
+どちらのツールも、実際の投稿・送信は人間が最終判断して手動で行う設計です(全自動投稿は行いません)。
