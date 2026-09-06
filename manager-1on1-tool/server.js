@@ -18,8 +18,14 @@ const { generateAgenda, summarizeLog, generateTrend } = require("./lib/generate"
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const PORT = parseInt(process.env.PORT || "3100", 10);
-// デフォルトはlocalhostのみ待受(意図せず外部公開されるのを防ぐため)
+// デフォルトはlocalhostのみ待受(意図せず外部公開されるのを防ぐため)。
+// ホスティング環境ではHOST=0.0.0.0を設定すること。
 const HOST = process.env.HOST || "127.0.0.1";
+// ホスティングして複数人がアクセスできる状態にする場合、部下の氏名や1on1の内容という
+// 機微な個人情報を扱うため、必ずこの2つを設定してBasic認証をかけること。
+// 未設定の場合はローカル開発用として認証なしで動作する。
+const APP_USERNAME = process.env.APP_USERNAME;
+const APP_PASSWORD = process.env.APP_PASSWORD;
 
 const PUBLIC_DIR = path.join(__dirname, "public");
 
@@ -82,7 +88,35 @@ function findSubordinate(subordinates, id) {
   return subordinates.find((s) => s.id === id);
 }
 
+function isAuthorized(req) {
+  if (!APP_USERNAME || !APP_PASSWORD) return true;
+  const header = req.headers.authorization || "";
+  const [scheme, encoded] = header.split(" ");
+  if (scheme !== "Basic" || !encoded) return false;
+  const decoded = Buffer.from(encoded, "base64").toString("utf-8");
+  const sep = decoded.indexOf(":");
+  const user = Buffer.from(decoded.slice(0, sep));
+  const pass = Buffer.from(decoded.slice(sep + 1));
+  const expectedUser = Buffer.from(APP_USERNAME);
+  const expectedPass = Buffer.from(APP_PASSWORD);
+  return (
+    user.length === expectedUser.length &&
+    pass.length === expectedPass.length &&
+    crypto.timingSafeEqual(user, expectedUser) &&
+    crypto.timingSafeEqual(pass, expectedPass)
+  );
+}
+
 const server = http.createServer(async (req, res) => {
+  if (!isAuthorized(req)) {
+    res.writeHead(401, {
+      "WWW-Authenticate": 'Basic realm="1on1 Tool"',
+      "Content-Type": "text/plain; charset=utf-8",
+    });
+    res.end("認証が必要です");
+    return;
+  }
+
   const url = new URL(req.url, `http://${req.headers.host}`);
 
   try {
@@ -225,5 +259,8 @@ server.listen(PORT, HOST, () => {
   console.log(`1on1支援ツールを起動しました: http://${HOST}:${PORT}`);
   if (!ANTHROPIC_API_KEY) {
     console.warn("警告: ANTHROPIC_API_KEY が設定されていません。生成系APIは失敗します。");
+  }
+  if (!APP_USERNAME || !APP_PASSWORD) {
+    console.warn("警告: APP_USERNAME/APP_PASSWORDが未設定のため認証なしで動作しています。外部公開する場合は必ず設定してください。");
   }
 });
