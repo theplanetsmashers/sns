@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>note→Substack導入記事生成</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1c1e21;
+    --muted: #6b7280;
+    --border: #e2e5ea;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --chip-bg: #eef2ff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181c;
+      --card: #202226;
+      --text: #f0f1f3;
+      --muted: #9aa0aa;
+      --border: #33363c;
+      --accent: #5b8def;
+      --accent-hover: #7ba3f2;
+      --chip-bg: #26304a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+    padding: 24px 16px 60px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 12px 0 4px; }
+  label:first-child { margin-top: 0; }
+  input[type="text"], textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    resize: vertical;
+    font-family: inherit;
+  }
+  textarea { min-height: 80px; }
+  #articleText { min-height: 220px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 16px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    width: 100%;
+    margin-top: 16px;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:disabled { opacity: 0.5; cursor: default; }
+  .result {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .result pre {
+    margin: 0 0 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .btn-small {
+    background: var(--chip-bg);
+    color: var(--text);
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .btn-small.copied { background: #16a34a; color: #fff; }
+  #status { font-size: 13px; color: var(--muted); margin-top: 8px; min-height: 18px; }
+  #status.error { color: #dc2626; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>note→Substack導入記事生成</h1>
+    <p class="sub">note記事の本文を貼り付けると、Substack向けの英語の導入記事(ティザー記事)を自動生成します。実際のSubstackへの投稿は必ずコピーして自分で行ってください。</p>
+
+    <div class="card">
+      <label for="articleText">note記事の本文(日本語) <span style="color:#dc2626">*</span></label>
+      <textarea id="articleText" placeholder="紹介したいnote記事の本文をそのまま貼り付け"></textarea>
+
+      <label for="articleUrl">note記事のURL(任意・末尾に?hl=enを付けて記事内に案内します)</label>
+      <input type="text" id="articleUrl" placeholder="https://note.com/xxxx/n/xxxxxxxx" />
+
+      <label for="tone">文体・トーンの指定(任意)</label>
+      <textarea id="tone" placeholder="例: カジュアルでウィットに富んだ語り口 / ビジネスパーソン向けに落ち着いたトーン、など"></textarea>
+
+      <label for="note">追加の指示(任意)</label>
+      <textarea id="note" placeholder="例: 日本特有の文化的背景を一言補足してほしい、など"></textarea>
+
+      <button id="generateBtn" class="btn-primary">Substack導入記事を生成する</button>
+      <div id="status"></div>
+    </div>
+
+    <div id="results"></div>
+  </div>
+
+<script>
+const els = {
+  articleText: document.getElementById("articleText"),
+  articleUrl: document.getElementById("articleUrl"),
+  tone: document.getElementById("tone"),
+  note: document.getElementById("note"),
+  generateBtn: document.getElementById("generateBtn"),
+  status: document.getElementById("status"),
+  results: document.getElementById("results"),
+};
+
+// トーン設定はブラウザに保存して毎回入力しなくて済むようにする
+try {
+  const savedTone = localStorage.getItem("nsg_tone");
+  if (savedTone) els.tone.value = savedTone;
+} catch {}
+
+els.tone.addEventListener("change", () => {
+  try { localStorage.setItem("nsg_tone", els.tone.value); } catch {}
+});
+
+function setStatus(msg, isError) {
+  els.status.textContent = msg;
+  els.status.className = isError ? "error" : "";
+}
+
+function renderResult(article) {
+  els.results.innerHTML = "";
+
+  const div = document.createElement("div");
+  div.className = "result";
+
+  const pre = document.createElement("pre");
+  pre.textContent = article;
+  div.appendChild(pre);
+
+  const copyBtn = document.createElement("button");
+  copyBtn.className = "btn-small";
+  copyBtn.textContent = "コピー";
+  copyBtn.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(article);
+      copyBtn.textContent = "コピーしました";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "コピー";
+        copyBtn.classList.remove("copied");
+      }, 1500);
+    } catch {
+      setStatus("コピーに失敗しました。手動で選択してコピーしてください。", true);
+    }
+  };
+  div.appendChild(copyBtn);
+
+  els.results.appendChild(div);
+}
+
+async function generate() {
+  const articleText = els.articleText.value.trim();
+  if (!articleText) {
+    setStatus("note記事の本文を入力してください。", true);
+    return;
+  }
+
+  els.generateBtn.disabled = true;
+  setStatus("生成中…(記事の長さによって数十秒かかることがあります)");
+  els.results.innerHTML = "";
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        articleText,
+        articleUrl: els.articleUrl.value.trim(),
+        tone: els.tone.value.trim(),
+        note: els.note.value.trim(),
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "生成に失敗しました");
+    if (!data.article) throw new Error("記事を取得できませんでした");
+    renderResult(data.article);
+    setStatus("Substack導入記事を生成しました。");
+  } catch (err) {
+    setStatus(err.message, true);
+  } finally {
+    els.generateBtn.disabled = false;
+  }
+}
+
+els.generateBtn.addEventListener("click", generate);
+</script>
+</body>
+</html>

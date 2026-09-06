@@ -1,0 +1,12 @@
+{
+  "name": "note-substack-generator",
+  "version": "1.0.0",
+  "description": "note記事を貼り付けると、Substack用の英語導入記事をClaude APIで自動生成するWebアプリ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
