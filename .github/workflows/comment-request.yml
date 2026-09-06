@@ -6,14 +6,8 @@ on:
 
 jobs:
   generate:
-    # リポジトリの持ち主が開いたIssueだけを処理する(公開リポジトリでの悪用/API消費を防ぐため)。
-    # 1on1支援ツール向けのIssue(1on1-*ラベル)はmanager-1on1-tool.ymlが処理するため除外する。
-    if: |
-      github.event.issue.user.login == github.repository_owner &&
-      !contains(github.event.issue.labels.*.name, '1on1-register') &&
-      !contains(github.event.issue.labels.*.name, '1on1-agenda') &&
-      !contains(github.event.issue.labels.*.name, '1on1-log') &&
-      !contains(github.event.issue.labels.*.name, '1on1-trend')
+    # リポジトリの持ち主が開いたIssueだけを処理する(公開リポジトリでの悪用/API消費を防ぐため)
+    if: github.event.issue.user.login == github.repository_owner
     runs-on: ubuntu-latest
     permissions:
       issues: write
