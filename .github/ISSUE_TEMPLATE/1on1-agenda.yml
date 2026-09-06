@@ -1,0 +1,20 @@
+name: "[1on1] 準備(アジェンダ生成)"
+description: 1on1前にAIがアジェンダ案を提案します
+title: "[1on1準備] "
+labels: ["1on1-agenda"]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: 対象
+      description: 登録時の「名前」と同じ表記で入力してください
+      placeholder: "例: 山田さん"
+    validations:
+      required: true
+  - type: textarea
+    id: status
+    attributes:
+      label: 直近の業務状況(任意)
+      placeholder: "例: 新規案件がスタートし負荷が上がっている。先週のミスについて本人から報告あり。"
+    validations:
+      required: false

@@ -1,19 +1,20 @@
-name: Comment Draft From Issue
+name: 1on1 Tool From Issue
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  generate:
-    # リポジトリの持ち主が開いたIssueだけを処理する(公開リポジトリでの悪用/API消費を防ぐため)。
-    # 1on1支援ツール向けのIssue(1on1-*ラベル)はmanager-1on1-tool.ymlが処理するため除外する。
+  handle:
+    # リポジトリの持ち主が開いた、1on1支援ツール向けラベル付きのIssueだけを処理する
     if: |
       github.event.issue.user.login == github.repository_owner &&
-      !contains(github.event.issue.labels.*.name, '1on1-register') &&
-      !contains(github.event.issue.labels.*.name, '1on1-agenda') &&
-      !contains(github.event.issue.labels.*.name, '1on1-log') &&
-      !contains(github.event.issue.labels.*.name, '1on1-trend')
+      (
+        contains(github.event.issue.labels.*.name, '1on1-register') ||
+        contains(github.event.issue.labels.*.name, '1on1-agenda') ||
+        contains(github.event.issue.labels.*.name, '1on1-log') ||
+        contains(github.event.issue.labels.*.name, '1on1-trend')
+      )
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -27,8 +28,8 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Generate comment drafts
-        working-directory: comment-generator
+      - name: Run 1on1 bot
+        working-directory: manager-1on1-tool
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -36,12 +37,13 @@ jobs:
           REPO: ${{ github.repository }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ',') }}
         run: node bot.js
 
-      - name: Commit updated history
+      - name: Commit updated state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add comment-generator/state/history.json
-          git diff --staged --quiet || git commit -m "chore: update comment history (issue #${{ github.event.issue.number }})"
+          git add manager-1on1-tool/state/subordinates.json manager-1on1-tool/state/logs.json
+          git diff --staged --quiet || git commit -m "chore: update 1on1 tool state (issue #${{ github.event.issue.number }})"
           git push
