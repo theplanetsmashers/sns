@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>1on1支援ツール</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1c1e21;
+    --muted: #6b7280;
+    --border: #e2e5ea;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --chip-bg: #eef2ff;
+    --danger: #dc2626;
+    --good: #16a34a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181c;
+      --card: #202226;
+      --text: #f0f1f3;
+      --muted: #9aa0aa;
+      --border: #33363c;
+      --accent: #5b8def;
+      --accent-hover: #7ba3f2;
+      --chip-bg: #26304a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+    padding: 24px 16px 60px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+  .tab-btn {
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+  }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 12px 0 4px; }
+  label:first-child { margin-top: 0; }
+  input[type="text"], input[type="date"], textarea, select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    resize: vertical;
+    font-family: inherit;
+  }
+  textarea { min-height: 80px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 16px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    width: 100%;
+    margin-top: 16px;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:disabled { opacity: 0.5; cursor: default; }
+  .btn-small {
+    background: var(--chip-bg);
+    color: var(--text);
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .status { font-size: 13px; color: var(--muted); margin-top: 8px; min-height: 18px; }
+  .status.error { color: var(--danger); }
+  .result {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    background: var(--bg);
+  }
+  .result h3 { margin: 0 0 6px; font-size: 14px; }
+  .result p { margin: 4px 0; font-size: 13px; line-height: 1.5; white-space: pre-wrap; }
+  .result .label { color: var(--muted); font-size: 11px; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--accent);
+    margin-left: 6px;
+  }
+  .sub-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border);
+    padding: 10px 0;
+  }
+  .sub-item:last-child { border-bottom: none; }
+  .sub-item .meta { font-size: 12px; color: var(--muted); }
+  ul.plain { margin: 4px 0; padding-left: 18px; }
+  ul.plain li { font-size: 13px; margin-bottom: 4px; }
+  .log-item { border-bottom: 1px dashed var(--border); padding: 10px 0; }
+  .log-item:last-child { border-bottom: none; }
+  .log-item .date { font-size: 12px; color: var(--muted); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>1on1支援ツール</h1>
+    <p class="sub">新任管理職向け。部下プロフィールを登録し、1on1前のアジェンダ提案・1on1後の要点記録・複数回のログからの傾向分析をClaude APIが支援します。</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="members">部下管理</button>
+      <button class="tab-btn" data-tab="agenda">1on1準備</button>
+      <button class="tab-btn" data-tab="record">1on1後記録</button>
+      <button class="tab-btn" data-tab="trend">履歴・傾向</button>
+    </div>
+
+    <!-- 部下管理 -->
+    <div class="panel active" id="panel-members">
+      <div class="card">
+        <label for="m-name">名前 <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="m-name" placeholder="例: 山田さん" />
+
+        <div class="row">
+          <div>
+            <label for="m-role">役割</label>
+            <input type="text" id="m-role" placeholder="例: 営業担当" />
+          </div>
+          <div>
+            <label for="m-years">経験年数</label>
+            <input type="text" id="m-years" placeholder="例: 3年" />
+          </div>
+        </div>
+
+        <label for="m-type">関係</label>
+        <select id="m-type">
+          <option value="direct">直属部下</option>
+          <option value="delegate">委任先チームリーダー</option>
+        </select>
+        <p class="hint">直属部下と委任先チームリーダーでは、1on1準備で重視する観点が変わります。</p>
+
+        <label for="m-note">メモ(任意)</label>
+        <textarea id="m-note" placeholder="性格や背景など、判断の参考になること"></textarea>
+
+        <button id="m-add-btn" class="btn-primary">登録する</button>
+        <div class="status" id="m-status"></div>
+      </div>
+
+      <div class="card">
+        <div id="m-list"><p class="hint">まだ登録されていません。</p></div>
+      </div>
+    </div>
+
+    <!-- 1on1準備 -->
+    <div class="panel" id="panel-agenda">
+      <div class="card">
+        <label for="a-select">対象</label>
+        <select id="a-select"></select>
+
+        <label for="a-status">直近の業務状況(申告・観察メモ)</label>
+        <textarea id="a-status" placeholder="例: 新規案件がスタートし負荷が上がっている。先週のミスについて本人から報告あり。"></textarea>
+
+        <button id="a-btn" class="btn-primary">アジェンダ案を生成する</button>
+        <div class="status" id="a-status-msg"></div>
+      </div>
+      <div id="a-results"></div>
+    </div>
+
+    <!-- 1on1後記録 -->
+    <div class="panel" id="panel-record">
+      <div class="card">
+        <label for="r-select">対象</label>
+        <select id="r-select"></select>
+
+        <label for="r-date">実施日</label>
+        <input type="date" id="r-date" />
+
+        <label for="r-memo">1on1メモ(生データでOK)</label>
+        <textarea id="r-memo" placeholder="話した内容をそのまま貼り付け。箇条書きでも文章でも構いません。" style="min-height:140px;"></textarea>
+
+        <button id="r-btn" class="btn-primary">記録して要点を抽出する</button>
+        <div class="status" id="r-status-msg"></div>
+      </div>
+      <div id="r-result"></div>
+    </div>
+
+    <!-- 履歴・傾向 -->
+    <div class="panel" id="panel-trend">
+      <div class="card">
+        <label for="t-select">対象</label>
+        <select id="t-select"></select>
+        <button id="t-btn" class="btn-primary">傾向を分析する</button>
+        <div class="status" id="t-status-msg"></div>
+      </div>
+      <div id="t-result"></div>
+
+      <div class="card">
+        <h3 style="margin-top:0;font-size:14px;">記録一覧</h3>
+        <div id="t-logs"><p class="hint">対象を選ぶと表示されます。</p></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let subordinates = [];
+
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function setStatus(id, msg, isError) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = "status" + (isError ? " error" : "");
+}
+
+function typeLabel(type) {
+  return type === "delegate" ? "委任先チームリーダー" : "直属部下";
+}
+
+// タブ切り替え
+document.querySelectorAll(".tab-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
+  });
+});
+
+// ===== 部下管理 =====
+async function loadSubordinates() {
+  const res = await fetch("/api/subordinates");
+  const data = await res.json();
+  subordinates = data.subordinates || [];
+  renderMemberList();
+  fillSelects();
+}
+
+function renderMemberList() {
+  const list = document.getElementById("m-list");
+  if (subordinates.length === 0) {
+    list.innerHTML = "<p class='hint'>まだ登録されていません。</p>";
+    return;
+  }
+  list.innerHTML = "";
+  subordinates.forEach((s) => {
+    const div = document.createElement("div");
+    div.className = "sub-item";
+    div.innerHTML = `
+      <div>
+        <strong>${escapeHtml(s.name)}</strong><span class="badge">${typeLabel(s.type)}</span>
+        <div class="meta">${escapeHtml(s.role || "")}${s.experienceYears ? " / " + escapeHtml(s.experienceYears) : ""}</div>
+      </div>
+    `;
+    const delBtn = document.createElement("button");
+    delBtn.className = "btn-small";
+    delBtn.textContent = "削除";
+    delBtn.onclick = async () => {
+      if (!confirm(`${s.name}さんを削除しますか?(記録は残ります)`)) return;
+      await fetch("/api/subordinates/" + s.id, { method: "DELETE" });
+      loadSubordinates();
+    };
+    div.appendChild(delBtn);
+    list.appendChild(div);
+  });
+}
+
+function fillSelects() {
+  const selects = [document.getElementById("a-select"), document.getElementById("r-select"), document.getElementById("t-select")];
+  selects.forEach((sel) => {
+    const prev = sel.value;
+    sel.innerHTML = "";
+    if (subordinates.length === 0) {
+      sel.innerHTML = "<option value=''>(先に部下を登録してください)</option>";
+      return;
+    }
+    subordinates.forEach((s) => {
+      const opt = document.createElement("option");
+      opt.value = s.id;
+      opt.textContent = `${s.name}(${typeLabel(s.type)})`;
+      sel.appendChild(opt);
+    });
+    if (prev && subordinates.some((s) => s.id === prev)) sel.value = prev;
+  });
+}
+
+document.getElementById("m-add-btn").addEventListener("click", async () => {
+  const name = document.getElementById("m-name").value.trim();
+  if (!name) {
+    setStatus("m-status", "名前を入力してください。", true);
+    return;
+  }
+  const payload = {
+    name,
+    role: document.getElementById("m-role").value.trim(),
+    experienceYears: document.getElementById("m-years").value.trim(),
+    type: document.getElementById("m-type").value,
+    note: document.getElementById("m-note").value.trim(),
+  };
+  setStatus("m-status", "登録中…");
+  try {
+    const res = await fetch("/api/subordinates", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "登録に失敗しました");
+    document.getElementById("m-name").value = "";
+    document.getElementById("m-role").value = "";
+    document.getElementById("m-years").value = "";
+    document.getElementById("m-note").value = "";
+    setStatus("m-status", "登録しました。");
+    loadSubordinates();
+  } catch (err) {
+    setStatus("m-status", err.message, true);
+  }
+});
+
+// ===== 1on1準備(アジェンダ) =====
+document.getElementById("a-btn").addEventListener("click", async () => {
+  const subordinateId = document.getElementById("a-select").value;
+  if (!subordinateId) {
+    setStatus("a-status-msg", "対象を選択してください。", true);
+    return;
+  }
+  const recentStatus = document.getElementById("a-status").value.trim();
+  const btn = document.getElementById("a-btn");
+  btn.disabled = true;
+  setStatus("a-status-msg", "生成中…");
+  document.getElementById("a-results").innerHTML = "";
+  try {
+    const res = await fetch("/api/agenda", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subordinateId, recentStatus }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "生成に失敗しました");
+    renderAgenda(data.agenda || []);
+    setStatus("a-status-msg", `${(data.agenda || []).length}件のアジェンダ案を生成しました。`);
+  } catch (err) {
+    setStatus("a-status-msg", err.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+function renderAgenda(agenda) {
+  const wrap = document.getElementById("a-results");
+  wrap.innerHTML = "";
+  agenda.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.className = "result";
+    div.innerHTML = `
+      <h3>${i + 1}. ${escapeHtml(item.topic)}</h3>
+      <p><span class="label">なぜ今回扱うか</span><br>${escapeHtml(item.reason)}</p>
+      <p><span class="label">問いかけ例</span><br>${escapeHtml(item.question)}</p>
+    `;
+    wrap.appendChild(div);
+  });
+}
+
+// ===== 1on1後記録 =====
+(function initDate() {
+  document.getElementById("r-date").value = new Date().toISOString().slice(0, 10);
+})();
+
+document.getElementById("r-btn").addEventListener("click", async () => {
+  const subordinateId = document.getElementById("r-select").value;
+  const memo = document.getElementById("r-memo").value.trim();
+  if (!subordinateId) {
+    setStatus("r-status-msg", "対象を選択してください。", true);
+    return;
+  }
+  if (!memo) {
+    setStatus("r-status-msg", "1on1メモを入力してください。", true);
+    return;
+  }
+  const btn = document.getElementById("r-btn");
+  btn.disabled = true;
+  setStatus("r-status-msg", "要点を抽出中…");
+  document.getElementById("r-result").innerHTML = "";
+  try {
+    const res = await fetch("/api/logs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subordinateId, memo, date: document.getElementById("r-date").value }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "記録に失敗しました");
+    renderLogSummary(data.log);
+    document.getElementById("r-memo").value = "";
+    setStatus("r-status-msg", "記録しました。");
+  } catch (err) {
+    setStatus("r-status-msg", err.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+function listHtml(items) {
+  if (!items || items.length === 0) return "<p class='hint'>(なし)</p>";
+  return "<ul class='plain'>" + items.map((i) => `<li>${escapeHtml(i)}</li>`).join("") + "</ul>";
+}
+
+function renderLogSummary(log) {
+  const div = document.createElement("div");
+  div.className = "result";
+  div.innerHTML = `
+    <h3>${escapeHtml(log.date)} の要点</h3>
+    <p class="label">要点</p>${listHtml(log.summary.keyPoints)}
+    <p class="label">判断基準</p>${listHtml(log.summary.judgmentCriteria)}
+    <p class="label">次回フォロー</p>${listHtml(log.summary.followUps)}
+  `;
+  document.getElementById("r-result").innerHTML = "";
+  document.getElementById("r-result").appendChild(div);
+}
+
+// ===== 履歴・傾向 =====
+document.getElementById("t-select").addEventListener("change", loadLogsForTrend);
+
+document.getElementById("t-btn").addEventListener("click", async () => {
+  const subordinateId = document.getElementById("t-select").value;
+  if (!subordinateId) {
+    setStatus("t-status-msg", "対象を選択してください。", true);
+    return;
+  }
+  const btn = document.getElementById("t-btn");
+  btn.disabled = true;
+  setStatus("t-status-msg", "分析中…");
+  document.getElementById("t-result").innerHTML = "";
+  try {
+    const res = await fetch("/api/trend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subordinateId }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "分析に失敗しました");
+    const div = document.createElement("div");
+    div.className = "result";
+    div.innerHTML = `
+      <h3>傾向サマリー</h3>
+      <p>${escapeHtml(data.trend.summary)}</p>
+      <p class="label">注目すべき兆候</p>${listHtml(data.trend.signals)}
+    `;
+    document.getElementById("t-result").appendChild(div);
+    setStatus("t-status-msg", "分析しました。");
+  } catch (err) {
+    setStatus("t-status-msg", err.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+async function loadLogsForTrend() {
+  const subordinateId = document.getElementById("t-select").value;
+  const wrap = document.getElementById("t-logs");
+  if (!subordinateId) {
+    wrap.innerHTML = "<p class='hint'>対象を選ぶと表示されます。</p>";
+    return;
+  }
+  try {
+    const res = await fetch("/api/logs?subordinateId=" + encodeURIComponent(subordinateId));
+    const data = await res.json();
+    const logs = data.logs || [];
+    if (logs.length === 0) {
+      wrap.innerHTML = "<p class='hint'>まだ記録はありません。</p>";
+      return;
+    }
+    wrap.innerHTML = "";
+    logs.forEach((log) => {
+      const div = document.createElement("div");
+      div.className = "log-item";
+      div.innerHTML = `
+        <div class="date">${escapeHtml(log.date)}</div>
+        <p class="label">要点</p>${listHtml(log.summary.keyPoints)}
+        <p class="label">判断基準</p>${listHtml(log.summary.judgmentCriteria)}
+        <p class="label">次回フォロー</p>${listHtml(log.summary.followUps)}
+      `;
+      wrap.appendChild(div);
+    });
+  } catch {
+    wrap.innerHTML = "<p class='hint'>読み込みに失敗しました。</p>";
+  }
+}
+
+loadSubordinates();
+</script>
+</body>
+</html>

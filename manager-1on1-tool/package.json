@@ -1,0 +1,12 @@
+{
+  "name": "manager-1on1-tool",
+  "version": "1.0.0",
+  "description": "新任管理職向け1on1支援ツール。部下プロフィール管理・1on1前のアジェンダ提案・1on1後の要点記録・傾向分析をClaude APIで支援する(フェーズ3)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
