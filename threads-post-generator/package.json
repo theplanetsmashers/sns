@@ -1,0 +1,12 @@
+{
+  "name": "threads-post-generator",
+  "version": "1.0.0",
+  "description": "会社の裏設定シリーズを元にしたThreads投稿案の自動生成(フェーズ1)",
+  "main": "generate-posts.js",
+  "scripts": {
+    "generate": "node generate-posts.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "comment-generator",
+  "version": "1.0.0",
+  "description": "他の人のSNS投稿に対する返信コメント案をClaude APIで自動生成するWebアプリ(フェーズ2)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

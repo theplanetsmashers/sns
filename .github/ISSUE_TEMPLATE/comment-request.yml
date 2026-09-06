@@ -1,0 +1,33 @@
+name: コメント案リクエスト
+description: 他の人の投稿に対する返信コメント案を自動生成します
+title: "[コメント案] "
+labels: ["comment-request"]
+body:
+  - type: input
+    id: author
+    attributes:
+      label: 投稿者(任意)
+      placeholder: "例: 田中さん"
+    validations:
+      required: false
+  - type: input
+    id: url
+    attributes:
+      label: 投稿URL(任意・わかれば本文の自動取得を試みます)
+      placeholder: "https://www.threads.net/@xxx/post/xxxxx"
+    validations:
+      required: false
+  - type: textarea
+    id: posttext
+    attributes:
+      label: 投稿本文(URLからの自動取得に失敗した場合はこちらが必須です。確実なのは直接貼り付けです)
+      placeholder: 投稿の本文をそのまま貼り付け
+    validations:
+      required: false
+  - type: textarea
+    id: note
+    attributes:
+      label: 追加の指示・文脈(任意)
+      placeholder: "例: 親しい同業者なので少しフランクに"
+    validations:
+      required: false

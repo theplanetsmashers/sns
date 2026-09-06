@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>コメント自動生成</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1c1e21;
+    --muted: #6b7280;
+    --border: #e2e5ea;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --chip-bg: #eef2ff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181c;
+      --card: #202226;
+      --text: #f0f1f3;
+      --muted: #9aa0aa;
+      --border: #33363c;
+      --accent: #5b8def;
+      --accent-hover: #7ba3f2;
+      --chip-bg: #26304a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+    padding: 24px 16px 60px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 12px 0 4px; }
+  label:first-child { margin-top: 0; }
+  input[type="text"], textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    resize: vertical;
+    font-family: inherit;
+  }
+  textarea { min-height: 80px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 16px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    width: 100%;
+    margin-top: 16px;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:disabled { opacity: 0.5; cursor: default; }
+  .result {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    background: var(--bg);
+  }
+  .result p { margin: 0 0 10px; white-space: pre-wrap; line-height: 1.5; }
+  .result .actions { display: flex; gap: 8px; }
+  .btn-small {
+    background: var(--chip-bg);
+    color: var(--text);
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .btn-small.used { background: #16a34a; color: #fff; }
+  #status { font-size: 13px; color: var(--muted); margin-top: 8px; min-height: 18px; }
+  #status.error { color: #dc2626; }
+  details { margin-top: 20px; }
+  summary { cursor: pointer; font-size: 13px; color: var(--muted); }
+  .history-item { font-size: 13px; border-bottom: 1px dashed var(--border); padding: 8px 0; }
+  .history-item .meta { color: var(--muted); font-size: 11px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>コメント自動生成</h1>
+    <p class="sub">他の人の投稿をここに貼り付けると、返信コメント案を3パターン作成します。投稿(送信)は必ずコピペして自分で行ってください。</p>
+
+    <div class="card">
+      <label for="postText">相手の投稿内容 <span style="color:#dc2626">*</span></label>
+      <textarea id="postText" placeholder="コメントしたい投稿の本文をそのまま貼り付け"></textarea>
+
+      <div class="row">
+        <div>
+          <label for="author">投稿者(任意)</label>
+          <input type="text" id="author" placeholder="例: 田中さん" />
+        </div>
+        <div>
+          <label for="postUrl">投稿URL(任意・メモ用)</label>
+          <input type="text" id="postUrl" placeholder="https://www.threads.net/..." />
+        </div>
+      </div>
+
+      <label for="tone">普段のトーン(初回だけ入力すればOK・自動で保存されます)</label>
+      <textarea id="tone" placeholder="例: 共感ベースで気取らない自然体。絵文字は0〜1個程度。"></textarea>
+
+      <label for="note">追加の指示・文脈(任意)</label>
+      <textarea id="note" placeholder="例: 親しい同業者なので少しフランクに / この人には初めてコメントする、など"></textarea>
+
+      <button id="generateBtn" class="btn-primary">コメント案を生成する</button>
+      <div id="status"></div>
+    </div>
+
+    <div id="results"></div>
+
+    <details>
+      <summary>最近使ったコメントの履歴</summary>
+      <div id="history"></div>
+    </details>
+  </div>
+
+<script>
+const els = {
+  postText: document.getElementById("postText"),
+  author: document.getElementById("author"),
+  postUrl: document.getElementById("postUrl"),
+  tone: document.getElementById("tone"),
+  note: document.getElementById("note"),
+  generateBtn: document.getElementById("generateBtn"),
+  status: document.getElementById("status"),
+  results: document.getElementById("results"),
+  history: document.getElementById("history"),
+};
+
+// トーン設定はブラウザに保存して毎回入力しなくて済むようにする
+try {
+  const savedTone = localStorage.getItem("cg_tone");
+  if (savedTone) els.tone.value = savedTone;
+} catch {}
+
+els.tone.addEventListener("change", () => {
+  try { localStorage.setItem("cg_tone", els.tone.value); } catch {}
+});
+
+function setStatus(msg, isError) {
+  els.status.textContent = msg;
+  els.status.className = isError ? "error" : "";
+}
+
+function renderResults(comments, ctx) {
+  els.results.innerHTML = "";
+  comments.forEach((comment) => {
+    const div = document.createElement("div");
+    div.className = "result";
+
+    const p = document.createElement("p");
+    p.textContent = comment;
+    div.appendChild(p);
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "btn-small";
+    copyBtn.textContent = "コピー";
+    copyBtn.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(comment);
+        copyBtn.textContent = "コピーしました";
+        setTimeout(() => (copyBtn.textContent = "コピー"), 1500);
+      } catch {
+        setStatus("コピーに失敗しました。手動で選択してコピーしてください。", true);
+      }
+    };
+
+    const usedBtn = document.createElement("button");
+    usedBtn.className = "btn-small";
+    usedBtn.textContent = "投稿した(履歴に記録)";
+    usedBtn.onclick = async () => {
+      usedBtn.disabled = true;
+      try {
+        await fetch("/api/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...ctx, comment }),
+        });
+        usedBtn.textContent = "記録しました";
+        usedBtn.classList.add("used");
+        loadHistory();
+      } catch {
+        usedBtn.disabled = false;
+        setStatus("履歴の記録に失敗しました。", true);
+      }
+    };
+
+    actions.appendChild(copyBtn);
+    actions.appendChild(usedBtn);
+    div.appendChild(actions);
+    els.results.appendChild(div);
+  });
+}
+
+async function generate() {
+  const postText = els.postText.value.trim();
+  if (!postText) {
+    setStatus("相手の投稿内容を入力してください。", true);
+    return;
+  }
+
+  const ctx = {
+    author: els.author.value.trim(),
+    postText,
+    postUrl: els.postUrl.value.trim(),
+  };
+
+  els.generateBtn.disabled = true;
+  setStatus("生成中…");
+  els.results.innerHTML = "";
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...ctx, tone: els.tone.value.trim(), note: els.note.value.trim() }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "生成に失敗しました");
+    if (!data.comments || data.comments.length === 0) throw new Error("コメント案を取得できませんでした");
+    renderResults(data.comments, ctx);
+    setStatus(`${data.comments.length}件のコメント案を生成しました。`);
+  } catch (err) {
+    setStatus(err.message, true);
+  } finally {
+    els.generateBtn.disabled = false;
+  }
+}
+
+async function loadHistory() {
+  try {
+    const res = await fetch("/api/history?limit=15");
+    const data = await res.json();
+    els.history.innerHTML = "";
+    if (!data.history || data.history.length === 0) {
+      els.history.innerHTML = "<p class='hint'>まだ履歴はありません。</p>";
+      return;
+    }
+    data.history.forEach((h) => {
+      const div = document.createElement("div");
+      div.className = "history-item";
+      const date = new Date(h.usedAt).toLocaleString("ja-JP");
+      div.innerHTML = `<div>${h.comment.replace(/</g, "&lt;")}</div><div class="meta">${date} ${h.author ? "→ " + h.author.replace(/</g, "&lt;") : ""}</div>`;
+      els.history.appendChild(div);
+    });
+  } catch {
+    // 履歴取得の失敗は致命的ではないので黙って無視
+  }
+}
+
+els.generateBtn.addEventListener("click", generate);
+loadHistory();
+</script>
+</body>
+</html>
