@@ -1,0 +1,540 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>The Company's Hidden Rules</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ground: #EDEEE9;
+    --surface: #FFFFFF;
+    --surface-2: #E4E6DE;
+    --ink: #1B1E1C;
+    --ink-soft: #52584F;
+    --ink-faint: #868C7F;
+    --line: #D7D9D1;
+    --line-strong: #B9BDB1;
+    --accent: #B5741A;
+    --accent-strong: #8F5A12;
+    --accent-soft: rgba(181, 116, 26, 0.13);
+    --teal: #2B6E6B;
+    --teal-soft: rgba(43, 110, 107, 0.12);
+    --shadow: 0 1px 2px rgba(20, 22, 18, 0.05), 0 10px 24px rgba(20, 22, 18, 0.06);
+    --radius: 4px;
+    --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+    --font-body: 'Public Sans', -apple-system, 'Hiragino Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #14171A;
+      --surface: #1C2023;
+      --surface-2: #262B2C;
+      --ink: #ECEEE7;
+      --ink-soft: #A9AFA2;
+      --ink-faint: #737A6E;
+      --line: #2E3432;
+      --line-strong: #3C433F;
+      --accent: #E3A34C;
+      --accent-strong: #F0BC77;
+      --accent-soft: rgba(227, 163, 76, 0.16);
+      --teal: #4FA39E;
+      --teal-soft: rgba(79, 163, 158, 0.16);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #14171A;
+    --surface: #1C2023;
+    --surface-2: #262B2C;
+    --ink: #ECEEE7;
+    --ink-soft: #A9AFA2;
+    --ink-faint: #737A6E;
+    --line: #2E3432;
+    --line-strong: #3C433F;
+    --accent: #E3A34C;
+    --accent-strong: #F0BC77;
+    --accent-soft: rgba(227, 163, 76, 0.16);
+    --teal: #4FA39E;
+    --teal-soft: rgba(79, 163, 158, 0.16);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px rgba(0, 0, 0, 0.3);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 22px 80px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead {
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 30px;
+    margin-bottom: 34px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(34px, 7vw, 50px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+
+  .dek {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 54ch;
+    margin: 0 0 26px;
+  }
+
+  .dek strong { color: var(--ink); font-weight: 600; }
+
+  .stat-row {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .stat-value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- intro ---------- */
+
+  .intro {
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin: 0 0 42px;
+  }
+
+  .intro a { color: var(--teal); }
+
+  /* ---------- section label ---------- */
+
+  .section-label {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 20px;
+  }
+
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ---------- record cards ---------- */
+
+  .records {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 48px;
+  }
+
+  .record {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 24px 20px 30px;
+  }
+
+  .record::before {
+    /* punch hole, like a tagged inspection card */
+    content: "";
+    position: absolute;
+    top: 24px;
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ground);
+    border: 1px solid var(--line-strong);
+  }
+
+  .record::after {
+    /* tear line under the number */
+    content: "";
+    position: absolute;
+    top: 40px;
+    bottom: 20px;
+    left: 16px;
+    width: 0;
+    border-left: 1px dashed var(--line-strong);
+  }
+
+  .record-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .record-no {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+
+  .record h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+
+  .finding {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 14.5px;
+    color: var(--accent-strong);
+    margin: 0 0 10px;
+  }
+
+  .finding::before { content: "Finding — "; font-style: normal; font-weight: 600; }
+
+  .teaser {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+
+  .record-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .record-foot a {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .record-foot a:hover { border-bottom-color: var(--teal); }
+
+  .lang-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 1px 8px;
+  }
+
+  /* ---------- follow / cta ---------- */
+
+  .cta {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 26px 24px;
+    margin-bottom: 30px;
+  }
+
+  .cta h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    margin: 0 0 8px;
+  }
+
+  .cta p {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    max-width: 52ch;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #FFF8EE;
+  }
+  .btn-primary:hover { background: var(--accent-strong); }
+
+  .btn-ghost {
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+  }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    line-height: 1.7;
+    max-width: 58ch;
+  }
+
+  footer a { color: var(--ink-faint); }
+
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Field records &middot; manufacturing floor, Japan</div>
+    <h1>The Company's Hidden Rules</h1>
+    <p class="dek">
+      <strong>Kotolog</strong> is a working manufacturing manager in Japan who writes down what the employee handbook leaves out —
+      how trust actually gets assigned, why "I understand" is the riskiest thing you can say, and what a shop floor teaches
+      about reporting, failure, and automation that a management course doesn't.
+    </p>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-value">170+</span>
+        <span class="stat-label">Records on file</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">Jul&nbsp;2026</span>
+        <span class="stat-label">Archive opened</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">Weekly</span>
+        <span class="stat-label">New entries</span>
+      </div>
+    </div>
+  </header>
+
+  <p class="intro">
+    Each record is a single true story from the floor — an inspection that went wrong, a report that came too late,
+    a robot that got bought before anyone counted what it needed to replace. Published in Japanese as
+    <a href="https://note.com/kotolog_note" target="_blank" rel="noopener noreferrer">「会社の裏設定」(Company Backstory)</a>
+    on note.com. Seven records worth starting with, below.
+  </p>
+
+  <div class="section-label">Seven records from the archive</div>
+
+  <div class="records">
+
+    <article class="record">
+      <div class="record-head">
+        <h2>Why the Same Person Keeps Getting the Call</h2>
+        <span class="record-no">No. 001</span>
+      </div>
+      <p class="finding">Trust outranks talent.</p>
+      <p class="teaser">
+        New hires assume the person everyone calls is simply the best at the job. Managers know it's someone else
+        entirely: the one they can hand something to and stop worrying about. Tracing the moment a shop-floor
+        engineer became the manager doing the calling — and what changed about whose name came to mind first.
+      </p>
+      <div class="record-foot">
+        <a href="https://note.com/kotolog_note/n/nbfe74e704094" target="_blank" rel="noopener noreferrer">Read the full record on note.com &rarr;</a>
+        <span class="lang-tag">JP &middot; auto-translate works well</span>
+      </div>
+    </article>
+
+    <article class="record">
+      <div class="record-head">
+        <h2>Efficiency Isn't About Working Faster</h2>
+        <span class="record-no">No. 002</span>
+      </div>
+      <p class="finding">The waste was never the work. It was the hesitation before it.</p>
+      <p class="teaser">
+        Watching an operator search for a tool, hunt down a drawing, and re-measure the same part a third time,
+        a young engineer realizes none of it counted as "the job" — it was the delay before the job could start.
+        A different definition of kaizen follows.
+      </p>
+      <div class="record-foot">
+        <a href="https://note.com/kotolog_note/n/n283a006d275a" target="_blank" rel="noopener noreferrer">Read the full record on note.com &rarr;</a>
+        <span class="lang-tag">JP &middot; auto-translate works well</span>
+      </div>
+    </article>
+
+    <article class="record">
+      <div class="record-head">
+        <h2>"Got It" Is the Most Dangerous Thing You Can Say</h2>
+        <span class="record-no">No. 003</span>
+      </div>
+      <p class="finding">A confident yes is not proof of understanding.</p>
+      <p class="teaser">
+        A rookie's cheerful "understood!" costs him the wrong part and a quiet question from a senior colleague:
+        "Did you really understand?" Years later, training his own juniors, he finds himself listening for a
+        different phrase entirely — one that sounds far less confident, and means far more.
+      </p>
+      <div class="record-foot">
+        <a href="https://note.com/kotolog_note/n/n5157b8dc0a8e" target="_blank" rel="noopener noreferrer">Read the full record on note.com &rarr;</a>
+        <span class="lang-tag">JP &middot; auto-translate works well</span>
+      </div>
+    </article>
+
+    <article class="record">
+      <div class="record-head">
+        <h2>A Phrase More Trusted Than "I Can Handle It"</h2>
+        <span class="record-no">No. 004</span>
+      </div>
+      <p class="finding">Managers don't fear difficulty. They fear silence.</p>
+      <p class="teaser">
+        Promising "I can do it" and then going quiet until the deadline nearly costs a young engineer his
+        credibility. What his manager says afterward reshapes how he reads every "yes" his own team gives him
+        today.
+      </p>
+      <div class="record-foot">
+        <a href="https://note.com/kotolog_note/n/nd64a5e6b9672" target="_blank" rel="noopener noreferrer">Read the full record on note.com &rarr;</a>
+        <span class="lang-tag">JP &middot; auto-translate works well</span>
+      </div>
+    </article>
+
+    <article class="record">
+      <div class="record-head">
+        <h2>You Don't Actually Need to "Report"</h2>
+        <span class="record-no">No. 006</span>
+      </div>
+      <p class="finding">By the time something's worth reporting, it's often too late to matter.</p>
+      <p class="teaser">
+        "The machine stopped" is a report nobody can use — the damage is already done. "It sounded a little off
+        yesterday" is the one that changes what happens next. A shop-floor emergency reframes what report-and-consult
+        culture was supposed to do in the first place.
+      </p>
+      <div class="record-foot">
+        <a href="https://note.com/kotolog_note/n/n99669bc21858" target="_blank" rel="noopener noreferrer">Read the full record on note.com &rarr;</a>
+        <span class="lang-tag">JP &middot; auto-translate works well</span>
+      </div>
+    </article>
+
+    <article class="record">
+      <div class="record-head">
+        <h2>What Actually Worries a Manager Isn't Failure</h2>
+        <span class="record-no">No. 008</span>
+      </div>
+      <p class="finding">A spotless record can be a warning sign, not a good one.</p>
+      <p class="teaser">
+        "I haven't failed once this year" should sound reassuring. To a manager it raises a quieter question —
+        did you take any risks at all? On why zero mistakes and zero growth so often arrive in the same package.
+      </p>
+      <div class="record-foot">
+        <a href="https://note.com/kotolog_note/n/n99cd23174fbf" target="_blank" rel="noopener noreferrer">Read the full record on note.com &rarr;</a>
+        <span class="lang-tag">JP &middot; auto-translate works well</span>
+      </div>
+    </article>
+
+    <article class="record">
+      <div class="record-head">
+        <h2>Before Buying a Robot, Count the Footsteps</h2>
+        <span class="record-no">No. 114</span>
+      </div>
+      <p class="finding">You can't automate a number nobody has ever measured.</p>
+      <p class="teaser">
+        Every automation pitch opens with payload and top speed. Every automation project stalls on the same
+        forgotten question: how many trips does this actually take today? Nobody had ever counted — because
+        nobody had ever needed to.
+      </p>
+      <div class="record-foot">
+        <a href="https://note.com/kotolog_note/n/naf77758607e8" target="_blank" rel="noopener noreferrer">Read the full record on note.com &rarr;</a>
+        <span class="lang-tag">JP &middot; auto-translate works well</span>
+      </div>
+    </article>
+
+  </div>
+
+  <section class="cta">
+    <h3>Follow the archive</h3>
+    <p>
+      New records are added most weeks, in Japanese, on note.com. There's also a small interactive tool — in
+      Japanese only for now — that reads whatever's on your mind and finds the closest record in the archive.
+    </p>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="https://note.com/kotolog_note" target="_blank" rel="noopener noreferrer">Follow on note.com</a>
+      <a class="btn btn-ghost" href="https://claude.ai/code/artifact/f2ff1622-9e56-4258-8a37-36316b229a43" target="_blank" rel="noopener noreferrer">Try the tool (Japanese)</a>
+    </div>
+  </section>
+
+  <footer>
+    Titles, findings, and teasers on this page are English summaries written for international readers —
+    the source records themselves are published in Japanese. Nothing here is a full translation; read the
+    original on note.com for the complete text.
+  </footer>
+
+</div>
+
+</body></html>
