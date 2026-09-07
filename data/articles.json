@@ -102,7 +102,21 @@
       "createdTime": "2026-07-16T14:06:33.572Z",
       "modifiedTime": "2026-07-16T14:07:26.473Z",
       "notePrice": 100,
-      "noteNumber": 1
+      "noteNumber": 1,
+      "titleEn": "Why the Same Person Always Gets the Call",
+      "summaryEn": "A new hire resents watching the same coworker get every urgent request — until becoming a manager reveals that what actually earns the call isn't raw skill, it's the quiet feeling of 'I can trust this person.'",
+      "keywordsEn": [
+        "delegation",
+        "trust at work",
+        "being relied on",
+        "why me",
+        "workload",
+        "reliability",
+        "favoritism",
+        "who gets picked",
+        "overworked",
+        "work distribution"
+      ]
     },
     {
       "id": "12_4svo25QHvJRIZppjfU4KgSFeuXii9-EXMNEN6df1g",
@@ -114,7 +128,21 @@
       "createdTime": "2026-07-16T14:09:59.994Z",
       "modifiedTime": "2026-07-16T14:10:35.798Z",
       "notePrice": 100,
-      "noteNumber": 2
+      "noteNumber": 2,
+      "titleEn": "What 'Efficiency' Actually Means on the Shop Floor",
+      "summaryEn": "A production engineer used to dread the word 'efficiency' as code for squeezing workers harder, until watching operators hunt for tools and drawings taught him the real waste isn't the work itself — it's the hesitation before it even begins.",
+      "keywordsEn": [
+        "efficiency",
+        "process improvement",
+        "kaizen",
+        "workplace waste",
+        "time management",
+        "manufacturing",
+        "lean thinking",
+        "streamlining",
+        "wasted motion",
+        "productivity"
+      ]
     },
     {
       "id": "14GqGYO6WQdQhCfh6L6pA6hWdQxAx8ZUdnJct4-p6C78",
@@ -126,7 +154,20 @@
       "createdTime": "2026-07-16T14:10:48.550Z",
       "modifiedTime": "2026-07-16T14:11:16.071Z",
       "notePrice": 100,
-      "noteNumber": 3
+      "noteNumber": 3,
+      "titleEn": "'Got It' Is the Most Dangerous Thing You Can Say",
+      "summaryEn": "Answering 'understood' just to end an awkward moment feels polite, but a manager's simple question — 'did you really get it?' — reveals it's actually the riskiest response of all, and real trust comes from having the courage to say 'I don't.'",
+      "keywordsEn": [
+        "pretending to understand",
+        "asking questions",
+        "clarifying instructions",
+        "miscommunication",
+        "admitting confusion",
+        "workplace communication",
+        "fear of asking",
+        "false confidence",
+        "training new hires"
+      ]
     },
     {
       "id": "1607rkgmDee2sN1LfR2WACNn3dHvZtlY6ciOsl8yBlPk",
@@ -138,7 +179,20 @@
       "createdTime": "2026-07-16T14:11:27.434Z",
       "modifiedTime": "2026-07-16T14:11:52.585Z",
       "notePrice": 100,
-      "noteNumber": 4
+      "noteNumber": 4,
+      "titleEn": "The Phrase That Earns More Trust Than 'I Can Do It'",
+      "summaryEn": "Always answering 'I can do it' felt like the safest way to seem reliable, until a blown deadline taught the author that what managers actually value isn't confidence upfront — it's speaking up early once things start going sideways.",
+      "keywordsEn": [
+        "overcommitting",
+        "saying yes to everything",
+        "asking for help",
+        "missed deadlines",
+        "reliability",
+        "early communication",
+        "admitting struggle",
+        "trust at work",
+        "workload management"
+      ]
     },
     {
       "id": "1797_FepF8_Y8kIPhZIVF2gHCuyKvowlyPRCUEpUt_-Q",
@@ -150,7 +204,20 @@
       "createdTime": "2026-07-16T14:12:03.959Z",
       "modifiedTime": "2026-07-16T14:12:30.494Z",
       "notePrice": 100,
-      "noteNumber": 5
+      "noteNumber": 5,
+      "titleEn": "The Busiest Person Always Gets the Call — and Managers Hate That",
+      "summaryEn": "New hires assume 'capable people just end up overworked' is simply how it goes, but seeing the assigning side reveals managers secretly wish anyone could handle the job — piling work on one reliable person isn't the goal, it's a last resort.",
+      "keywordsEn": [
+        "overworked",
+        "delegation",
+        "workload distribution",
+        "capable employees",
+        "burnout",
+        "single point of failure",
+        "cross-training",
+        "relied on too much",
+        "management perspective"
+      ]
     },
     {
       "id": "17ZeMKugzjJUUHMrC9U9p4IqF710UESKJleJXdGIDb8o",
@@ -162,7 +229,20 @@
       "createdTime": "2026-07-16T14:13:03.353Z",
       "modifiedTime": "2026-07-16T14:13:29.929Z",
       "notePrice": 100,
-      "noteNumber": 6
+      "noteNumber": 6,
+      "titleEn": "The Truth About 'Keep Me Posted' — Nobody Actually Wants a Report",
+      "summaryEn": "Told over and over to report everything, the author learned the hard way that a report after the machine has already stopped is nearly worthless — the real value is in speaking up about small warning signs before trouble happens.",
+      "keywordsEn": [
+        "reporting to your boss",
+        "early warning signs",
+        "preventive maintenance",
+        "escalation",
+        "status updates",
+        "workplace communication",
+        "proactive communication",
+        "hourensou",
+        "equipment downtime"
+      ]
     },
     {
       "id": "17sXymUBcygQPUntoNwBgjAYdwOJHezUTdq69o281RVw",
@@ -174,7 +254,20 @@
       "createdTime": "2026-07-16T14:30:09.744Z",
       "modifiedTime": "2026-07-16T14:30:42.881Z",
       "notePrice": 100,
-      "noteNumber": 7
+      "noteNumber": 7,
+      "titleEn": "'Just Ask Me' Doesn't Mean 'Tell Me the Answer'",
+      "summaryEn": "Told to consult a manager whenever stuck, the author used to show up wanting the answer handed over — until becoming the manager revealed that what's actually wanted isn't a question, it's your own thinking brought to the table first.",
+      "keywordsEn": [
+        "asking for help",
+        "consulting your boss",
+        "critical thinking",
+        "problem solving",
+        "spoon-feeding",
+        "taking initiative",
+        "decision making",
+        "mentoring",
+        "bring solutions not problems"
+      ]
     },
     {
       "id": "18D63JKhBKdtoohTuWnK-TKxue0lzy8cfLwKZvzOztWI",
@@ -186,7 +279,20 @@
       "createdTime": "2026-07-16T14:30:58.885Z",
       "modifiedTime": "2026-07-16T14:31:28.983Z",
       "notePrice": 100,
-      "noteNumber": 8
+      "noteNumber": 8,
+      "titleEn": "What Managers Actually Fear Isn't Your Failure",
+      "summaryEn": "A spotless record with zero failures sounds impressive, but it quietly worries the people evaluating you — because zero failures might really mean zero attempts at anything hard.",
+      "keywordsEn": [
+        "fear of failure",
+        "risk taking",
+        "taking initiative",
+        "playing it safe",
+        "career growth",
+        "challenging assignments",
+        "performance review",
+        "comfort zone",
+        "innovation at work"
+      ]
     },
     {
       "id": "18xvqCT8uAkmBAl4TkM52M2-OqI_CXkjsdzG1-jqL0CQ",
@@ -208,7 +314,20 @@
       "createdTime": "2026-07-16T14:32:46.493Z",
       "modifiedTime": "2026-07-16T14:33:07.456Z",
       "notePrice": 100,
-      "noteNumber": 12
+      "noteNumber": 12,
+      "titleEn": "Leaving On Time Isn't Slacking — Managers Notice Something Else",
+      "summaryEn": "Staying late used to feel like the safe way to look hardworking, but managers actually remember whether you finished what mattered that day, not what time you walked out — and unplanned overtime raises more questions than it answers.",
+      "keywordsEn": [
+        "work-life balance",
+        "leaving on time",
+        "overtime culture",
+        "presenteeism",
+        "time management",
+        "perceived effort",
+        "prioritization",
+        "workplace perception",
+        "planning ahead"
+      ]
     },
     {
       "id": "1BdtlnMeyo-gCoL-TALPwAXC_QI7JTUGqf45lIjfkEbA",
@@ -220,7 +339,20 @@
       "createdTime": "2026-07-16T14:33:20.292Z",
       "modifiedTime": "2026-07-16T14:33:45.688Z",
       "notePrice": 100,
-      "noteNumber": 13
+      "noteNumber": 13,
+      "titleEn": "Taking Notes Isn't the Same as Understanding",
+      "summaryEn": "Filling a notebook page by page used to feel like proof of listening, until the author realized a full notebook doesn't stop you from asking the same question twice — what actually earns trust is confirming your understanding out loud, not writing it down.",
+      "keywordsEn": [
+        "note taking",
+        "active listening",
+        "confirming understanding",
+        "training new employees",
+        "communication skills",
+        "retaining information",
+        "asking clarifying questions",
+        "onboarding",
+        "listening skills"
+      ]
     },
     {
       "id": "1CbLcpqT-KZ40MEx1_KHarCnj6_4Lfnj9AwoAcsJt9z4",
@@ -232,7 +364,20 @@
       "createdTime": "2026-07-16T14:34:00.582Z",
       "modifiedTime": "2026-07-16T14:34:26.471Z",
       "notePrice": 100,
-      "noteNumber": 14
+      "noteNumber": 14,
+      "titleEn": "Reading the Room Isn't the Skill Managers Actually Remember",
+      "summaryEn": "Blending into the silence of a meeting felt like the mature, professional move, but managers worry more about a room where nobody objects than one where someone does — and it's the person who breaks that silence with one honest concern who actually stands out.",
+      "keywordsEn": [
+        "speaking up in meetings",
+        "groupthink",
+        "reading the room",
+        "silence in meetings",
+        "psychological safety",
+        "disagreement at work",
+        "meeting culture",
+        "conformity",
+        "voicing concerns"
+      ]
     },
     {
       "id": "1CnWprqqm4TaHa6-CrKFwczE91nP2zPY0zapN4m8a94c",
@@ -244,7 +389,20 @@
       "createdTime": "2026-07-16T14:34:38.436Z",
       "modifiedTime": "2026-07-16T14:35:04.026Z",
       "notePrice": 100,
-      "noteNumber": 15
+      "noteNumber": 15,
+      "titleEn": "Managers Don't See Everything — That's the Biggest Myth",
+      "summaryEn": "Assuming a manager quietly tracks everyone's effort and will eventually reward it is a comforting myth — buried in meetings and firefighting, they simply can't see it all, so improvements nobody mentions go unnoticed while a two-line update sticks in memory.",
+      "keywordsEn": [
+        "visibility at work",
+        "self-promotion",
+        "being overlooked",
+        "communicating achievements",
+        "manager awareness",
+        "recognition at work",
+        "workplace fairness",
+        "making your work known",
+        "career advancement"
+      ]
     },
     {
       "id": "1CqisNNuWjoHB6IExjwy0EF3mVTSnKHadSREI6xb85vE",
@@ -256,7 +414,20 @@
       "createdTime": "2026-07-16T14:35:17.014Z",
       "modifiedTime": "2026-07-16T14:35:43.439Z",
       "notePrice": 100,
-      "noteNumber": 16
+      "noteNumber": 16,
+      "titleEn": "'I'm Busy' Tells Your Manager Almost Nothing",
+      "summaryEn": "Saying 'I'm busy' felt like it conveyed real effort, but a manager explains that word alone is useless — what actually gets you help is naming the specific cause behind the busyness.",
+      "keywordsEn": [
+        "being busy",
+        "workload",
+        "time management",
+        "root cause",
+        "prioritization",
+        "feeling overwhelmed",
+        "communicating problems",
+        "asking for help",
+        "burnout signals"
+      ]
     },
     {
       "id": "1DFm49MvdDKCrGnslB54v-p_DehlPRXBYVw8abgin7g4",
@@ -268,7 +439,19 @@
       "createdTime": "2026-07-16T14:35:56.491Z",
       "modifiedTime": "2026-07-16T14:36:24.749Z",
       "notePrice": 100,
-      "noteNumber": 17
+      "noteNumber": 17,
+      "titleEn": "Why 'I Can Do It' Makes Managers Nervous",
+      "summaryEn": "A quick 'I can do it' feels like the confident, reassuring answer to give, but from the other side of the desk it raises more questions than it answers — and an unfinished task the next day shows exactly why.",
+      "keywordsEn": [
+        "overcommitting",
+        "saying yes to everything",
+        "confidence vs competence",
+        "deadline management",
+        "honest communication",
+        "workload assessment",
+        "trust at work",
+        "missed deadlines"
+      ]
     },
     {
       "id": "1EadHeKnJQ4itwBGmRReFSH50lJYydguf3xcxdCVN3TM",
@@ -280,7 +463,19 @@
       "createdTime": "2026-07-16T14:37:16.781Z",
       "modifiedTime": "2026-07-16T14:37:49.123Z",
       "notePrice": 100,
-      "noteNumber": 18
+      "noteNumber": 18,
+      "titleEn": "'I'm Trying My Best' Isn't Something a Manager Can Evaluate",
+      "summaryEn": "Working the longest hours and never saying no used to feel like the surest path to recognition, but a manager explains that effort is an action, not an outcome — and the person who leaves on time after streamlining the whole team's work often stands out more.",
+      "keywordsEn": [
+        "hard work vs results",
+        "effort vs outcome",
+        "performance evaluation",
+        "working overtime",
+        "process improvement",
+        "recognition at work",
+        "results-oriented",
+        "workplace perception"
+      ]
     },
     {
       "id": "1DmG0uyPhxbbJ99zgN_shH4LAaHjxZbMhrKwAq76hU8o",
@@ -292,7 +487,20 @@
       "createdTime": "2026-07-16T14:36:37.554Z",
       "modifiedTime": "2026-07-16T14:37:04.782Z",
       "notePrice": 100,
-      "noteNumber": 19
+      "noteNumber": 19,
+      "titleEn": "The Evaluation That Never Makes It Onto the Review Form",
+      "summaryEn": "Wondering why a colleague with fewer visible achievements scored higher, the author later sat in on evaluation meetings and discovered the real deciding conversation happens after the numbers are done — about how someone handled trouble, not just what they produced.",
+      "keywordsEn": [
+        "performance review",
+        "unfair evaluation",
+        "promotion criteria",
+        "office politics",
+        "soft skills",
+        "reputation at work",
+        "how you handle problems",
+        "being underrated",
+        "review process"
+      ]
     },
     {
       "id": "1GJOnIwGq451Hz032cCyGyQJcKAWffGXH89dz9GSQog8",
@@ -304,7 +512,20 @@
       "createdTime": "2026-07-16T14:38:03.812Z",
       "modifiedTime": "2026-07-16T14:38:32.378Z",
       "notePrice": 100,
-      "noteNumber": 20
+      "noteNumber": 20,
+      "titleEn": "The Most Capable People Are the Fastest to Say 'I Don't Know'",
+      "summaryEn": "It sounds backwards, but the employees managers trust most aren't the ones who never ask for help — they're the ones who flag their uncertainty early and precisely, turning what could be a crisis into a two-minute conversation.",
+      "keywordsEn": [
+        "asking for help",
+        "admitting uncertainty",
+        "early escalation",
+        "competence",
+        "avoiding mistakes",
+        "self-sufficiency trap",
+        "consulting your boss",
+        "deadline problems",
+        "workplace confidence"
+      ]
     },
     {
       "id": "1GcibWPgl5UKFU5ZYJwjQefU-ORvQt5cU59pWBA8-u_k",
@@ -316,7 +537,20 @@
       "createdTime": "2026-07-16T14:38:42.863Z",
       "modifiedTime": "2026-07-16T14:39:12.931Z",
       "notePrice": 100,
-      "noteNumber": 21
+      "noteNumber": 21,
+      "titleEn": "The Report That Really Troubles a Manager Isn't Bad News",
+      "summaryEn": "Trying to soften bad news by waiting until you have a solution feels considerate, but a stalled machine that sat unreported for a full day shows why managers dread the delay far more than the failure itself.",
+      "keywordsEn": [
+        "delivering bad news",
+        "delayed reporting",
+        "escalation timing",
+        "equipment downtime",
+        "transparency at work",
+        "hiding problems",
+        "early warning",
+        "crisis communication",
+        "honesty with your boss"
+      ]
     },
     {
       "id": "1IU8TVIX7y4_DlkGSPzZQjLOtZkTTzKdUh4iEdZTuiUU",
@@ -328,7 +562,20 @@
       "createdTime": "2026-07-16T14:39:28.009Z",
       "modifiedTime": "2026-07-16T14:39:53.906Z",
       "notePrice": 100,
-      "noteNumber": 22
+      "noteNumber": 22,
+      "titleEn": "Slow Work Doesn't Worry Managers — Invisible Work Does",
+      "summaryEn": "Apologizing for falling behind schedule feels like the risky move, but a manager reveals that silence is far scarier than delay — a status update, even a bad one, opens options that a week of no news forecloses entirely.",
+      "keywordsEn": [
+        "status updates",
+        "progress reports",
+        "radio silence",
+        "project visibility",
+        "delegating tasks",
+        "checking in",
+        "transparency",
+        "managing up",
+        "deadline anxiety"
+      ]
     },
     {
       "id": "1JBjLRFaCB_xdv2hOSDRmfFLn0RCf3Ebn6DTrNdkmNps",
@@ -340,7 +587,20 @@
       "createdTime": "2026-07-16T14:40:10.183Z",
       "modifiedTime": "2026-07-16T14:40:38.319Z",
       "notePrice": 100,
-      "noteNumber": 23
+      "noteNumber": 23,
+      "titleEn": "The Longer the Meeting, the Less Actually Gets Decided",
+      "summaryEn": "An hour that ends in 'let's take this back and think about it' is a familiar ritual, but a manager argues the real culprit isn't meeting length — it's starting a meeting without first deciding what it needs to decide.",
+      "keywordsEn": [
+        "unproductive meetings",
+        "meeting efficiency",
+        "decision making",
+        "meeting agenda",
+        "wasted time",
+        "running effective meetings",
+        "indecision",
+        "meeting culture",
+        "facilitation"
+      ]
     },
     {
       "id": "1J_C5vimTaHjMfG39uAzk3caVdvec5zirzKpTaxXXEEc",
@@ -352,7 +612,19 @@
       "createdTime": "2026-07-16T14:40:49.736Z",
       "modifiedTime": "2026-07-16T14:41:13.008Z",
       "notePrice": 100,
-      "noteNumber": 24
+      "noteNumber": 24,
+      "titleEn": "There's an Answer Managers Trust More Than 'I Can't'",
+      "summaryEn": "Reflexively saying 'I can do it' to avoid disappointing anyone often ends in a missed deadline that ripples through the whole department, but the response managers actually trust isn't a flat yes or no — it's something else entirely.",
+      "keywordsEn": [
+        "overcommitting",
+        "saying no at work",
+        "honest communication",
+        "deadline reliability",
+        "trust at work",
+        "workload negotiation",
+        "managing expectations",
+        "dependability"
+      ]
     },
     {
       "id": "1JjuVYM9DhkOnG7oq9JfTAKSA6qsT1D0_vlDr9yBf8iQ",
@@ -364,7 +636,20 @@
       "createdTime": "2026-07-16T14:41:25.294Z",
       "modifiedTime": "2026-07-16T14:41:53.384Z",
       "notePrice": 100,
-      "noteNumber": 25
+      "noteNumber": 25,
+      "titleEn": "Being Busy Isn't the Skill Managers Reward — Prioritizing Is",
+      "summaryEn": "Running from task to task without a lunch break used to feel like proof of dedication, but a manager explains that what actually earns trust isn't how much you juggled — it's what you chose to do first when you couldn't do it all.",
+      "keywordsEn": [
+        "prioritization",
+        "time management",
+        "being busy",
+        "workload management",
+        "performance evaluation",
+        "decision making under pressure",
+        "overwhelmed at work",
+        "saying no",
+        "task triage"
+      ]
     },
     {
       "id": "1JlrtllzkMozDNFFLrRPB6t9_ijc7PYgEKprMfh1ieds",
@@ -376,7 +661,20 @@
       "createdTime": "2026-07-16T14:42:05.487Z",
       "modifiedTime": "2026-07-16T14:42:37.306Z",
       "notePrice": 100,
-      "noteNumber": 26
+      "noteNumber": 26,
+      "titleEn": "'I'm Doing My Best' Is the Update Managers Dread Most",
+      "summaryEn": "Answering a check-in with 'I'm working hard on it' feels reassuring to say, but it leaves a manager with nothing to act on — a concrete number or a named sticking point, even if it's bad news, is what actually earns confidence.",
+      "keywordsEn": [
+        "status updates",
+        "progress reports",
+        "vague answers",
+        "check-ins",
+        "project tracking",
+        "communicating problems",
+        "managing up",
+        "transparency",
+        "quantifying progress"
+      ]
     },
     {
       "id": "1JmouI6ipRC3YjxbpGt9qU0a83w9uAEkQQF5RnCCdArc",
@@ -388,7 +686,20 @@
       "createdTime": "2026-07-16T14:42:50.972Z",
       "modifiedTime": "2026-07-16T14:43:19.763Z",
       "notePrice": 100,
-      "noteNumber": 27
+      "noteNumber": 27,
+      "titleEn": "Managers Aren't Watching Your Skill — They're Watching How Fast You Grow",
+      "summaryEn": "Feeling passed over for someone with less obvious skill or experience is a common frustration, but evaluation meetings reveal managers are quietly tracking a different metric entirely: not what you can do today, but how much you've changed since last year.",
+      "keywordsEn": [
+        "performance review",
+        "career growth",
+        "skill vs growth",
+        "being overlooked",
+        "promotion criteria",
+        "personal development",
+        "evaluation criteria",
+        "unfair promotion",
+        "potential vs experience"
+      ]
     },
     {
       "id": "1LPcmZCpp1rWi8OWO8xFXwMJzsihNZna-h-rdVUJYxoA",
@@ -400,7 +711,20 @@
       "createdTime": "2026-07-16T14:43:32.928Z",
       "modifiedTime": "2026-07-16T14:44:00.499Z",
       "notePrice": 100,
-      "noteNumber": 28
+      "noteNumber": 28,
+      "titleEn": "It's Not the Mistake That Hurts Your Evaluation — It's Repeating It",
+      "summaryEn": "A single failure rarely counts against you in a manager's eyes, since real risk-taking always includes some — what actually erodes trust is making the exact same mistake again, because it signals the task might fail the same way next time too.",
+      "keywordsEn": [
+        "mistakes at work",
+        "repeated errors",
+        "learning from failure",
+        "accountability",
+        "root cause analysis",
+        "performance evaluation",
+        "trust at work",
+        "taking responsibility",
+        "preventing recurrence"
+      ]
     },
     {
       "id": "1LUm0tI4-5mtsKTEpOt8_Sc38Y6gbJ0P82nUUIo1M-pw",
@@ -412,7 +736,20 @@
       "createdTime": "2026-07-16T14:44:11.804Z",
       "modifiedTime": "2026-07-16T14:44:46.044Z",
       "notePrice": 100,
-      "noteNumber": 29
+      "noteNumber": 29,
+      "titleEn": "The People Managers Remember Think One Step Ahead",
+      "summaryEn": "Doing exactly what you're told feels like the responsible baseline for being trusted, but managers barely notice it since everyone does that much — what actually sticks is the small extra thought that anticipates what comes next.",
+      "keywordsEn": [
+        "taking initiative",
+        "going above and beyond",
+        "anticipating needs",
+        "following instructions",
+        "standing out at work",
+        "proactive thinking",
+        "being memorable",
+        "career advancement",
+        "adding value"
+      ]
     },
     {
       "id": "1N4yOS2B8cu-q7YeXTcQ1ZQ2dtVukdHVRZZGY_Z57q-w",
@@ -424,7 +761,20 @@
       "createdTime": "2026-07-16T14:45:03.644Z",
       "modifiedTime": "2026-07-16T14:45:29.418Z",
       "notePrice": 0,
-      "noteNumber": 30
+      "noteNumber": 30,
+      "titleEn": "When You Make a Mistake, Your Manager Isn't Thinking You're Incapable",
+      "summaryEn": "Fearing that a slip-up means you've lost your manager's confidence is a common anxiety, but when the same error shows up across several people, managers usually look inward first — at their own explanation, the instructions, the process — before doubting the person.",
+      "keywordsEn": [
+        "making mistakes at work",
+        "imposter syndrome",
+        "fear of judgment",
+        "management perspective",
+        "unclear instructions",
+        "process design",
+        "blame culture",
+        "psychological safety",
+        "learning from errors"
+      ]
     },
     {
       "id": "1Nq0ODdgWFAG7Ns1nk60UU7Zb-NNXDegfQ8ZbdRxn5Y8",
@@ -436,7 +786,20 @@
       "createdTime": "2026-07-16T14:45:43.926Z",
       "modifiedTime": "2026-07-16T14:46:30.155Z",
       "notePrice": 100,
-      "noteNumber": 31
+      "noteNumber": 31,
+      "titleEn": "Finishing the Task Isn't the Same as Finishing the Job",
+      "summaryEn": "Submitting the deliverable feels like the finish line, but a manager explains real completion means leaving things ready for whoever comes next — sharing context, saving the data, flagging what to improve — and that extra step is what earns repeat trust.",
+      "keywordsEn": [
+        "handoff",
+        "task completion",
+        "finishing strong",
+        "documentation",
+        "knowledge sharing",
+        "reliability at work",
+        "going the extra mile",
+        "team collaboration",
+        "follow-through"
+      ]
     },
     {
       "id": "1O7UEPWd0rK_WDL778aVPAw-kSjj9HBfgpRrLd3GhJsI",
@@ -448,7 +811,20 @@
       "createdTime": "2026-07-16T14:46:42.827Z",
       "modifiedTime": "2026-07-16T14:48:35.315Z",
       "notePrice": 100,
-      "noteNumber": 32
+      "noteNumber": 32,
+      "titleEn": "Managers Don't Chase Fairness — They Chase Buy-In",
+      "summaryEn": "Watching the same colleague repeatedly land the big assignments can feel like blatant favoritism, but a manager explains that identical treatment for everyone isn't actually the goal — what matters is that each assignment has a reason people can genuinely accept.",
+      "keywordsEn": [
+        "favoritism",
+        "fairness at work",
+        "task assignment",
+        "perceived unfairness",
+        "opportunity distribution",
+        "workplace trust",
+        "transparency in decisions",
+        "career opportunities",
+        "being passed over"
+      ]
     },
     {
       "id": "1P1bMGAE_epIhq7PXPEFobyGRgOSsKNFRUbYdx3yOk28",
@@ -460,7 +836,20 @@
       "createdTime": "2026-07-16T14:48:47.744Z",
       "modifiedTime": "2026-07-16T14:49:33.378Z",
       "notePrice": 100,
-      "noteNumber": 33
+      "noteNumber": 33,
+      "titleEn": "When Your Manager Asks 'What Do You Think?' They're Not Grading the Answer",
+      "summaryEn": "Scrambling to guess the 'right' answer when a manager asks your opinion is a common reflex, but what they're actually listening for is the reasoning behind it — how you think is far harder to fake, and far more valuable, than getting it right by luck.",
+      "keywordsEn": [
+        "critical thinking",
+        "put on the spot",
+        "decision making process",
+        "reasoning skills",
+        "fear of being wrong",
+        "mentoring",
+        "problem solving",
+        "workplace confidence",
+        "showing your work"
+      ]
     },
     {
       "id": "1QSJc8PQUmug2P2ZLegQpTkQnsLCyBUP-_VIs3u6D2DU",
@@ -472,7 +861,20 @@
       "createdTime": "2026-07-16T14:49:55.316Z",
       "modifiedTime": "2026-07-16T14:50:32.401Z",
       "notePrice": 100,
-      "noteNumber": 34
+      "noteNumber": 34,
+      "titleEn": "Managers Would Rather Grow a Coachable Person Than a Talented One",
+      "summaryEn": "Skill alone doesn't guarantee someone keeps growing — what actually predicts it is whether they can take feedback without getting defensive and adjust, even just slightly, the next time around.",
+      "keywordsEn": [
+        "coachability",
+        "receiving feedback",
+        "taking criticism",
+        "growth mindset",
+        "defensiveness at work",
+        "career development",
+        "being open to change",
+        "mentorship",
+        "professional growth"
+      ]
     },
     {
       "id": "1SOMT0ZNSBYtweK2CD4qXlcsIE4fAylR8qOCO_UmRLJ4",
@@ -484,7 +886,20 @@
       "createdTime": "2026-07-16T14:51:55.732Z",
       "modifiedTime": "2026-07-16T14:52:23.795Z",
       "notePrice": 100,
-      "noteNumber": 35
+      "noteNumber": 35,
+      "titleEn": "Managers Don't Resent Being Told 'I Disagree'",
+      "summaryEn": "Staying quiet in meetings to avoid seeming difficult feels like the safe move, but a manager admits what actually keeps them up at night is a decision nobody objected to that blows up later — silence, not disagreement, is the real risk.",
+      "keywordsEn": [
+        "speaking up at work",
+        "dissent",
+        "disagreeing with your boss",
+        "groupthink",
+        "meeting culture",
+        "psychological safety",
+        "risk management",
+        "voicing concerns",
+        "workplace conflict"
+      ]
     },
     {
       "id": "1SOfCuH_W51-PDokK_kvLT4KdksUqMbJXjAiJVML27e0",
@@ -496,7 +911,20 @@
       "createdTime": "2026-07-16T14:52:48.152Z",
       "modifiedTime": "2026-07-16T14:53:49.589Z",
       "notePrice": 100,
-      "noteNumber": 36
+      "noteNumber": 36,
+      "titleEn": "Working Fast Isn't What Managers Actually Reward",
+      "summaryEn": "Finishing your own part ahead of schedule feels like a clear win, but if the handoff is missing and the next person stalls, the team's overall pace never improved at all — what managers really track is whether the work keeps moving, not how fast any one person moved it.",
+      "keywordsEn": [
+        "handoff",
+        "team velocity",
+        "individual speed vs team output",
+        "communication at work",
+        "bottlenecks",
+        "workflow",
+        "collaboration",
+        "sharing information",
+        "project momentum"
+      ]
     },
     {
       "id": "1SVI4D6JVx8mwcxP0lIGMgkJ1dX_SlI4HNECiBBn0ubI",
@@ -508,7 +936,20 @@
       "createdTime": "2026-07-16T14:54:21.558Z",
       "modifiedTime": "2026-07-16T14:55:20.755Z",
       "notePrice": 100,
-      "noteNumber": 37
+      "noteNumber": 37,
+      "titleEn": "Following Instructions Isn't the Same as Understanding the Point",
+      "summaryEn": "Doing exactly what was asked feels like mission accomplished, but a manager explains the people who really stand out are the ones who grasp why the task matters — because that understanding is what lets them add the small touches instructions alone never spell out.",
+      "keywordsEn": [
+        "following instructions",
+        "understanding purpose",
+        "taking initiative",
+        "critical thinking",
+        "going beyond the ask",
+        "task context",
+        "autonomy at work",
+        "being trusted with tasks",
+        "work quality"
+      ]
     },
     {
       "id": "1SzqYImVlBMx6Ezx_QVG4g4N19umThjfUzekF2rNJtqc",
@@ -520,7 +961,20 @@
       "createdTime": "2026-07-16T15:26:40.565Z",
       "modifiedTime": "2026-07-16T15:27:39.499Z",
       "notePrice": 100,
-      "noteNumber": 38
+      "noteNumber": 38,
+      "titleEn": "Managers Don't Reward Effort — They Reward Systems",
+      "summaryEn": "Working yourself to the bone impresses no one for long: the people managers actually promote are the ones who quietly fix the process so nobody has to grind that hard again.",
+      "keywordsEn": [
+        "hard work vs results",
+        "building systems",
+        "process improvement",
+        "burnout",
+        "getting promoted",
+        "effort vs impact",
+        "working smarter",
+        "sustainable workload",
+        "recognition at work"
+      ]
     },
     {
       "id": "1QjkbS3TeX3zp8AUq3JfAgxRIAwcRXeKFQUvr_aD5mxg",
@@ -532,7 +986,19 @@
       "createdTime": "2026-07-16T14:51:02.980Z",
       "modifiedTime": "2026-07-16T14:51:31.814Z",
       "notePrice": 100,
-      "noteNumber": 39
+      "noteNumber": 39,
+      "titleEn": "Being a Good Explainer Isn't the Same as Being Understood",
+      "summaryEn": "Talking a lot and talking clearly are two different skills — the people managers actually trust are the ones whose listeners walk away knowing exactly what to do next.",
+      "keywordsEn": [
+        "communication skills",
+        "being understood",
+        "clear explanations",
+        "getting your point across",
+        "reporting up",
+        "workplace communication",
+        "listener perspective",
+        "concise explanations"
+      ]
     },
     {
       "id": "1TB-8gxMeBV1lOnE2T4CHpxisyJvs3L4YSI9y-epbtBY",
@@ -544,7 +1010,19 @@
       "createdTime": "2026-07-16T15:28:16.304Z",
       "modifiedTime": "2026-07-16T15:29:04.558Z",
       "notePrice": 100,
-      "noteNumber": 40
+      "noteNumber": 40,
+      "titleEn": "Knowledge Expires — Curiosity Doesn't",
+      "summaryEn": "Certifications and experience matter, but what actually earns a manager's confidence is whether you keep learning as the ground shifts beneath you, because today's expertise has a shelf life.",
+      "keywordsEn": [
+        "continuous learning",
+        "staying relevant",
+        "knowledge becomes outdated",
+        "adapting to change",
+        "upskilling",
+        "growth mindset",
+        "career development",
+        "keeping up with technology"
+      ]
     },
     {
       "id": "1UnANWe0bk4dXdRjBaDAHyNPupnE6-aGlha4E2U30HC0",
@@ -566,7 +1044,19 @@
       "createdTime": "2026-07-16T21:54:51.984Z",
       "modifiedTime": "2026-07-16T21:55:29.135Z",
       "notePrice": 100,
-      "noteNumber": 42
+      "noteNumber": 42,
+      "titleEn": "Deciding Without Knowing the Right Answer",
+      "summaryEn": "Real management isn't about waiting for certainty — it's about choosing a direction with incomplete information, building in safeguards, and moving before the moment passes you by.",
+      "keywordsEn": [
+        "decision making",
+        "uncertainty",
+        "leadership under pressure",
+        "making the call",
+        "risk management",
+        "indecision",
+        "tough calls",
+        "managing ambiguity"
+      ]
     },
     {
       "id": "14iXFp5m8M4zzrF4NnYVSSBS_ey6YbMKbbtS5i9sETJ4",
@@ -578,7 +1068,20 @@
       "createdTime": "2026-07-17T11:01:06.294Z",
       "modifiedTime": "2026-07-17T11:01:57.629Z",
       "notePrice": 100,
-      "noteNumber": 43
+      "noteNumber": 43,
+      "titleEn": "Don't Just Find Who Made the Mistake — Find Why Anyone Could",
+      "summaryEn": "Blaming an individual and retraining them feels like closure, but if the workplace still lets a careful, ordinary person make the same error, the real problem was never fixed.",
+      "keywordsEn": [
+        "root cause analysis",
+        "preventing recurrence",
+        "blame culture",
+        "workplace safety",
+        "quality control",
+        "process failure",
+        "human error",
+        "systemic issues",
+        "corrective action"
+      ]
     },
     {
       "id": "1qS90MZLKrYiqf-NhuJULHNn3h9eHbHmgBpNLI6uftt4",
@@ -590,7 +1093,20 @@
       "createdTime": "2026-07-17T11:14:49.482Z",
       "modifiedTime": "2026-07-17T11:15:49.030Z",
       "notePrice": 100,
-      "noteNumber": 44
+      "noteNumber": 44,
+      "titleEn": "The One Who Hits Pause Matters More Than the One Who Caused the Mess",
+      "summaryEn": "When something goes wrong, everyone looks for who's at fault — but what actually limits the damage is who has the nerve to stop the line the moment something feels off, even without proof.",
+      "keywordsEn": [
+        "crisis response",
+        "stopping the line",
+        "speaking up",
+        "damage control",
+        "quality incident",
+        "who to blame",
+        "early warning signs",
+        "incident response",
+        "acting on a hunch"
+      ]
     },
     {
       "id": "1FwBSYHPr8WuhH-5u_wT6RMzcogu-01fy8H3cg-dPQ18",
@@ -602,7 +1118,20 @@
       "createdTime": "2026-07-17T11:22:58.654Z",
       "modifiedTime": "2026-07-19T03:56:20.541Z",
       "notePrice": 0,
-      "noteNumber": 45
+      "noteNumber": 45,
+      "titleEn": "The Best Improvement Is Subtraction, Not Addition",
+      "summaryEn": "Piling on new checklists and approval steps looks like progress, but the manager who actually earns your gratitude is the one quietly cutting redundant work that nobody dared to question.",
+      "keywordsEn": [
+        "process improvement",
+        "reducing busywork",
+        "eliminating redundancy",
+        "kaizen",
+        "cutting bureaucracy",
+        "simplifying workflows",
+        "unnecessary meetings",
+        "administrative burden",
+        "doing less better"
+      ]
     },
     {
       "id": "16QbLQlw8rSTu_51t8IKaE7X04AkXwBBJ3Eq-uxyUxq4",
@@ -614,7 +1143,20 @@
       "createdTime": "2026-07-17T11:38:34.414Z",
       "modifiedTime": "2026-07-18T08:34:54.610Z",
       "notePrice": 0,
-      "noteNumber": 46
+      "noteNumber": 46,
+      "titleEn": "Disagree Before the Decision — Not After",
+      "summaryEn": "Managers welcome pushback while a decision is still open, but what actually damages trust is someone who drags their feet and distances themselves once the call has been made and it's time to execute.",
+      "keywordsEn": [
+        "disagree and commit",
+        "after the decision",
+        "buy-in",
+        "sabotaging execution",
+        "team alignment",
+        "handling disagreement",
+        "passive resistance",
+        "commitment after decision",
+        "workplace politics"
+      ]
     },
     {
       "id": "1mFpOhdh2K1YqxFnpv9uksWwUNw-7rRqEHH09e6QGCNU",
@@ -626,7 +1168,20 @@
       "createdTime": "2026-07-17T11:51:23.905Z",
       "modifiedTime": "2026-07-17T11:52:24.808Z",
       "notePrice": 0,
-      "noteNumber": 47
+      "noteNumber": 47,
+      "titleEn": "Meeting the Deadline Isn't the Same as Finishing the Job",
+      "summaryEn": "Sending a file on time feels like keeping your word, but if it's unusable until someone else scrambles to fix it before the meeting, the real deadline was never actually met.",
+      "keywordsEn": [
+        "deadlines",
+        "meeting expectations",
+        "finishing the job",
+        "quality of deliverables",
+        "working backward from use",
+        "reliability",
+        "last minute work",
+        "accountability",
+        "deliverable readiness"
+      ]
     },
     {
       "id": "1hNMHZgxIlKTsSNXgxFnBp5l-vjsN602c7b8LHQ90zyA",
@@ -638,7 +1193,20 @@
       "createdTime": "2026-07-17T12:11:24.134Z",
       "modifiedTime": "2026-07-17T12:12:24.464Z",
       "notePrice": 100,
-      "noteNumber": 48
+      "noteNumber": 48,
+      "titleEn": "Great Meeting Notes Don't Mean the Meeting Actually Ended",
+      "summaryEn": "A beautifully written summary of who said what is worthless if nobody owns the next action — what actually moves work forward is turning discussion into decisions, owners, and deadlines.",
+      "keywordsEn": [
+        "meeting effectiveness",
+        "action items",
+        "meeting minutes",
+        "accountability",
+        "follow through",
+        "wasted meetings",
+        "decision ownership",
+        "next steps",
+        "productive meetings"
+      ]
     },
     {
       "id": "14D4ev_F_gYlLOffElpR9_BLjh7t03UqjkgyChp10vUc",
@@ -650,7 +1218,20 @@
       "createdTime": "2026-07-17T12:45:35.919Z",
       "modifiedTime": "2026-07-17T12:46:23.516Z",
       "notePrice": 0,
-      "noteNumber": 49
+      "noteNumber": 49,
+      "titleEn": "Saying 'Got It' Isn't the Same as Actually Getting It",
+      "summaryEn": "A quick 'understood' feels reassuring, but real comprehension has stages — and the people you can safely hand work to are the ones who can restate the goal, the risks, and the finished picture in their own words.",
+      "keywordsEn": [
+        "did they really understand",
+        "confirming understanding",
+        "delegation risk",
+        "miscommunication",
+        "clarifying instructions",
+        "levels of comprehension",
+        "asking questions",
+        "task handoff",
+        "avoiding rework"
+      ]
     },
     {
       "id": "12RN9HJIlY8IQuuaDD7ZSFwwd2ApC8cDmO3aOm7o7YCM",
@@ -662,7 +1243,20 @@
       "createdTime": "2026-07-17T13:03:05.218Z",
       "modifiedTime": "2026-07-17T13:04:07.109Z",
       "notePrice": 100,
-      "noteNumber": 50
+      "noteNumber": 50,
+      "titleEn": "The Real Skill Isn't Running the Workaround — It's Ending It",
+      "summaryEn": "Stopgap fixes that keep the floor running look heroic in the moment, but if nobody sets — and enforces — an end date, 'temporary' quietly becomes permanent and fragile forever.",
+      "keywordsEn": [
+        "temporary fix becomes permanent",
+        "workarounds",
+        "stopgap solutions",
+        "technical debt",
+        "process debt",
+        "sunsetting workarounds",
+        "band-aid solutions",
+        "operational risk",
+        "follow through on fixes"
+      ]
     },
     {
       "id": "1GpVmdggNVB_PFVBfAw5mEz1uZnfa3Mv5iG1wa81RwTE",
@@ -674,7 +1268,20 @@
       "createdTime": "2026-07-18T01:25:56.461Z",
       "modifiedTime": "2026-07-18T01:26:43.419Z",
       "notePrice": 0,
-      "noteNumber": 51
+      "noteNumber": 51,
+      "titleEn": "Doing Everything Yourself Isn't the Same as Getting It Done",
+      "summaryEn": "Taking on every task alone looks admirable and keeps you busiest of all — until three things stall at once because nothing ever left your desk to someone who could help.",
+      "keywordsEn": [
+        "delegation",
+        "taking on too much",
+        "overload",
+        "can't say no",
+        "workload management",
+        "asking for help",
+        "single point of failure",
+        "trust to delegate",
+        "doing it all yourself"
+      ]
     },
     {
       "id": "1cVAWep8_vJl5jWMzB2iZPNUUkLW9sz6F29ywn7VMBQI",
@@ -686,7 +1293,20 @@
       "createdTime": "2026-07-18T01:37:47.342Z",
       "modifiedTime": "2026-07-18T01:38:40.718Z",
       "notePrice": 0,
-      "noteNumber": 52
+      "noteNumber": 52,
+      "titleEn": "Rescuing Someone Isn't the Same as Teaching Them",
+      "summaryEn": "Jumping in to fix a struggling junior's screen feels kind and gets the job done fast, but it quietly teaches them to freeze and wait for you instead of learning to solve it themselves.",
+      "keywordsEn": [
+        "over-helping",
+        "training juniors",
+        "letting people struggle productively",
+        "mentorship",
+        "learning by doing",
+        "hovering supervisor",
+        "building independence",
+        "on the job training",
+        "helicopter management"
+      ]
     },
     {
       "id": "1qJTDm2xcJTCDyuLFakuArvV7BTE_M6fTe03ffod6FAA",
@@ -698,7 +1318,20 @@
       "createdTime": "2026-07-18T01:51:33.868Z",
       "modifiedTime": "2026-07-18T01:52:29.627Z",
       "notePrice": 100,
-      "noteNumber": 53
+      "noteNumber": 53,
+      "titleEn": "The Best Employees Aren't the Ones Who Never Take a Day Off",
+      "summaryEn": "Being indispensable feels like job security, but what a manager actually values is work that keeps running smoothly even when you're suddenly out, because that means you built something bigger than yourself.",
+      "keywordsEn": [
+        "indispensability",
+        "being irreplaceable",
+        "documentation",
+        "backup coverage",
+        "taking time off",
+        "single point of failure",
+        "cross training",
+        "sick day coverage",
+        "sustainable work habits"
+      ]
     },
     {
       "id": "1trmi6e49ayIuP-oLa5vKrcUq0Y25VbjA2e0U3A6DZv0",
@@ -710,7 +1343,19 @@
       "createdTime": "2026-07-18T11:20:12.433Z",
       "modifiedTime": "2026-07-18T11:21:19.583Z",
       "notePrice": 0,
-      "noteNumber": 54
+      "noteNumber": 54,
+      "titleEn": "Before You Solve the Problem, Shrink It",
+      "summaryEn": "Chasing down the root cause feels like the heroic move, but the person who asks the right narrowing questions first — what's actually affected, what can keep moving — limits the damage while the real answer is still unknown.",
+      "keywordsEn": [
+        "problem solving under pressure",
+        "triage",
+        "containing a problem",
+        "troubleshooting",
+        "narrowing down the cause",
+        "keeping operations running",
+        "incident management",
+        "root cause vs quick containment"
+      ]
     },
     {
       "id": "1GFKDQVrM_5iLYl-ujkeOVBz28DCbAplwORBLF8ZnDgU",
@@ -722,7 +1367,20 @@
       "createdTime": "2026-07-18T11:34:07.270Z",
       "modifiedTime": "2026-07-18T11:35:17.167Z",
       "notePrice": 100,
-      "noteNumber": 55
+      "noteNumber": 55,
+      "titleEn": "Finding Problems Is Easy — Deciding Who Decides Is the Job",
+      "summaryEn": "A room full of valid concerns can still produce zero decisions when every department passes the ball to someone else — what actually breaks the deadlock is naming who owns the call.",
+      "keywordsEn": [
+        "decision ownership",
+        "cross-department conflict",
+        "who decides",
+        "analysis paralysis",
+        "meeting stalemate",
+        "accountability gap",
+        "escalation",
+        "clarifying ownership",
+        "getting unstuck"
+      ]
     },
     {
       "id": "1uYd3et8YqSb7SvYwOd4fnyRI-7nMcoJwQjPeTKVzNqM",
@@ -734,7 +1392,19 @@
       "createdTime": "2026-07-18T11:40:15.592Z",
       "modifiedTime": "2026-07-18T11:41:21.047Z",
       "notePrice": 0,
-      "noteNumber": 56
+      "noteNumber": 56,
+      "titleEn": "A Correct Document Isn't Enough If Nobody Knows It's the Latest",
+      "summaryEn": "Three files all labeled 'final,' 'latest,' and 'revised' can each be technically accurate and still bring work to a halt — the real skill is making sure everyone can tell, at a glance, which one is current.",
+      "keywordsEn": [
+        "version control",
+        "document management",
+        "single source of truth",
+        "outdated documents",
+        "file naming confusion",
+        "keeping records current",
+        "conflicting information",
+        "documentation practices"
+      ]
     },
     {
       "id": "12lSO4xfwcDXYgVhiVq0rWJkoD5rwZjc01BAgaOUXAFI",
@@ -746,7 +1416,19 @@
       "createdTime": "2026-07-18T11:46:14.685Z",
       "modifiedTime": "2026-07-18T11:47:19.061Z",
       "notePrice": 0,
-      "noteNumber": 57
+      "noteNumber": 57,
+      "titleEn": "A Packed Calendar Isn't Proof You're Essential",
+      "summaryEn": "Being booked solid looks like importance, but when something urgent breaks, what a manager actually needs is someone who can rearrange their day on the spot, not someone whose calendar has no room to move.",
+      "keywordsEn": [
+        "flexibility",
+        "prioritization",
+        "urgent vs important",
+        "packed schedule",
+        "adaptability",
+        "handling interruptions",
+        "rearranging priorities",
+        "being available when it matters"
+      ]
     },
     {
       "id": "1BZV0gkYevrR1AQrtm0fSt-LOjQZWG89K-Maew7sw8kE",
@@ -758,7 +1440,19 @@
       "createdTime": "2026-07-18T11:51:07.894Z",
       "modifiedTime": "2026-07-18T11:52:12.322Z",
       "notePrice": 100,
-      "noteNumber": 58
+      "noteNumber": 58,
+      "titleEn": "Talking a Lot in Meetings Isn't the Same as Doing the Work After",
+      "summaryEn": "Being the loudest voice in the room feels productive in the moment, but the person who quietly claims an action item and a deadline before the meeting ends is the one whose work actually shows up Monday morning.",
+      "keywordsEn": [
+        "meeting participation",
+        "follow through",
+        "talk vs action",
+        "action items",
+        "owning next steps",
+        "vocal in meetings",
+        "accountability after meetings",
+        "getting things done"
+      ]
     },
     {
       "id": "1gMy7pecofrOHaRBXkdZ52orJgyNeA1XJlmO_fWfMlwo",
@@ -770,7 +1464,19 @@
       "createdTime": "2026-07-18T11:55:48.520Z",
       "modifiedTime": "2026-07-18T11:57:05.054Z",
       "notePrice": 100,
-      "noteNumber": 59
+      "noteNumber": 59,
+      "titleEn": "Show Your Work Before It's Finished, Not After",
+      "summaryEn": "A polished, complete-looking deliverable can hide a wrong direction that costs days to undo — the smarter move is bringing in a rough sketch early enough that someone can catch the mistake before you've built the whole thing.",
+      "keywordsEn": [
+        "showing work early",
+        "getting feedback sooner",
+        "avoiding rework",
+        "premature polish",
+        "checking direction early",
+        "work in progress reviews",
+        "perfectionism",
+        "iterative feedback"
+      ]
     },
     {
       "id": "1naWgPGUjCgV4cTaB7VyRMcUm6pDbtiPQumZ03A2PgAU",
@@ -782,7 +1488,19 @@
       "createdTime": "2026-07-18T12:02:06.225Z",
       "modifiedTime": "2026-07-18T12:03:32.712Z",
       "notePrice": 0,
-      "noteNumber": 60
+      "noteNumber": 60,
+      "titleEn": "Never Saying No Isn't the Same as Being Reliable",
+      "summaryEn": "Agreeing to everything sounds helpful in the moment, but silently taking on an impossible workload guarantees something breaks — the people managers trust most are the ones who ask what's really needed before saying yes.",
+      "keywordsEn": [
+        "saying no at work",
+        "negotiating deadlines",
+        "overcommitment",
+        "prioritizing requests",
+        "pushing back respectfully",
+        "workload negotiation",
+        "scope clarification",
+        "conflicting priorities"
+      ]
     },
     {
       "id": "1uGv0vF4JyuzT8cZ_MMjk5Dcmgns6uDQz-8auK5qWAJg",
@@ -794,7 +1512,20 @@
       "createdTime": "2026-07-18T12:09:13.990Z",
       "modifiedTime": "2026-07-18T12:10:25.205Z",
       "notePrice": 100,
-      "noteNumber": 61
+      "noteNumber": 61,
+      "titleEn": "'No Problems' Isn't Useful — Where the Problem Would Start Is",
+      "summaryEn": "A clean test report feels reassuring, but if it doesn't say how far conditions can drift before things break, it doesn't actually tell a manager whether the process is safe to run at scale.",
+      "keywordsEn": [
+        "test reporting",
+        "defining tolerances",
+        "operating limits",
+        "quality assurance",
+        "meaningful reporting",
+        "control limits",
+        "margin of safety",
+        "process validation",
+        "useful status updates"
+      ]
     },
     {
       "id": "1fV5_3qvLdMu8I64WYGE77XkqgDrlUw1jwXjeUkCbBjg",
@@ -806,7 +1537,19 @@
       "createdTime": "2026-07-18T12:25:28.920Z",
       "modifiedTime": "2026-07-18T12:26:59.296Z",
       "notePrice": 100,
-      "noteNumber": 62
+      "noteNumber": 62,
+      "titleEn": "More Meetings Don't Mean More Progress",
+      "summaryEn": "A calendar packed with daily check-ins can create the feeling of momentum while the same issues sit unresolved week after week — real progress comes from visibility systems, not from gathering people in a room.",
+      "keywordsEn": [
+        "meeting overload",
+        "status meetings",
+        "visibility without meetings",
+        "project tracking",
+        "unnecessary meetings",
+        "async updates",
+        "transparency",
+        "progress vs activity"
+      ]
     },
     {
       "id": "1-P9kx37Hl4YcLD4OCQlfYxla5GEQDrRe9DamFacwCog",
@@ -818,7 +1561,19 @@
       "createdTime": "2026-07-18T12:39:42.753Z",
       "modifiedTime": "2026-07-18T12:40:27.177Z",
       "notePrice": 0,
-      "noteNumber": 63
+      "noteNumber": 63,
+      "titleEn": "Being the Go-To Person for Answers Isn't the Same as Fixing the Question",
+      "summaryEn": "Answering the same question three times in one day feels like being helpful and indispensable, but it's actually a sign the real answer lives only in your head instead of somewhere everyone can find it.",
+      "keywordsEn": [
+        "tribal knowledge",
+        "documentation gaps",
+        "repeated questions",
+        "knowledge silos",
+        "single point of contact",
+        "institutional knowledge",
+        "self-service information",
+        "reducing interruptions"
+      ]
     },
     {
       "id": "1G16v-uGp6NFPfuGr72BhRevliZ0sbrArUK7h2A2sJm4",
@@ -830,7 +1585,19 @@
       "createdTime": "2026-07-18T21:50:53.368Z",
       "modifiedTime": "2026-07-18T21:51:31.778Z",
       "notePrice": 0,
-      "noteNumber": 64
+      "noteNumber": 64,
+      "titleEn": "A Fast Reply Isn't the Same as a Finished One",
+      "summaryEn": "Answering 'I'll check' within five minutes looks responsive, but if nobody ever comes back with the actual answer, the sender's uncertainty never really goes away — speed without closure isn't help.",
+      "keywordsEn": [
+        "responsiveness",
+        "following up",
+        "closing the loop",
+        "communication follow through",
+        "unfinished replies",
+        "email etiquette",
+        "reliability in communication",
+        "leaving people hanging"
+      ]
     },
     {
       "id": "1R2pUidfJrYyBEiZXx9TdqdY0HYzfiOXgYL0jvwOYtPU",
@@ -842,7 +1609,19 @@
       "createdTime": "2026-07-18T22:23:27.391Z",
       "modifiedTime": "2026-07-18T22:24:27.844Z",
       "notePrice": 0,
-      "noteNumber": 65
+      "noteNumber": 65,
+      "titleEn": "Being Right Isn't Enough — You Have to Fix It Without Breaking Trust",
+      "summaryEn": "Pointing out someone's mistake in front of a room might be technically correct, but it can cost more than it saves — the real skill is correcting an error while protecting the relationship of the person who made it.",
+      "keywordsEn": [
+        "giving feedback tactfully",
+        "correcting mistakes diplomatically",
+        "saving face",
+        "workplace tact",
+        "handling errors gracefully",
+        "difficult conversations",
+        "diplomacy at work",
+        "constructive criticism"
+      ]
     },
     {
       "id": "1OiTRnXoO2NmY-oVPFt7jHLG-L1gAKezzsFxFtzz_vNs",
@@ -854,7 +1633,19 @@
       "createdTime": "2026-07-18T22:36:04.234Z",
       "modifiedTime": "2026-07-18T22:37:10.508Z",
       "notePrice": 100,
-      "noteNumber": 66
+      "noteNumber": 66,
+      "titleEn": "Generating Options Is Easy — Closing Out the Ones You Didn't Pick Is the Hard Part",
+      "summaryEn": "Brainstorming multiple solid proposals feels impressive, but if the rejected options keep quietly consuming time and resources after the decision, nothing was actually decided at all.",
+      "keywordsEn": [
+        "decision follow through",
+        "killing rejected options",
+        "wasted effort",
+        "decisiveness",
+        "commitment to a plan",
+        "resource allocation",
+        "zombie projects",
+        "closing out alternatives"
+      ]
     },
     {
       "id": "1BibLOvJnyrgWpL85Si4t3h_sxpRbrQiji_ctbZVUG_Y",
@@ -866,7 +1657,19 @@
       "createdTime": "2026-07-18T22:46:08.152Z",
       "modifiedTime": "2026-07-18T22:47:06.557Z",
       "notePrice": 100,
-      "noteNumber": 67
+      "noteNumber": 67,
+      "titleEn": "Working Fast on a Bad Request Just Gets You to the Wrong Answer Faster",
+      "summaryEn": "Saying yes immediately and diving in looks diligent, but if you never ask what the request is actually for, you can burn hours producing something nobody can use.",
+      "keywordsEn": [
+        "clarifying requirements",
+        "understanding the ask",
+        "purpose before action",
+        "avoiding wasted work",
+        "requirements gathering",
+        "pushing back on vague requests",
+        "working efficiently",
+        "asking why before how"
+      ]
     },
     {
       "id": "1PnBo7TOSNM7cdGNA4l5fPMrssOksmpyzIIC9bRerR-M",
@@ -878,7 +1681,20 @@
       "createdTime": "2026-07-25T11:12:26.828Z",
       "modifiedTime": "2026-07-25T11:14:54.777Z",
       "notePrice": 100,
-      "noteNumber": 68
+      "noteNumber": 68,
+      "titleEn": "The Better the Numbers Look, the More You Should Question Them",
+      "summaryEn": "A dramatic improvement in the metrics feels like a win worth celebrating, but if the way you're measuring quietly changed along with the result, you might be comparing two completely different things.",
+      "keywordsEn": [
+        "data integrity",
+        "questioning good metrics",
+        "changing definitions",
+        "metric manipulation",
+        "measurement consistency",
+        "reporting accuracy",
+        "kpi tracking",
+        "too good to be true",
+        "auditing your own numbers"
+      ]
     },
     {
       "id": "1-Dg5ZYfu-zyfOUTv4u2Npwjsi21hps68tf6-3QobQGw",
@@ -890,7 +1706,19 @@
       "createdTime": "2026-07-25T12:32:45.483Z",
       "modifiedTime": "2026-07-25T13:15:56.209Z",
       "notePrice": 100,
-      "noteNumber": 69
+      "noteNumber": 69,
+      "titleEn": "The Quiet Days Are the Ones to Worry About",
+      "summaryEn": "'No problems to report' sounds like good news, but it can just as easily mean small issues are being handled — and hidden — by the people closest to them, without anyone above ever finding out.",
+      "keywordsEn": [
+        "underreporting problems",
+        "no news isn't good news",
+        "hidden issues",
+        "silence as a warning sign",
+        "walking the floor",
+        "visibility on the ground",
+        "self-resolved incidents",
+        "transparency culture"
+      ]
     },
     {
       "id": "1WRUx7XAe3CynmXnKLbR9h-EILtmeerEhtP-ZXrX_bRc",
@@ -902,7 +1730,19 @@
       "createdTime": "2026-07-25T13:16:54.769Z",
       "modifiedTime": "2026-07-25T13:18:00.714Z",
       "notePrice": 100,
-      "noteNumber": 70
+      "noteNumber": 70,
+      "titleEn": "The Faster You Recover, the More Evidence You Destroy",
+      "summaryEn": "Hitting reset the instant a machine stops feels like the responsible move, but every quick recovery wipes out the exact conditions you'd need to actually find out why it keeps happening.",
+      "keywordsEn": [
+        "root cause investigation",
+        "premature reset",
+        "preserving evidence",
+        "recurring equipment failure",
+        "resist quick fixes",
+        "troubleshooting discipline",
+        "incident data collection",
+        "downtime vs diagnosis"
+      ]
     },
     {
       "id": "1QkUWp0ZjiCx5eDhzhxN7j7JG49REUZPAR6O6lCO6ZL0",
@@ -914,7 +1754,20 @@
       "createdTime": "2026-07-19T04:21:52.524Z",
       "modifiedTime": "2026-07-26T04:31:30.747Z",
       "notePrice": 100,
-      "noteNumber": 71
+      "noteNumber": 71,
+      "titleEn": "A Decision You Can't Explain Later Was Never Really Settled",
+      "summaryEn": "Recording what was decided isn't enough — without the reasoning behind it, the same argument resurfaces months later, and a decision nobody can defend has to be made all over again.",
+      "keywordsEn": [
+        "documenting decisions",
+        "decision rationale",
+        "avoiding rework",
+        "institutional memory",
+        "meeting records",
+        "why not just what",
+        "revisiting old decisions",
+        "context loss",
+        "knowledge transfer"
+      ]
     },
     {
       "id": "1X-qU6yoNB7M_1cSLT-wkwo19i7gsZZnFC9bG5zRz7cw",
@@ -926,7 +1779,19 @@
       "createdTime": "2026-07-19T04:45:34.899Z",
       "modifiedTime": "2026-07-19T04:47:01.629Z",
       "notePrice": 0,
-      "noteNumber": 72
+      "noteNumber": 72,
+      "titleEn": "A Perfectly Correct Plan Can Still Be Wrong",
+      "summaryEn": "Every calculation and layout can be flawless, but if the assumption behind them quietly changed and nobody told the people building the plan, precision won't save you from being wrong.",
+      "keywordsEn": [
+        "outdated assumptions",
+        "plan validity",
+        "stale requirements",
+        "communication breakdown",
+        "changing requirements",
+        "assumptions vs facts",
+        "cross-team information gaps",
+        "revalidating plans"
+      ]
     },
     {
       "id": "1BBncFnauw3Q3wSmUNAWl-DyO8iDHVrloBqqdM4N3OPs",
@@ -938,7 +1803,21 @@
       "createdTime": "2026-07-19T05:06:43.194Z",
       "modifiedTime": "2026-07-19T05:07:56.458Z",
       "notePrice": 100,
-      "noteNumber": 73
+      "noteNumber": 73,
+      "titleEn": "The Busier You Are, the Fewer Decisions You Should Make",
+      "summaryEn": "When a production line keeps stalling for the same reason, the instinct is to decide faster each time — but the real fix is building a system so the same call never has to be made twice.",
+      "keywordsEn": [
+        "decision fatigue",
+        "recurring problems",
+        "repeated stoppages",
+        "standard response",
+        "escalation criteria",
+        "judgment overload",
+        "busy schedule",
+        "workflow bottleneck",
+        "decision making",
+        "quick fix vs root cause"
+      ]
     },
     {
       "id": "1NiXsiNa4zELzDZrUPbZh2_USu0erMVD7uXAI0yBDFFA",
@@ -950,7 +1829,21 @@
       "createdTime": "2026-07-19T11:43:57.148Z",
       "modifiedTime": "2026-07-19T11:45:01.805Z",
       "notePrice": 100,
-      "noteNumber": 74
+      "noteNumber": 74,
+      "titleEn": "It's Not About Avoiding Mistakes — It's About Being Able to Undo Them",
+      "summaryEn": "A team spent so much energy proving their new settings wouldn't fail that nobody thought to ask how fast they could revert if it did — and that question turned out to matter more.",
+      "keywordsEn": [
+        "mistake recovery",
+        "rollback plan",
+        "change management",
+        "risk management",
+        "reversibility",
+        "contingency planning",
+        "testing vs preparedness",
+        "undo plan",
+        "production changes",
+        "resilience"
+      ]
     },
     {
       "id": "1Te5AO6mFmGRZd1HhM8wyhFhLO3i2Do7LV6wQAzuTUAI",
@@ -962,7 +1855,21 @@
       "createdTime": "2026-07-19T21:16:25.688Z",
       "modifiedTime": "2026-07-19T21:17:25.785Z",
       "notePrice": 100,
-      "noteNumber": 75
+      "noteNumber": 75,
+      "titleEn": "Fixing It Once Isn't the Same as Understanding Why It Broke",
+      "summaryEn": "When a machine error vanishes the moment you touch it, \"it's fixed\" can be the most dangerous thing to say — the real skill is being able to reproduce the failure, not just make it go away.",
+      "keywordsEn": [
+        "intermittent failure",
+        "root cause analysis",
+        "equipment troubleshooting",
+        "one-off error",
+        "quick fix",
+        "reproducing bugs",
+        "false confidence",
+        "machine downtime",
+        "unexplained anomaly",
+        "diagnostics"
+      ]
     },
     {
       "id": "1DIK6kSHXn4ylLNxcBBESpzXDAXgYGSNZ6APMM-lcxvA",
@@ -974,7 +1881,21 @@
       "createdTime": "2026-07-19T21:24:24.606Z",
       "modifiedTime": "2026-07-19T21:26:01.762Z",
       "notePrice": 100,
-      "noteNumber": 76
+      "noteNumber": 76,
+      "titleEn": "Finding the Cause Doesn't Help Anyone Else Until It's Written Down",
+      "summaryEn": "One team solved a tricky equipment fault brilliantly — then the exact same failure hit another team weeks later, because nobody had turned the fix into a shared standard.",
+      "keywordsEn": [
+        "knowledge sharing",
+        "tribal knowledge",
+        "documentation",
+        "standardization",
+        "recurring failures",
+        "lessons learned",
+        "institutional knowledge",
+        "root cause fix",
+        "cross-team communication",
+        "best practices"
+      ]
     },
     {
       "id": "1f33zeAvYckyZxR_f1Ms_tn_VlBhuWW8Oopj3KsQ2T38",
@@ -986,7 +1907,21 @@
       "createdTime": "2026-07-20T03:16:42.664Z",
       "modifiedTime": "2026-07-20T03:18:13.728Z",
       "notePrice": 100,
-      "noteNumber": 77
+      "noteNumber": 77,
+      "titleEn": "Before You Ask for Help, Bring a Guess",
+      "summaryEn": "A young engineer who asks \"what should I do?\" is handing over the whole decision — the ones who get ahead show up with a hypothesis and options they've already weighed, even if they're not sure yet.",
+      "keywordsEn": [
+        "asking for help",
+        "escalation",
+        "decision making",
+        "mentoring juniors",
+        "problem solving skills",
+        "bring solutions not problems",
+        "critical thinking",
+        "consulting your boss",
+        "ownership",
+        "professional growth"
+      ]
     },
     {
       "id": "1spygyIMjAlOWrt2jIdoj8vhyxLowI9PkLT65UqAttqQ",
@@ -998,7 +1933,21 @@
       "createdTime": "2026-07-20T09:19:20.325Z",
       "modifiedTime": "2026-07-20T09:21:21.619Z",
       "notePrice": 0,
-      "noteNumber": 78
+      "noteNumber": 78,
+      "titleEn": "When a Rule Keeps Getting Broken, Look at the Rule First",
+      "summaryEn": "A worker was quietly skipping a safety check every single morning — not out of carelessness, but because the procedure and the actual time pressure made it impossible to do both, and nobody had noticed.",
+      "keywordsEn": [
+        "procedure compliance",
+        "workarounds",
+        "standard operating procedures",
+        "checklist fatigue",
+        "time pressure",
+        "rule violations",
+        "noncompliance root cause",
+        "safety checks",
+        "process design",
+        "blaming workers vs fixing process"
+      ]
     },
     {
       "id": "1LoFuZ4UjVAlpZEzaqWpJsTktrdoABGmeJ9x4WnpP6_8",
@@ -1010,7 +1959,21 @@
       "createdTime": "2026-07-20T09:55:59.612Z",
       "modifiedTime": "2026-07-20T09:56:41.500Z",
       "notePrice": 0,
-      "noteNumber": 79
+      "noteNumber": 79,
+      "titleEn": "Every Slide Can Be Correct and the Whole Report Still Fail",
+      "summaryEn": "A report with perfect numbers, clean graphs, and no typos still left the audience wondering what it was actually trying to say — proof that being right on every page isn't the same as telling a coherent story.",
+      "keywordsEn": [
+        "presentation skills",
+        "report writing",
+        "storytelling",
+        "slide design",
+        "communication clarity",
+        "business reporting",
+        "narrative flow",
+        "data presentation",
+        "meeting prep",
+        "connecting the dots"
+      ]
     },
     {
       "id": "1LsEvb_Zbcko48ASsEcEJhRxzMMa8VBNTl0-jP5_S1jA",
@@ -1022,7 +1985,21 @@
       "createdTime": "2026-07-20T12:10:12.398Z",
       "modifiedTime": "2026-07-20T12:11:38.462Z",
       "notePrice": 100,
-      "noteNumber": 80
+      "noteNumber": 80,
+      "titleEn": "Read It Out Loud and the Gaps in Your Logic Show Themselves",
+      "summaryEn": "A slide deck looked complete until its author tried explaining it out loud — and the leap from \"the machine stopped\" to \"we replaced the sensor\" turned out to exist only in his head, never on the page.",
+      "keywordsEn": [
+        "logical gaps",
+        "presentation prep",
+        "rehearsing a presentation",
+        "explaining your reasoning",
+        "slide review",
+        "communication clarity",
+        "hidden assumptions",
+        "walking through logic",
+        "report review",
+        "practice run"
+      ]
     },
     {
       "id": "1g0196YA5BshOQ2dTknV_aFDHWll3Ep37qbYBqz3Ucno",
@@ -1044,7 +2021,21 @@
       "createdTime": "2026-07-20T20:00:22.110Z",
       "modifiedTime": "2026-07-20T20:01:47.968Z",
       "notePrice": 100,
-      "noteNumber": 82
+      "noteNumber": 82,
+      "titleEn": "Reporting Fast Isn't the Same as Reporting What Matters",
+      "summaryEn": "A worker reported a machine stoppage within five minutes — fast, honest, by the book — but left out the one thing a manager actually needed to know: how far the damage would spread.",
+      "keywordsEn": [
+        "incident reporting",
+        "impact assessment",
+        "escalation",
+        "downstream effects",
+        "production downtime",
+        "communication with management",
+        "status updates",
+        "scope of impact",
+        "crisis response",
+        "speed vs completeness"
+      ]
     },
     {
       "id": "1LODYo98DSUGOS9r_NjTvha2CennCd8lU6xhvDxImXDs",
@@ -1056,7 +2047,21 @@
       "createdTime": "2026-07-29T16:20:49.941Z",
       "modifiedTime": "2026-07-29T16:21:27.139Z",
       "notePrice": 100,
-      "noteNumber": 83
+      "noteNumber": 83,
+      "titleEn": "The Fastest People Don't Know the Answer — They Know Who Does",
+      "summaryEn": "One employee spent two hours digging through folders alone; another spent ten minutes figuring out who to ask and had the answer in twenty-five — real speed at work often comes from knowing the network, not knowing everything yourself.",
+      "keywordsEn": [
+        "finding information",
+        "who to ask",
+        "networking at work",
+        "information retrieval",
+        "efficiency",
+        "knowledge network",
+        "asking the right person",
+        "research skills",
+        "workplace shortcuts",
+        "institutional knowledge"
+      ]
     },
     {
       "id": "1QuOPfWekJr5YL7N_WcUH7tfYqUprJ2_Fgl90AbyAqNU",
@@ -1068,7 +2073,21 @@
       "createdTime": "2026-07-30T11:51:55.474Z",
       "modifiedTime": "2026-07-30T11:52:47.002Z",
       "notePrice": 100,
-      "noteNumber": 84
+      "noteNumber": 84,
+      "titleEn": "The More People Involved, the More You Need a Single Point of Contact",
+      "summaryEn": "Four departments each reached out separately about the same small spec change and each got a different answer — not because anyone lied, but because four parallel channels of communication had quietly replaced one.",
+      "keywordsEn": [
+        "communication breakdown",
+        "single point of contact",
+        "coordination overhead",
+        "stakeholder management",
+        "cross-department communication",
+        "conflicting information",
+        "project coordination",
+        "information silos",
+        "too many channels",
+        "alignment"
+      ]
     },
     {
       "id": "16JKj6rsIiIimXKzXRE8oA8E2TTtVwS6nSOZnxC2gyIw",
@@ -1080,7 +2099,21 @@
       "createdTime": "2026-07-20T22:17:37.499Z",
       "modifiedTime": "2026-07-30T20:56:23.194Z",
       "notePrice": 100,
-      "noteNumber": 85
+      "noteNumber": 85,
+      "titleEn": "Starting Fast Isn't Progress If the Ground Isn't Ready",
+      "summaryEn": "One engineer dove straight into setup work and hit a wall by 11am because basic decisions like install location were never confirmed; another spent the first thirty minutes just nailing down prerequisites — and never had to redo a thing.",
+      "keywordsEn": [
+        "project prerequisites",
+        "jumping in too fast",
+        "planning before execution",
+        "scope confirmation",
+        "wasted work",
+        "requirements gathering",
+        "setup readiness",
+        "false progress",
+        "due diligence",
+        "project kickoff"
+      ]
     },
     {
       "id": "17UiaCUu62HP-xzYxTLZfM-JSaeY_m1-qxC9xoHubhQs",
@@ -1092,7 +2125,21 @@
       "createdTime": "2026-07-20T22:22:29.584Z",
       "modifiedTime": "2026-07-31T10:15:46.328Z",
       "notePrice": 100,
-      "noteNumber": 86
+      "noteNumber": 86,
+      "titleEn": "A Handover Document Isn't the Same as a Successful Handover",
+      "summaryEn": "The transition documents looked thorough — twenty pages, photos, contacts — until the newcomer actually stood at the control panel and froze on the very first screen, because steps too obvious to the old hand were never written down.",
+      "keywordsEn": [
+        "job handover",
+        "knowledge transfer",
+        "onboarding",
+        "documentation gaps",
+        "training new employees",
+        "tacit knowledge",
+        "standard operating procedures",
+        "succession planning",
+        "hands-on verification",
+        "unwritten steps"
+      ]
     },
     {
       "id": "1p4_dNlhufHtArARRagchm5J-xG4IbWh8hAfq8OwD9Fg",
@@ -1104,7 +2151,21 @@
       "createdTime": "2026-07-21T21:38:24.205Z",
       "modifiedTime": "2026-07-31T11:27:49.645Z",
       "notePrice": 100,
-      "noteNumber": 87
+      "noteNumber": 87,
+      "titleEn": "Cleaning Up a Mess Doesn't Stop It From Coming Back",
+      "summaryEn": "A folder full of \"final_v2\" and \"latest_fixed\" files got tidied up beautifully — and a few months later was just as messy again, because nobody had left behind a rule for what actually counts as final.",
+      "keywordsEn": [
+        "file organization",
+        "version control",
+        "shared folders",
+        "naming conventions",
+        "document management",
+        "recurring clutter",
+        "process standards",
+        "decision criteria",
+        "sustainable fixes",
+        "team habits"
+      ]
     },
     {
       "id": "1bREpjaSJv2dTYBskYkutNh0fl1kGAMIAZKxrmLkTCSk",
@@ -1116,7 +2177,21 @@
       "createdTime": "2026-07-24T03:28:36.348Z",
       "modifiedTime": "2026-07-24T03:29:19.959Z",
       "notePrice": 100,
-      "noteNumber": 88
+      "noteNumber": 88,
+      "titleEn": "You Don't Need a Finished Spec to Get a Useful Quote",
+      "summaryEn": "Insisting on a complete, airtight specification before requesting quotes can stall a project for weeks — sometimes what vendors actually need is just enough information to compare apples to apples.",
+      "keywordsEn": [
+        "vendor quotes",
+        "budgetary estimate",
+        "spec writing",
+        "procurement",
+        "project planning",
+        "over-engineering documents",
+        "decision-ready information",
+        "request for quote",
+        "early-stage planning",
+        "analysis paralysis"
+      ]
     },
     {
       "id": "1kzmi07fGxPD5X0KIqZQFvhzSBbBjEZ6cC1nJeerFPXw",
@@ -1128,7 +2203,21 @@
       "createdTime": "2026-07-24T04:17:58.978Z",
       "modifiedTime": "2026-07-31T20:27:49.808Z",
       "notePrice": 100,
-      "noteNumber": 89
+      "noteNumber": 89,
+      "titleEn": "The Best Automation Still Has a Manual Way Back",
+      "summaryEn": "A spreadsheet automation that quietly saved twenty minutes a day broke the moment its creator was out — and nobody else could fall back to doing it by hand, because \"automated\" had come to mean \"nobody understands it anymore.\"",
+      "keywordsEn": [
+        "automation risk",
+        "single point of failure",
+        "business continuity",
+        "manual fallback",
+        "process resilience",
+        "bus factor",
+        "over-automation",
+        "spreadsheet automation",
+        "knowledge dependency",
+        "disaster recovery"
+      ]
     },
     {
       "id": "1NQS8kbRQRk03FQRDDduICYCLA0NaE3HL1ZQ578cErTg",
@@ -1140,7 +2229,21 @@
       "createdTime": "2026-07-24T04:30:43.729Z",
       "modifiedTime": "2026-07-31T21:00:38.345Z",
       "notePrice": 100,
-      "noteNumber": 90
+      "noteNumber": 90,
+      "titleEn": "Don't Just Say 'Be Careful' — Show Them What Danger Looks Like Before It Arrives",
+      "summaryEn": "Telling someone to \"be more careful\" sounds helpful but teaches nothing; naming the exact conditions where danger tends to appear, before it does, is what actually builds judgment.",
+      "keywordsEn": [
+        "safety coaching",
+        "hazard perception",
+        "mentoring",
+        "driving safety",
+        "proactive warnings",
+        "teaching judgment",
+        "risk awareness",
+        "vague feedback",
+        "situational awareness",
+        "near miss prevention"
+      ]
     },
     {
       "id": "1XdhhGckEh9Tx5l91E4FuW_E1J37yIHuADb1HBw-NW60",
@@ -1152,7 +2255,21 @@
       "createdTime": "2026-07-24T04:35:51.714Z",
       "modifiedTime": "2026-07-31T22:43:12.361Z",
       "notePrice": 100,
-      "noteNumber": 91
+      "noteNumber": 91,
+      "titleEn": "A Good-Looking Fix Is Worthless If No One Can Explain Why It Works",
+      "summaryEn": "A team proposed a clever, easy-to-implement fix for a rare measurement error — but when asked why it would actually solve the problem, nobody could answer, because the fix and the root cause had never truly been connected.",
+      "keywordsEn": [
+        "root cause analysis",
+        "countermeasure validation",
+        "problem solving",
+        "quality control",
+        "engineering fixes",
+        "plausible solutions",
+        "measurement error",
+        "corrective action",
+        "cause and effect",
+        "quality investigation"
+      ]
     },
     {
       "id": "1acSHuIIYe15489OrRgSttSAv2uPDZFBzTjsX8QXpyF0",
@@ -1164,7 +2281,21 @@
       "createdTime": "2026-07-24T08:56:01.968Z",
       "modifiedTime": "2026-07-31T22:49:12.035Z",
       "notePrice": 100,
-      "noteNumber": 92
+      "noteNumber": 92,
+      "titleEn": "How You End the Day Decides How Fast You Start the Next One",
+      "summaryEn": "Two people looked equally done for the day — but the one who spent three minutes writing down tomorrow's first move started working instantly the next morning, while the other lost fifteen minutes just remembering where they left off.",
+      "keywordsEn": [
+        "end of day routine",
+        "productivity habits",
+        "restarting work",
+        "planning ahead",
+        "morning momentum",
+        "task prioritization",
+        "self handoff",
+        "time management",
+        "daily planning",
+        "getting started faster"
+      ]
     },
     {
       "id": "1jGVHng-YHQTikuBvpEEdWHQ2u3CYpFxKl_2L1qlHKsI",
@@ -1176,7 +2307,21 @@
       "createdTime": "2026-07-24T09:02:25.795Z",
       "modifiedTime": "2026-07-31T22:51:46.650Z",
       "notePrice": 100,
-      "noteNumber": 93
+      "noteNumber": 93,
+      "titleEn": "Grammatically Correct Isn't the Same as Easy to Follow",
+      "summaryEn": "A report had no typos and reasonably polite language, yet the reader kept stalling out — because vague phrases and missing subjects forced them to fill in the meaning themselves, sentence by sentence.",
+      "keywordsEn": [
+        "business writing",
+        "report clarity",
+        "reader friction",
+        "vague language",
+        "editing for clarity",
+        "technical writing",
+        "communication skills",
+        "proofreading vs editing",
+        "writing for the reader",
+        "ambiguous writing"
+      ]
     },
     {
       "id": "1qIF0BCpxpIsE8sOL4Y6JRpRx46f4TDN1ciQkrpNxZkM",
@@ -1188,7 +2333,21 @@
       "createdTime": "2026-07-24T09:08:15.803Z",
       "modifiedTime": "2026-07-31T22:54:23.381Z",
       "notePrice": 100,
-      "noteNumber": 94
+      "noteNumber": 94,
+      "titleEn": "'I'm Fine' Tells You Nothing About What They're Actually Thinking",
+      "summaryEn": "A junior kept saying \"it's going well\" right up until the day before the deadline, when the resulting slides revealed a chain of reasoning nobody had ever seen — reassuring words are not the same as showing your work in progress.",
+      "keywordsEn": [
+        "status updates",
+        "showing your work",
+        "progress check-ins",
+        "managing up",
+        "transparency",
+        "assumed progress",
+        "delegation risk",
+        "checking in with employees",
+        "work in progress visibility",
+        "trust but verify"
+      ]
     },
     {
       "id": "1wNwLz1YShyiEeDudekvqYbkJjAldRjKw44KRaVfUpY8",
@@ -1200,7 +2359,21 @@
       "createdTime": "2026-07-24T09:12:39.777Z",
       "modifiedTime": "2026-07-31T22:59:54.058Z",
       "notePrice": 100,
-      "noteNumber": 95
+      "noteNumber": 95,
+      "titleEn": "Not Everything Needs a Decision Today — Some Things Just Need a Category",
+      "summaryEn": "Trying to decide the fate of every file in a messy shared folder either stalls forever or risks deleting something needed — the fix was a third bucket, \"can't decide yet,\" that let the cleanup actually finish.",
+      "keywordsEn": [
+        "decision making",
+        "sorting priorities",
+        "indecision",
+        "file cleanup",
+        "triage",
+        "deferred decisions",
+        "analysis paralysis",
+        "categorization",
+        "incremental progress",
+        "uncertainty management"
+      ]
     },
     {
       "id": "1hWicr4FxFGW-szxrkRalWu-jXPc1IdgTbO1GNaBrzsc",
@@ -1212,7 +2385,21 @@
       "createdTime": "2026-07-24T09:17:14.920Z",
       "modifiedTime": "2026-07-31T23:02:40.892Z",
       "notePrice": 100,
-      "noteNumber": 96
+      "noteNumber": 96,
+      "titleEn": "Keeping Things Running Isn't the Same as Knowing Where You're Headed",
+      "summaryEn": "A manager proudly listed everything accomplished that year — until one question from the CEO, \"so what will this organization look like next year?\", exposed that all the energy had gone into today and none into tomorrow.",
+      "keywordsEn": [
+        "strategic thinking",
+        "vision setting",
+        "leadership skills",
+        "long-term planning",
+        "organizational direction",
+        "operational vs strategic",
+        "future roadmap",
+        "management presentation",
+        "goal setting",
+        "execution vs strategy"
+      ]
     },
     {
       "id": "1qNMnyj2H2NT9oW5tmzGDRItKcsQVX5qDZg1hGjjq8bc",
@@ -1224,7 +2411,21 @@
       "createdTime": "2026-07-25T05:09:51.805Z",
       "modifiedTime": "2026-07-31T23:05:32.765Z",
       "notePrice": 100,
-      "noteNumber": 97
+      "noteNumber": 97,
+      "titleEn": "When Something Goes Wrong, Say Where It Spread Before You Say Why",
+      "summaryEn": "A worker who made a data entry mistake came ready to explain exactly how it happened — but the more urgent question was how far the bad data had already traveled, and that answer wasn't ready yet.",
+      "keywordsEn": [
+        "incident response",
+        "root cause vs impact",
+        "error reporting",
+        "data quality",
+        "damage control",
+        "escalation priorities",
+        "mistake disclosure",
+        "downstream impact",
+        "crisis communication",
+        "accountability"
+      ]
     },
     {
       "id": "1IBGocVi9eKK0q4b3ScfVb1WO1M43_WOk8-ELHXe1s1Q",
@@ -1236,7 +2437,21 @@
       "createdTime": "2026-07-25T05:20:59.583Z",
       "modifiedTime": "2026-07-31T23:07:42.480Z",
       "notePrice": 100,
-      "noteNumber": 98
+      "noteNumber": 98,
+      "titleEn": "The Skill Isn't Doing Everything — It's Deciding What Waits",
+      "summaryEn": "A junior trying to handle three \"urgent\" tasks at once had finished none of them by noon — the fix wasn't working harder, it was ranking the tasks by whose work would stall if each one slipped.",
+      "keywordsEn": [
+        "prioritization",
+        "multitasking",
+        "task triage",
+        "urgent vs important",
+        "workload management",
+        "deciding what to skip",
+        "time management",
+        "competing deadlines",
+        "saying no",
+        "impact-based prioritization"
+      ]
     },
     {
       "id": "1DiUlNUwd_FCyb1BK2B-zPNtiIyycOQ2sh0FZPh7tw3E",
@@ -1248,7 +2463,21 @@
       "createdTime": "2026-07-25T05:54:14.099Z",
       "modifiedTime": "2026-07-31T23:10:33.158Z",
       "notePrice": 100,
-      "noteNumber": 99
+      "noteNumber": 99,
+      "titleEn": "You Don't Need the Answer Yet — You Need to Say When You'll Have It",
+      "summaryEn": "A junior went quiet while carefully confirming details for a vendor's question, leaving the vendor wondering if the message had even been seen — the fix wasn't answering faster, it was immediately committing to when the real answer would come.",
+      "keywordsEn": [
+        "responsiveness",
+        "managing expectations",
+        "vendor communication",
+        "silence anxiety",
+        "setting timelines",
+        "acknowledging requests",
+        "communication etiquette",
+        "keeping people informed",
+        "response time",
+        "customer communication"
+      ]
     },
     {
       "id": "1Vd_zaX-8kIrbNP2ySREa45nmmO6WF6Txx4vMnCaRw9s",
@@ -1260,7 +2489,21 @@
       "createdTime": "2026-07-25T05:58:26.547Z",
       "modifiedTime": "2026-07-31T23:12:53.175Z",
       "notePrice": 100,
-      "noteNumber": 100
+      "noteNumber": 100,
+      "titleEn": "Moving Fast in the Wrong Direction Still Means Starting Over",
+      "summaryEn": "A junior jumped straight into building meeting materials the moment he got the assignment — and two diligent days later had to scrap it all, because nobody had confirmed what \"done\" actually needed to look like.",
+      "keywordsEn": [
+        "scope clarification",
+        "definition of done",
+        "starting too fast",
+        "requirements gathering",
+        "wasted effort",
+        "clarifying questions",
+        "hidden assumptions",
+        "project kickoff",
+        "rework",
+        "understanding the ask"
+      ]
     },
     {
       "id": "1oOmtCyJWN9DOey9SSNZgEAz0TWlOvhyDuN8L5grTFyw",
@@ -1272,7 +2515,21 @@
       "createdTime": "2026-07-25T06:54:33.328Z",
       "modifiedTime": "2026-07-25T10:14:15.974Z",
       "notePrice": 100,
-      "noteNumber": 101
+      "noteNumber": 101,
+      "titleEn": "A More Detailed Quote Request Isn't Always a More Useful One",
+      "summaryEn": "Building an exhaustive specification before asking vendors for a quote feels thorough, but at the concept stage it can just produce numbers nobody can compare — sometimes photos and a rough description get you further, faster.",
+      "keywordsEn": [
+        "vendor quotes",
+        "procurement",
+        "budgetary estimate",
+        "over-specification",
+        "request for quote",
+        "early-stage planning",
+        "comparing vendor bids",
+        "analysis paralysis",
+        "project budgeting",
+        "scope definition"
+      ]
     },
     {
       "id": "1uugtyeh7Vsr2fW1IjlhrjWUUbMIiCm91HPmjKjZ1D_Q",
@@ -1284,7 +2541,21 @@
       "createdTime": "2026-08-01T12:04:38.986Z",
       "modifiedTime": "2026-08-01T12:05:36.612Z",
       "notePrice": 100,
-      "noteNumber": 102
+      "noteNumber": 102,
+      "titleEn": "You Can't Catch an Anomaly If No One Recorded What Normal Looked Like",
+      "summaryEn": "A misaligned part was fixed in minutes, but when someone asked \"what was the normal position yesterday?\", nobody could say — because normal had only ever existed in memory, never in a record anyone could compare against.",
+      "keywordsEn": [
+        "baseline data",
+        "anomaly detection",
+        "equipment monitoring",
+        "record keeping",
+        "normal operating conditions",
+        "preventive maintenance",
+        "documentation",
+        "condition monitoring",
+        "historical data",
+        "catching problems early"
+      ]
     },
     {
       "id": "1yU_jcwDvv70BukiR_VFO_1S-7Hrl2y2afy-meAIRtac",
@@ -1296,7 +2567,21 @@
       "createdTime": "2026-08-01T12:16:53.165Z",
       "modifiedTime": "2026-08-01T12:17:41.382Z",
       "notePrice": 100,
-      "noteNumber": 103
+      "noteNumber": 103,
+      "titleEn": "Long Hours Aren't Always About Too Much Work — Often It's an Undefined 'Done'",
+      "summaryEn": "In an office logging heavy overtime, the real problem wasn't workload — it was that nobody had agreed on what \"finished\" meant, so the exact same report could take one person thirty minutes and another two hours.",
+      "keywordsEn": [
+        "overtime",
+        "workload management",
+        "definition of done",
+        "work standards",
+        "inconsistent expectations",
+        "productivity",
+        "time tracking",
+        "completion criteria",
+        "burnout",
+        "unclear requirements"
+      ]
     },
     {
       "id": "1-R25gFAe9Lo4wfGJk-3OMgKOHN4DUVE11RZduZkTO1A",
@@ -1328,7 +2613,21 @@
       "createdTime": "2026-08-03T21:23:47.843Z",
       "modifiedTime": "2026-08-03T21:31:58.706Z",
       "notePrice": 100,
-      "noteNumber": 106
+      "noteNumber": 106,
+      "titleEn": "You Got the Promotion. The System Didn't Get the Memo.",
+      "summaryEn": "A newly promoted manager discovered he'd been silently missing meetings for months — not from a one-off mistake, but because nobody had updated the mailing list that decides who gets invited, revealing how promotions and information access are quietly two separate jobs.",
+      "keywordsEn": [
+        "promotion process",
+        "onboarding new managers",
+        "distribution lists",
+        "access provisioning",
+        "information gaps",
+        "organizational systems",
+        "role transitions",
+        "admin oversight",
+        "new responsibilities",
+        "systemic gaps"
+      ]
     },
     {
       "id": "1TvyMKKi5q-YDYqESuoh5nZtbw4NcRYiRkG4l7MaktXY",
@@ -1380,7 +2679,21 @@
       "createdTime": "2026-07-29T12:33:34.563Z",
       "modifiedTime": "2026-08-03T21:45:35.948Z",
       "notePrice": 100,
-      "noteNumber": 111
+      "noteNumber": 111,
+      "titleEn": "Finishing Early Doesn't Help Anyone If You Sit On It",
+      "summaryEn": "A junior wrapped up a vendor comparison two full days ahead of deadline and then just held onto it — not realizing that finished work sitting unshared on someone's desk is, for the rest of the organization, functionally not done at all.",
+      "keywordsEn": [
+        "sharing work early",
+        "deadline mentality",
+        "work in progress visibility",
+        "timely communication",
+        "holding onto finished work",
+        "cross-team delays",
+        "proactive sharing",
+        "project timelines",
+        "bottlenecks",
+        "front-loading work"
+      ]
     },
     {
       "id": "1UBqryNICXpqk6IcOWDuRk9Uanri-hv26kmn6Sg1aMhQ",
@@ -1472,7 +2785,21 @@
       "createdTime": "2026-08-06T13:29:58.992Z",
       "modifiedTime": "2026-08-06T13:30:40.564Z",
       "notePrice": 100,
-      "noteNumber": 112
+      "noteNumber": 112,
+      "titleEn": "It's Not the Busy Schedule That Wears You Down — It's Not Being Able to See It",
+      "summaryEn": "The unease wasn't from having too much to do; it was from not being able to picture tomorrow as one clear sequence — a reminder that checking your calendar isn't about filling time, it's about deciding the order of decisions in advance.",
+      "keywordsEn": [
+        "schedule anxiety",
+        "calendar management",
+        "planning ahead",
+        "mental clarity",
+        "decision sequencing",
+        "fragmented information",
+        "time blocking",
+        "anticipatory planning",
+        "work overwhelm",
+        "visibility into workload"
+      ]
     },
     {
       "id": "1w3AZmE2JLI-d-ShIYa8jpMZYsXz9Vv6ZJdnS9JFIEyY",
@@ -1484,7 +2811,21 @@
       "createdTime": "2026-08-06T13:37:22.482Z",
       "modifiedTime": "2026-08-06T13:38:04.795Z",
       "notePrice": 100,
-      "noteNumber": 110
+      "noteNumber": 110,
+      "titleEn": "If You Can't See Where the Time Goes, All That's Left Is Feeling Busy",
+      "summaryEn": "Asking people to log their hours to find the cause of overtime backfired — the logging itself became one more burden on the busiest people, proving that what's needed isn't perfect records but just enough insight to see where the time is actually going.",
+      "keywordsEn": [
+        "time tracking",
+        "overtime causes",
+        "workload visibility",
+        "employee burden",
+        "measuring productivity",
+        "work hours",
+        "process improvement",
+        "data collection fatigue",
+        "identifying bottlenecks",
+        "capacity planning"
+      ]
     },
     {
       "id": "12j-DN-Qy7eiNswrDkp3Ys7lWpn6DZ20DzCaxnr_1YjY",
@@ -1496,7 +2837,19 @@
       "createdTime": "2026-08-06T13:43:13.043Z",
       "modifiedTime": "2026-08-06T13:43:52.933Z",
       "notePrice": 100,
-      "noteNumber": 109
+      "noteNumber": 109,
+      "titleEn": "Where Does This Fit in the Whole Company?",
+      "summaryEn": "A department pitches a solid system improvement, but an executive's single question - where does this fit in the bigger picture - exposes why even good local ideas can stall without a view of the whole.",
+      "keywordsEn": [
+        "proposal buy-in",
+        "big picture thinking",
+        "executive pushback",
+        "cross-department alignment",
+        "why proposals get rejected",
+        "systems thinking",
+        "strategic fit",
+        "presenting to leadership"
+      ]
     },
     {
       "id": "17NT9jYYNGp28crfwQ7QpEsn6WUf9x84_tPtjEFj8OW4",
@@ -1508,7 +2861,19 @@
       "createdTime": "2026-08-06T15:47:06.589Z",
       "modifiedTime": "2026-08-06T15:47:45.481Z",
       "notePrice": 100,
-      "noteNumber": 108
+      "noteNumber": 108,
+      "titleEn": "Before You Delegate, Say What You Don't Want",
+      "summaryEn": "Handing off a task with only the goal in mind feels like trust, but skipping what you actually care about leaves the other person to fill the gaps with their own judgment - and they can end up somewhere you never intended.",
+      "keywordsEn": [
+        "delegation",
+        "giving instructions",
+        "autonomy vs guidance",
+        "aligning expectations",
+        "trust at work",
+        "project drift",
+        "managing without micromanaging",
+        "setting boundaries"
+      ]
     },
     {
       "id": "1mHDxZ-8vs_64xPL5AIwHNNWTKxMFo9hQ6LHL3eY-J6E",
@@ -1530,7 +2895,19 @@
       "createdTime": "2026-08-06T20:49:54.788Z",
       "modifiedTime": "2026-08-06T20:54:20.279Z",
       "notePrice": 100,
-      "noteNumber": 107
+      "noteNumber": 107,
+      "titleEn": "What Junior Staff Are Really Afraid Of",
+      "summaryEn": "A second-year employee's quiet anxiety turns out to have nothing to do with how hard the work is - it's the fear of not knowing how much responsibility is coming, made worse by vague talk of shrinking headcount and rising expectations.",
+      "keywordsEn": [
+        "junior employee anxiety",
+        "unclear expectations",
+        "career growth",
+        "delegating responsibility",
+        "staffing changes",
+        "mentoring young employees",
+        "one-on-ones",
+        "communicating expectations"
+      ]
     },
     {
       "id": "1k4RN3wMrmYBT9vcID52ozXCBbwNggVOdTA5RZu-8irE",
@@ -1552,7 +2929,19 @@
       "createdTime": "2026-08-07T23:46:37.411Z",
       "modifiedTime": "2026-08-07T23:47:06.650Z",
       "notePrice": 100,
-      "noteNumber": 113
+      "noteNumber": 113,
+      "titleEn": "Forget Market Size - Time the Cycle",
+      "summaryEn": "A promising market's headline numbers mean little in manufacturing until you ask the question nobody puts in the report: how many seconds does it take to make one unit? That number, not the forecast, decides whether the business actually works.",
+      "keywordsEn": [
+        "new business evaluation",
+        "market research",
+        "cycle time",
+        "manufacturing feasibility",
+        "capital investment planning",
+        "production capacity",
+        "hidden costs",
+        "due diligence"
+      ]
     },
     {
       "id": "1KqldFX3howt6WlukDribqvz8t-GV6QZO9UwkimFbHZI",
@@ -1564,7 +2953,19 @@
       "createdTime": "2026-08-08T04:29:04.298Z",
       "modifiedTime": "2026-08-08T04:29:51.761Z",
       "notePrice": 100,
-      "noteNumber": 114
+      "noteNumber": 114,
+      "titleEn": "Count the Trips Before You Buy the Robot",
+      "summaryEn": "Automated guided vehicles look like an easy upgrade at a trade show demo, but the first real question - how many trips, how many parts, at what times - reveals that no one had ever measured the current process at all.",
+      "keywordsEn": [
+        "automation planning",
+        "agv",
+        "amr",
+        "material handling",
+        "process measurement",
+        "data before automation",
+        "factory automation",
+        "justifying capital investment"
+      ]
     },
     {
       "id": "1jV02ognwbCLFdKo5x58nLBRyiYGKivbzHs0jE8E0S_g",
@@ -1576,7 +2977,19 @@
       "createdTime": "2026-08-08T04:35:49.902Z",
       "modifiedTime": "2026-08-08T04:40:04.929Z",
       "notePrice": 100,
-      "noteNumber": 115
+      "noteNumber": 115,
+      "titleEn": "Answer Once, Then Write It Down",
+      "summaryEn": "Solving a colleague's question on the spot feels efficient, but without recording the reasoning behind the call, the same question comes back next month from someone else - the fix is one written line, not another quick save.",
+      "keywordsEn": [
+        "knowledge sharing",
+        "documenting decisions",
+        "avoiding repeat questions",
+        "tribal knowledge",
+        "process documentation",
+        "efficiency vs sustainability",
+        "single point of failure",
+        "decision rules"
+      ]
     },
     {
       "id": "1w8U3t05BOAHsWfJOMZCZ_VCnIkmCPzDqzmNQySPPLJk",
@@ -1588,7 +3001,19 @@
       "createdTime": "2026-08-08T10:20:49.112Z",
       "modifiedTime": "2026-08-08T10:21:20.800Z",
       "notePrice": 100,
-      "noteNumber": 116
+      "noteNumber": 116,
+      "titleEn": "Managing Without Anyone to Manage",
+      "summaryEn": "When reorganization leaves a manager with zero direct reports, it's tempting to think the job has disappeared too - but plenty of essential work falls in the gaps between departments, and someone without a team of their own is often best placed to catch it.",
+      "keywordsEn": [
+        "management without direct reports",
+        "org restructuring",
+        "role clarity",
+        "cross-functional work",
+        "ownerless tasks",
+        "redefining management",
+        "organizational gaps",
+        "career identity"
+      ]
     },
     {
       "id": "1P0tul6kUU4rEsIiBG14zjNB3tzyQMZPO1hT5TlN-l10",
@@ -1600,7 +3025,19 @@
       "createdTime": "2026-08-08T10:25:52.195Z",
       "modifiedTime": "2026-08-08T10:30:51.518Z",
       "notePrice": 100,
-      "noteNumber": 117
+      "noteNumber": 117,
+      "titleEn": "If You Do It For Them, It's Never Really Theirs",
+      "summaryEn": "It's faster to just finish a struggling department's proposal yourself, but that convenience quietly makes you the permanent owner of a job that was supposed to belong to someone else - real support means handing over judgment, not a finished deliverable.",
+      "keywordsEn": [
+        "enabling vs doing it for them",
+        "ownership of work",
+        "cross-department support",
+        "avoiding scope creep",
+        "delegation",
+        "capability building",
+        "informal responsibility",
+        "helping without taking over"
+      ]
     },
     {
       "id": "1LphBBNEcVeyblUxpuKObnFzElIrxKqJBP686uvDopEg",
@@ -1612,7 +3049,19 @@
       "createdTime": "2026-08-08T10:33:59.478Z",
       "modifiedTime": "2026-08-08T10:34:34.847Z",
       "notePrice": 100,
-      "noteNumber": 118
+      "noteNumber": 118,
+      "titleEn": "A Transfer Doesn't Have to End the Relationship",
+      "summaryEn": "When a trusted mentor moves to another department, the org chart says the relationship is over - but a junior employee's real safety net is knowing who they can still ask, regardless of what the reporting lines say.",
+      "keywordsEn": [
+        "mentorship",
+        "informal networks",
+        "organizational change",
+        "who to ask for help",
+        "psychological safety",
+        "institutional knowledge",
+        "cross-department relationships",
+        "supporting new employees"
+      ]
     },
     {
       "id": "1bMhjrniU8VnnK_JKlKRRH6M2hC0nRcY7LcSncNLpdYw",
@@ -1624,7 +3073,19 @@
       "createdTime": "2026-08-08T10:42:19.618Z",
       "modifiedTime": "2026-08-08T10:42:53.461Z",
       "notePrice": 100,
-      "noteNumber": 119
+      "noteNumber": 119,
+      "titleEn": "The Busiest Days Leave Nothing to Show",
+      "summaryEn": "A day spent adjusting priorities, unsticking other people's decisions, and prepping talking points for executives can feel like doing nothing at all - because management's real output isn't a document you made, it's the work of everyone around you moving forward.",
+      "keywordsEn": [
+        "management output",
+        "invisible work",
+        "measuring productivity",
+        "transition from individual contributor",
+        "imposter syndrome",
+        "what managers actually do",
+        "delegation",
+        "career transition"
+      ]
     },
     {
       "id": "1s6z5926YKsVDERDkKbz6SJDmy1UeOAbf5Wpa3lsdV_A",
@@ -1636,7 +3097,19 @@
       "createdTime": "2026-08-08T10:48:42.882Z",
       "modifiedTime": "2026-08-08T10:49:21.153Z",
       "notePrice": 100,
-      "noteNumber": 120
+      "noteNumber": 120,
+      "titleEn": "Fast to Start, Slow to Finish",
+      "summaryEn": "A junior employee who jumps into action the moment a task lands looks impressively fast - until you ask what one piece of data would let them stop, and realize nobody decided when the investigation should end, so it just keeps growing.",
+      "keywordsEn": [
+        "analysis paralysis",
+        "action bias",
+        "defining done",
+        "decision criteria before starting",
+        "productivity vs busyness",
+        "coaching junior staff",
+        "scope creep",
+        "working efficiently"
+      ]
     },
     {
       "id": "1uYHO4L6uTOhMnCEi4e1f07xzpJqq5BF0N_kzrKbBJP8",
@@ -1648,7 +3121,19 @@
       "createdTime": "2026-08-08T10:55:13.821Z",
       "modifiedTime": "2026-08-08T10:55:51.578Z",
       "notePrice": 100,
-      "noteNumber": 121
+      "noteNumber": 121,
+      "titleEn": "Before You Launch It, Decide Who Checks It Weekly",
+      "summaryEn": "After months of work getting a new data system approved, the real risk isn't the launch - it's that everyone opens it once during the rollout and quietly goes back to their old spreadsheet, because nobody was ever assigned to look at it every week.",
+      "keywordsEn": [
+        "system adoption",
+        "tool rollout",
+        "sustaining new habits",
+        "change management",
+        "dashboard adoption",
+        "ownership after launch",
+        "digital transformation",
+        "driving usage"
+      ]
     },
     {
       "id": "1HIW8xBydS8F13cNqLhk0ZehnBOcVIWNtas-eYuHCXIo",
@@ -1660,7 +3145,19 @@
       "createdTime": "2026-08-08T11:01:59.005Z",
       "modifiedTime": "2026-08-08T11:02:34.037Z",
       "notePrice": 100,
-      "noteNumber": 122
+      "noteNumber": 122,
+      "titleEn": "The Neater the AI's Table, the More Suspicious You Should Be",
+      "summaryEn": "An AI-generated comparison of market opportunities looks polished enough to bring straight to a meeting, until you notice the numbers were never built on the same assumptions - a trap that's easy to fall into precisely because the table looks so complete.",
+      "keywordsEn": [
+        "ai research pitfalls",
+        "data comparability",
+        "market research",
+        "hidden assumptions",
+        "verifying ai output",
+        "due diligence",
+        "using ai responsibly",
+        "apples to apples comparison"
+      ]
     },
     {
       "id": "12BNCSzrXuvq5tWepg54avmumKrMycDeUeBFTF4NEKBk",
@@ -1682,7 +3179,19 @@
       "createdTime": "2026-08-08T11:28:14.747Z",
       "modifiedTime": "2026-08-08T11:28:51.477Z",
       "notePrice": 100,
-      "noteNumber": 123
+      "noteNumber": 123,
+      "titleEn": "You Can't Hand Over Management Work On Top of Everything Else",
+      "summaryEn": "Promoting a capable person into management duties feels natural, but if their old hands-on workload never gets taken away, you haven't given them a new role - you've just given your best people more to do.",
+      "keywordsEn": [
+        "promotion overload",
+        "delegating management duties",
+        "workload redistribution",
+        "burning out top performers",
+        "role transition",
+        "capacity planning",
+        "career progression",
+        "unloading old tasks"
+      ]
     },
     {
       "id": "15RiBuVxQCetBLVTEpKr2lq1xCICJ9EdLHM1EK7Thoqs",
@@ -1694,7 +3203,19 @@
       "createdTime": "2026-08-08T12:02:22.451Z",
       "modifiedTime": "2026-08-08T12:03:03.216Z",
       "notePrice": 100,
-      "noteNumber": 124
+      "noteNumber": 124,
+      "titleEn": "Don't Pick a Single Successor Before You're Already Gone",
+      "summaryEn": "Casually mentioning an eventual, undated move to a new role is enough to expose how much of a job runs on judgment calls that were never written down anywhere - and why leaving succession to a last-minute handoff loses the reasoning behind every decision.",
+      "keywordsEn": [
+        "succession planning",
+        "knowledge transfer",
+        "tacit knowledge",
+        "leaving a role",
+        "handover",
+        "documenting decisions",
+        "single point of failure",
+        "organizational continuity"
+      ]
     },
     {
       "id": "1z5cZBBtPNG_Kh2D8eEIk-2AhgxPame3iyHHkmK9lDH0",
@@ -1706,7 +3227,19 @@
       "createdTime": "2026-08-08T12:14:51.380Z",
       "modifiedTime": "2026-08-08T12:15:25.588Z",
       "notePrice": 100,
-      "noteNumber": 125
+      "noteNumber": 125,
+      "titleEn": "Fixing Every Comment Won't Fix the Document",
+      "summaryEn": "A junior employee dutifully patches every piece of feedback an executive gave - more data here, a chart there - yet the final report reads worse than before, because addressing each note individually isn't the same as understanding what the whole document needs to say.",
+      "keywordsEn": [
+        "report writing",
+        "incorporating feedback",
+        "revision process",
+        "losing the throughline",
+        "document clarity",
+        "coaching writing skills",
+        "editing vs rewriting",
+        "communicating to executives"
+      ]
     },
     {
       "id": "14tzLxdkJynS3gF0ngMeEUD1K7yejSXqxsnCX_ncjq38",
@@ -1718,7 +3251,19 @@
       "createdTime": "2026-08-08T12:26:09.109Z",
       "modifiedTime": "2026-08-08T12:26:45.947Z",
       "notePrice": 100,
-      "noteNumber": 126
+      "noteNumber": 126,
+      "titleEn": "You Can Measure Overtime All You Want - Without a Baseline, You Can't Cut It",
+      "summaryEn": "Tracking how everyone spends their hours feels like the obvious first step to reducing overtime, but without any sense of what a normal amount of time for a task should be, all that data tells you is that people are busy - not what's safe to cut.",
+      "keywordsEn": [
+        "reducing overtime",
+        "time tracking",
+        "standard time",
+        "workload management",
+        "office productivity",
+        "benchmarking work hours",
+        "process standards",
+        "measuring efficiency"
+      ]
     },
     {
       "id": "1X4SgqDFQ4kd9A-xFpCD56WeP2K-c2hPDnF5xL43rqu0",
@@ -1730,7 +3275,19 @@
       "createdTime": "2026-08-08T13:00:01.551Z",
       "modifiedTime": "2026-08-08T13:00:38.169Z",
       "notePrice": 100,
-      "noteNumber": 127
+      "noteNumber": 127,
+      "titleEn": "Your Department's Role Isn't Yours Alone to Define",
+      "summaryEn": "A department's job description looks clear from the inside - until you notice how much of what other teams actually expect from you was never written down anywhere, and realize your real mandate is shaped as much by what people around you rely on you for.",
+      "keywordsEn": [
+        "role definition",
+        "team scope",
+        "unwritten expectations",
+        "cross-department reliance",
+        "org chart vs reality",
+        "defining your mandate",
+        "informal responsibilities",
+        "organizational boundaries"
+      ]
     },
     {
       "id": "1DSqYpc9wZdZTS0LHfT4kFz75yLF_yUUw4dnXgT4WGVg",
@@ -1742,7 +3299,19 @@
       "createdTime": "2026-08-08T13:12:02.635Z",
       "modifiedTime": "2026-08-08T13:12:50.503Z",
       "notePrice": 100,
-      "noteNumber": 128
+      "noteNumber": 128,
+      "titleEn": "Fewer People, Same Standards - That's How Burnout Starts",
+      "summaryEn": "When headcount drops but the same meetings, reports, and polish are still expected, the math only balances by cutting thinking time and topping up with overtime - the real fix isn't reshuffling who does what, but deciding what stops being done at all.",
+      "keywordsEn": [
+        "staffing cuts",
+        "overtime reduction",
+        "workload management",
+        "redefining standards",
+        "burnout prevention",
+        "doing less",
+        "prioritization",
+        "resource constraints"
+      ]
     },
     {
       "id": "1F3b6LZT_KkqLlxIDI5zaDCu0SW_dwqfa7Ic9FAGyfXQ",
@@ -1754,7 +3323,19 @@
       "createdTime": "2026-08-08T13:21:41.581Z",
       "modifiedTime": "2026-08-08T13:22:20.689Z",
       "notePrice": 100,
-      "noteNumber": 129
+      "noteNumber": 129,
+      "titleEn": "Someone Just Gave Notice - Don't Pull Their Work Yet",
+      "summaryEn": "The instinct after an employee announces they're leaving is to strip their responsibilities immediately, but doing that too fast severs the reasoning behind their decisions before it can be captured - a good handoff needs a deliberate window, not a sudden reassignment.",
+      "keywordsEn": [
+        "employee resignation",
+        "knowledge transfer",
+        "handover planning",
+        "retention conversations",
+        "offboarding",
+        "managing departures",
+        "transition period",
+        "capturing institutional knowledge"
+      ]
     },
     {
       "id": "1tYQO-pcXQmw5a8w5xchSZ66Dn60G7D1lkjVGqfmypng",
@@ -1766,7 +3347,19 @@
       "createdTime": "2026-08-08T23:36:33.912Z",
       "modifiedTime": "2026-08-08T23:37:01.840Z",
       "notePrice": 100,
-      "noteNumber": 130
+      "noteNumber": 130,
+      "titleEn": "Why You Keep Making the Same Edits",
+      "summaryEn": "Marking up the same kinds of mistakes in every junior employee's report starts to look like a writing-skill problem, until you realize the real issue is that your own standards only ever exist in your head - never shared until the red pen comes out.",
+      "keywordsEn": [
+        "giving feedback",
+        "writing skills coaching",
+        "unclear expectations",
+        "repeated mistakes",
+        "documenting standards",
+        "editing reports",
+        "mentoring junior staff",
+        "communication templates"
+      ]
     },
     {
       "id": "1-5xaxvqmU_xjnGVzIeEWcLKZ1P5YWg-T6PY8bw3tfJQ",
@@ -1778,7 +3371,19 @@
       "createdTime": "2026-08-08T23:51:28.647Z",
       "modifiedTime": "2026-08-08T23:51:56.646Z",
       "notePrice": 100,
-      "noteNumber": 131
+      "noteNumber": 131,
+      "titleEn": "If You Check Everything, You've Delegated Nothing",
+      "summaryEn": "Handing off tasks feels like delegation, but if every piece of work still funnels back through you for a final check, you've only transferred the labor - not the ownership - and your people never get the experience of seeing something through on their own.",
+      "keywordsEn": [
+        "delegation",
+        "micromanagement",
+        "empowering employees",
+        "letting go of control",
+        "building trust",
+        "ownership vs approval",
+        "developing staff",
+        "management bottleneck"
+      ]
     },
     {
       "id": "1lmpUgGDd6v2gDi7-HEbt3zuxfAa3HtwyAdWKE9wLYWY",
@@ -1790,7 +3395,19 @@
       "createdTime": "2026-08-09T00:01:03.307Z",
       "modifiedTime": "2026-08-09T00:01:36.826Z",
       "notePrice": 100,
-      "noteNumber": 132
+      "noteNumber": 132,
+      "titleEn": "Your Part Being Done Doesn't Mean the Job Is Done",
+      "summaryEn": "Finishing your own process on schedule used to feel like the finish line, but once you're responsible for an entire vehicle program, a delay anywhere else in the chain means nothing is actually finished - local success means little against a stalled whole.",
+      "keywordsEn": [
+        "cross-functional accountability",
+        "program management",
+        "local optimization vs global outcome",
+        "project dependencies",
+        "big picture ownership",
+        "manufacturing launch",
+        "systems thinking",
+        "whole vs parts"
+      ]
     },
     {
       "id": "11EFDfTglKpEuH5l8JIfQh8RaPGJm0HNvhFtzi_y6CYc",
@@ -1802,7 +3419,19 @@
       "createdTime": "2026-08-11T02:27:22.024Z",
       "modifiedTime": "2026-08-11T02:27:48.915Z",
       "notePrice": 0,
-      "noteNumber": 133
+      "noteNumber": 133,
+      "titleEn": "A Correct Drawing Isn't the Same as a Defensible One",
+      "summaryEn": "A 3D model passes every technical check - dimensions, clearances, manufacturability - until one question exposes the real gap: nobody can explain why a feature is there at all, only that it was copied from the last design.",
+      "keywordsEn": [
+        "design review",
+        "engineering rationale",
+        "design intent",
+        "copy paste design errors",
+        "mentoring junior engineers",
+        "defending design decisions",
+        "cad review",
+        "root cause thinking"
+      ]
     },
     {
       "id": "1HSc8RRy-_wZAGkPqnpqMvUBYv5qTld2ktUj4b8BIJQU",
@@ -1834,7 +3463,19 @@
       "createdTime": "2026-08-11T03:05:56.303Z",
       "modifiedTime": "2026-08-11T03:06:27.530Z",
       "notePrice": 0,
-      "noteNumber": 134
+      "noteNumber": 134,
+      "titleEn": "More Metrics on the Dashboard, Fewer Eyes On It",
+      "summaryEn": "Piling every available metric onto a new dashboard feels thorough, but the more numbers on screen, the less clear it is what to actually look at - a dashboard only earns a weekly glance once someone has decided exactly what action each number triggers.",
+      "keywordsEn": [
+        "dashboard design",
+        "kpi overload",
+        "driving dashboard adoption",
+        "actionable metrics",
+        "information overload",
+        "defining thresholds",
+        "data visualization",
+        "sustaining usage"
+      ]
     },
     {
       "id": "1i2bhecQ5irZsP-0A0jL8oM8no9tTP9Qf-wnl1_-uIwk",
@@ -1846,7 +3487,19 @@
       "createdTime": "2026-08-11T23:27:31.825Z",
       "modifiedTime": "2026-08-11T23:27:59.187Z",
       "notePrice": 100,
-      "noteNumber": 135
+      "noteNumber": 135,
+      "titleEn": "More People in the Room, Fewer Decisions Made",
+      "summaryEn": "Adding stakeholders to a meeting to be safe feels responsible, but a twelve-person meeting can end with more concerns raised and zero decisions made - what's missing isn't headcount, it's someone assigned to actually decide.",
+      "keywordsEn": [
+        "meeting effectiveness",
+        "decision making",
+        "too many stakeholders",
+        "defining meeting roles",
+        "accountability",
+        "running better meetings",
+        "decision paralysis",
+        "cross-functional coordination"
+      ]
     },
     {
       "id": "1OHU-4Vj3OA9sg3nVh3rJMUvoBxe0uECvqqtOlnn23Es",
@@ -1898,7 +3551,19 @@
       "createdTime": "2026-08-14T12:26:20.826Z",
       "modifiedTime": "2026-08-14T12:26:50.529Z",
       "notePrice": 0,
-      "noteNumber": 136
+      "noteNumber": 136,
+      "titleEn": "Before You Automate, Count the Exceptions",
+      "summaryEn": "A workflow that sounds simple enough to hand off to a script gradually reveals its true shape once you keep asking how it actually runs - and the exceptions, not the routine steps, turn out to be where most of the human judgment was hiding all along.",
+      "keywordsEn": [
+        "process automation",
+        "edge cases",
+        "exception handling",
+        "workflow analysis",
+        "hidden complexity",
+        "feasibility assessment",
+        "automating manual tasks",
+        "judgment calls"
+      ]
     },
     {
       "id": "1PZr9ZL54heLLoD7xCIQI_PnQAO0yDzrzqmGR0J-g0_M",
@@ -1910,7 +3575,19 @@
       "createdTime": "2026-08-14T22:03:47.250Z",
       "modifiedTime": "2026-08-14T22:04:14.645Z",
       "notePrice": 0,
-      "noteNumber": 137
+      "noteNumber": 137,
+      "titleEn": "Waiting for Everyone to Agree Is How Decisions Die",
+      "summaryEn": "Every voice in a multi-department meeting raises a valid point, yet the meeting ends with nothing decided - because chasing unanimous satisfaction is a different goal from using everyone's input to make a call, and mixing the two turns decisions impossibly heavy.",
+      "keywordsEn": [
+        "decision making",
+        "consensus building",
+        "meeting facilitation",
+        "cross-department alignment",
+        "tradeoffs",
+        "stalled decisions",
+        "conflicting priorities",
+        "leadership judgment"
+      ]
     },
     {
       "id": "1zEwf3WAW1a-3ds0uILvUHOOYx_8XNYzks4WCkNMczSA",
@@ -1922,7 +3599,19 @@
       "createdTime": "2026-08-14T22:06:08.995Z",
       "modifiedTime": "2026-08-14T22:06:34.615Z",
       "notePrice": 0,
-      "noteNumber": 138
+      "noteNumber": 138,
+      "titleEn": "By the Time You Decide How to Measure It, It's Too Late",
+      "summaryEn": "An improvement project gets glowing anecdotal feedback - easier, faster, better - but without a baseline measured before the change, there's no way to know how much actually improved, and \"it feels about twice as fast\" is all that's left to report.",
+      "keywordsEn": [
+        "measuring improvement",
+        "before and after baseline",
+        "kaizen",
+        "process improvement metrics",
+        "quantifying results",
+        "data collection",
+        "proving impact",
+        "continuous improvement"
+      ]
     },
     {
       "id": "102-k5v0zcDJHkV87K1KvuOaZbM8XSUWI5xWnsbZjE8k",
@@ -1934,7 +3623,19 @@
       "createdTime": "2026-08-14T22:09:11.880Z",
       "modifiedTime": "2026-08-14T22:09:38.697Z",
       "notePrice": 0,
-      "noteNumber": 139
+      "noteNumber": 139,
+      "titleEn": "Schedule the Decision, Not Just the Meeting",
+      "summaryEn": "A project calendar packed with tidy weekly meetings looks well-managed, until you ask when a key spec actually gets decided and realize nobody set that date - meetings are milestones, not the finish line, and a full calendar can hide a project going nowhere.",
+      "keywordsEn": [
+        "project scheduling",
+        "decision deadlines",
+        "meeting overload",
+        "mistaking activity for progress",
+        "project management",
+        "setting deadlines",
+        "driving decisions",
+        "calendar management"
+      ]
     },
     {
       "id": "1-JQ4vtSIYHC4slG_C1i5h22Os8go2SByIdQ6rhFjyU4",
@@ -2046,7 +3747,19 @@
       "createdTime": "2026-08-15T03:35:59.028Z",
       "modifiedTime": "2026-08-15T03:53:46.059Z",
       "notePrice": 3100,
-      "noteNumber": 140
+      "noteNumber": 140,
+      "titleEn": "'Be More Proactive' Isn't Actually an Instruction",
+      "summaryEn": "Telling someone to be more proactive sounds reasonable, but it gives them nothing to act on - the person receiving that advice genuinely doesn't know what change would count as \"proactive enough\" until you spell out exactly which behaviors you mean.",
+      "keywordsEn": [
+        "giving feedback",
+        "vague instructions",
+        "coaching proactivity",
+        "unclear expectations",
+        "behavioral specificity",
+        "managing junior staff",
+        "actionable feedback",
+        "performance conversations"
+      ]
     },
     {
       "id": "1yNBnpYF957zJe0Loocr0UQoikG3CHby2a6f4E141KHE",
@@ -2058,7 +3771,19 @@
       "createdTime": "2026-08-15T03:55:45.532Z",
       "modifiedTime": "2026-08-15T03:56:29.636Z",
       "notePrice": 100,
-      "noteNumber": 141
+      "noteNumber": 141,
+      "titleEn": "The Expert's Method Isn't the Standard You Think It Is",
+      "summaryEn": "Writing down exactly how your best worker does the job seems like the obvious way to standardize it, but if their real skill is judgment calls like \"you can tell by the sound,\" a procedure that only lists the steps leaves a newcomer stuck at every decision point.",
+      "keywordsEn": [
+        "standardization",
+        "tacit knowledge",
+        "work instructions",
+        "training new employees",
+        "capturing expert judgment",
+        "standard operating procedures",
+        "skill transfer",
+        "documenting decision criteria"
+      ]
     },
     {
       "id": "1Tea3Mf65tZkPdZhXmZe0fvNp2tGsCwvDJj_2g1CD4vo",
@@ -2080,7 +3805,19 @@
       "createdTime": "2026-08-15T04:11:24.034Z",
       "modifiedTime": "2026-08-15T04:12:06.356Z",
       "notePrice": 100,
-      "noteNumber": 142
+      "noteNumber": 142,
+      "titleEn": "The Real Point of Pre-Meeting Groundwork",
+      "summaryEn": "Doing the rounds before a meeting sounds like backroom dealing, but its real purpose isn't fixing the outcome in advance - it's surfacing objections one-on-one so the meeting itself doesn't grind to a halt the moment every department hears the plan for the first time.",
+      "keywordsEn": [
+        "nemawashi",
+        "pre-meeting alignment",
+        "stakeholder buy-in",
+        "meeting efficiency",
+        "cross-department coordination",
+        "surfacing objections early",
+        "consensus building",
+        "informal politics"
+      ]
     },
     {
       "id": "1cWJuUUo-OTbeViQuv2vcS09pK0nRLPasQXlILb0ebQU",
@@ -2092,7 +3829,19 @@
       "createdTime": "2026-08-15T04:16:51.214Z",
       "modifiedTime": "2026-08-15T04:17:34.663Z",
       "notePrice": 100,
-      "noteNumber": 143
+      "noteNumber": 143,
+      "titleEn": "Every 'Let Me Check That' Makes You the Bottleneck",
+      "summaryEn": "Reviewing everything before it goes out feels like responsible management, until a look at your own calendar reveals that half of it is just other people's work sitting idle, waiting on your approval - the manager meant to keep things moving has become the holdup.",
+      "keywordsEn": [
+        "management bottleneck",
+        "approval processes",
+        "delegation",
+        "letting go of control",
+        "review fatigue",
+        "empowering employees",
+        "workflow chokepoints",
+        "trust and autonomy"
+      ]
     },
     {
       "id": "1c1Nv3Otzso8XFmnxX10vz5HD6q2FJvmsOPLwnsL5e2E",
@@ -2104,7 +3853,20 @@
       "createdTime": "2026-08-15T04:20:35.761Z",
       "modifiedTime": "2026-08-15T04:21:07.064Z",
       "notePrice": 100,
-      "noteNumber": 144
+      "noteNumber": 144,
+      "titleEn": "A Trillion-Yen Market Doesn't Mean a Trillion Yen for You",
+      "summaryEn": "Big market-size numbers in a new-business slide look exciting, but once you subtract the slice you can actually sell, the competitors already in the space, and the channels you don't have, the real addressable market can shrink to a fraction of the headline figure.",
+      "keywordsEn": [
+        "market size",
+        "addressable market",
+        "new business planning",
+        "market sizing",
+        "revenue forecasting",
+        "competitive analysis",
+        "distribution channels",
+        "business case",
+        "tam sam som"
+      ]
     },
     {
       "id": "1eozJxu6JQG4F5I4rCnsZ6V1bEd9Wch7W8fntAb2Ag3c",
@@ -2116,7 +3878,20 @@
       "createdTime": "2026-08-15T04:28:37.470Z",
       "modifiedTime": "2026-08-15T04:29:12.428Z",
       "notePrice": 100,
-      "noteNumber": 145
+      "noteNumber": 145,
+      "titleEn": "A Successful Pilot Doesn't Mean It's Ready for Mass Production",
+      "summaryEn": "A proof-of-concept that worked once, under ideal conditions with someone standing by to tweak it, hasn't actually proven anything about running eight hours a day on every part in every shift — and that gap is where automation projects quietly fail later.",
+      "keywordsEn": [
+        "proof of concept",
+        "pilot testing",
+        "mass production readiness",
+        "scaling up",
+        "automation project risk",
+        "production validation",
+        "machine vision testing",
+        "process reliability",
+        "poc vs production"
+      ]
     },
     {
       "id": "1B5U1fBxOI5IKiLwnjhYWZEEC4cZzIUl7R_aIJt9rB1s",
@@ -2128,7 +3903,20 @@
       "createdTime": "2026-08-15T04:33:27.020Z",
       "modifiedTime": "2026-08-15T04:34:03.980Z",
       "notePrice": 100,
-      "noteNumber": 146
+      "noteNumber": 146,
+      "titleEn": "The Average Went Down. The Busy Days Didn't Get Easier.",
+      "summaryEn": "A process improvement can cut the average handling time and still leave the floor exactly as overloaded as before, because all the real pain was concentrated at month-end — and an average simply doesn't see peaks.",
+      "keywordsEn": [
+        "average vs peak load",
+        "workload distribution",
+        "process improvement metrics",
+        "month end crunch",
+        "kpi pitfalls",
+        "capacity planning",
+        "measuring improvement",
+        "hidden workload",
+        "overtime causes"
+      ]
     },
     {
       "id": "17vJObq64w3_Z_g4OCqW3WDxNAdD5gG_a4G8QOIUv9BM",
@@ -2150,7 +3938,20 @@
       "createdTime": "2026-08-17T14:08:01.751Z",
       "modifiedTime": "2026-08-17T14:08:45.558Z",
       "notePrice": 100,
-      "noteNumber": 137
+      "noteNumber": 137,
+      "titleEn": "Cycle Time Alone Will Overstate What Your Equipment Can Actually Make",
+      "summaryEn": "A machine's catalog cycle time promises far more output than it delivers once changeovers, first-piece checks, and setup time eat into the shift — turning a theoretical 960 pieces a day into a real 720.",
+      "keywordsEn": [
+        "equipment capacity",
+        "cycle time",
+        "changeover time",
+        "setup time",
+        "oee",
+        "production planning",
+        "throughput calculation",
+        "line capacity",
+        "manufacturing efficiency"
+      ]
     },
     {
       "id": "1XeKVYkecU6blhyA0LwA58LN5uVkPhIOlY2wdzG5totc",
@@ -2162,7 +3963,20 @@
       "createdTime": "2026-08-17T19:04:35.009Z",
       "modifiedTime": "2026-08-17T19:05:17.904Z",
       "notePrice": 100,
-      "noteNumber": 148
+      "noteNumber": 148,
+      "titleEn": "Leading with Your Conclusion Isn't the Same as Convincing Anyone",
+      "summaryEn": "Putting the answer on slide one looks like proper conclusion-first reporting, but if the audience hasn't been walked through why the other options lost, they'll still ask \"why this one?\" — and that's not a formatting problem, it's a persuasion problem.",
+      "keywordsEn": [
+        "conclusion first",
+        "executive communication",
+        "persuasive reporting",
+        "decision making",
+        "presentation skills",
+        "convincing your boss",
+        "comparing alternatives",
+        "report writing",
+        "stakeholder buy-in"
+      ]
     },
     {
       "id": "1kZUwvjeZgQeZ9qLQQCSeTQiWBGC0GjqQZnZ3xihBlho",
@@ -2174,7 +3988,20 @@
       "createdTime": "2026-08-17T21:35:59.240Z",
       "modifiedTime": "2026-08-17T21:36:40.474Z",
       "notePrice": 100,
-      "noteNumber": 149
+      "noteNumber": 149,
+      "titleEn": "Before You Propose a Fix, Write Down What Happens If You Don't",
+      "summaryEn": "A detailed, well-costed case for replacing aging equipment can still collapse under one question — \"what happens if we just keep using it?\" — the moment it turns out nobody ever bothered to quantify the cost of doing nothing.",
+      "keywordsEn": [
+        "status quo option",
+        "do nothing scenario",
+        "cost benefit analysis",
+        "equipment replacement",
+        "capital investment justification",
+        "baseline comparison",
+        "risk of inaction",
+        "decision framing",
+        "investment proposal"
+      ]
     },
     {
       "id": "1hDim7V2wBZhg4KqUu3DqRqer07SWxoOu5eSD7iaWqMc",
@@ -2186,7 +4013,20 @@
       "createdTime": "2026-08-17T21:40:56.957Z",
       "modifiedTime": "2026-08-17T21:41:36.022Z",
       "notePrice": 100,
-      "noteNumber": 150
+      "noteNumber": 150,
+      "titleEn": "Sending the Email Isn't the Same as Sharing the Information",
+      "summaryEn": "The change memo went out Friday to every relevant name, and Monday the floor still ran on the old rules — because reading an email and understanding exactly what you personally need to do differently turn out to be two very different things.",
+      "keywordsEn": [
+        "information sharing",
+        "communication breakdown",
+        "email doesn't equal understanding",
+        "change management",
+        "operational rollout",
+        "distribution list",
+        "notifying staff",
+        "process change communication",
+        "internal communication"
+      ]
     },
     {
       "id": "15BK_2I73STmJj_LCi-TzjRAuqdLht4wnFMfomk5iUtE",
@@ -2218,7 +4058,20 @@
       "createdTime": "2026-08-17T22:05:58.005Z",
       "modifiedTime": "2026-08-17T22:06:40.091Z",
       "notePrice": 100,
-      "noteNumber": 151
+      "noteNumber": 151,
+      "titleEn": "Cc Everyone 'Just in Case' and No One Reads It",
+      "summaryEn": "Widening the distribution list to cover yourself feels safe, but padding an email with twenty just-in-case recipients doesn't guarantee it reaches the people who actually need to act on it — it just adds noise everyone learns to skim past.",
+      "keywordsEn": [
+        "cc everyone",
+        "email overload",
+        "just in case",
+        "distribution list",
+        "information overload",
+        "cover yourself",
+        "who needs to know",
+        "email fatigue",
+        "notification fatigue"
+      ]
     },
     {
       "id": "1gjtnjcXsW-rpOyx6JaA0WclaSJbUwyN0OmzHKY17Pf4",
@@ -2230,7 +4083,20 @@
       "createdTime": "2026-08-18T03:22:19.519Z",
       "modifiedTime": "2026-08-18T03:22:54.297Z",
       "notePrice": 100,
-      "noteNumber": 152
+      "noteNumber": 152,
+      "titleEn": "The Downtime Clock Stops. The Real Loss Doesn't.",
+      "summaryEn": "A machine can log just twelve minutes of stoppage and still take another twenty to get back to normal output, once you count the fine-tuning, first-piece checks, and speed ramp-up that never show up in the downtime record.",
+      "keywordsEn": [
+        "downtime tracking",
+        "equipment stoppage",
+        "recovery time",
+        "ramp up time",
+        "oee metrics",
+        "hidden losses",
+        "production loss analysis",
+        "true downtime cost",
+        "machine restart"
+      ]
     },
     {
       "id": "1JPtH3EmYGoBk74IsHFCS45YSGWL6G3X7dcNKa24Al5s",
@@ -2242,7 +4108,20 @@
       "createdTime": "2026-08-18T10:57:24.939Z",
       "modifiedTime": "2026-08-18T10:58:01.812Z",
       "notePrice": 0,
-      "noteNumber": 153
+      "noteNumber": 153,
+      "titleEn": "Making the Product Is the Easy Part",
+      "summaryEn": "A working prototype feels like the finish line, but pricing, order-taking, inventory ownership, warranty support, and everything else that turns a thing into a product is where the real project actually starts.",
+      "keywordsEn": [
+        "product launch",
+        "commercialization",
+        "prototype to product",
+        "go to market",
+        "sales readiness",
+        "order fulfillment",
+        "product support",
+        "new product development",
+        "launching a product"
+      ]
     },
     {
       "id": "1_LV0t7XxqNuNa2lGVBKiOcxsPS15AQHADLRixyJ_lXE",
@@ -2254,7 +4133,20 @@
       "createdTime": "2026-08-18T11:06:24.637Z",
       "modifiedTime": "2026-08-18T11:07:09.387Z",
       "notePrice": 0,
-      "noteNumber": 154
+      "noteNumber": 154,
+      "titleEn": "'Coordinate with the Other Departments' Isn't an Instruction",
+      "summaryEn": "Gathering the right stakeholders in a meeting feels like progress, but if nobody defines who actually gets to decide what, the meeting just produces more open questions and a vague promise to keep coordinating.",
+      "keywordsEn": [
+        "cross department coordination",
+        "stakeholder alignment",
+        "decision rights",
+        "who decides",
+        "meeting without outcomes",
+        "unclear ownership",
+        "interdepartmental collaboration",
+        "project ownership",
+        "accountability"
+      ]
     },
     {
       "id": "1KwuEINpFA9mZeqEplHdClb7Yi9SP-bXBKJWUrmulwVI",
@@ -2266,7 +4158,20 @@
       "createdTime": "2026-08-18T21:09:22.747Z",
       "modifiedTime": "2026-08-18T21:09:50.789Z",
       "notePrice": 0,
-      "noteNumber": 155
+      "noteNumber": 155,
+      "titleEn": "Keeping Every File 'Just in Case' Slows Everyone Down",
+      "summaryEn": "Nothing was deleted, so it feels safe — but a shared folder full of near-duplicate \"final,\" \"final_revised,\" and \"old2\" files means every task starts with a hunt for the right one instead of the work itself.",
+      "keywordsEn": [
+        "file management",
+        "version control",
+        "document sprawl",
+        "just in case",
+        "shared folder chaos",
+        "which one is current",
+        "information overload",
+        "document naming",
+        "digital clutter"
+      ]
     },
     {
       "id": "13muBltEpdpeY-I9En6G4xaQwZ4GYcuzN3FouAbWq_wY",
@@ -2278,7 +4183,20 @@
       "createdTime": "2026-08-18T21:13:38.557Z",
       "modifiedTime": "2026-08-18T21:14:19.145Z",
       "notePrice": 0,
-      "noteNumber": 156
+      "noteNumber": 156,
+      "titleEn": "Knowing Your Job Isn't the Same as Knowing Where It Fits",
+      "summaryEn": "A team member can explain their own task in perfect detail and still freeze when asked where the data came from or who uses it next — and that blind spot is exactly what an audit finds first.",
+      "keywordsEn": [
+        "audit preparation",
+        "process ownership",
+        "upstream downstream",
+        "workflow understanding",
+        "job scope",
+        "silo thinking",
+        "process mapping",
+        "internal audit",
+        "understanding the bigger picture"
+      ]
     },
     {
       "id": "1lef0Wv1D9qwjezIgloIQrFMsZ7SzO3OTVrpBEdO35EA",
@@ -2290,7 +4208,20 @@
       "createdTime": "2026-08-18T21:28:49.373Z",
       "modifiedTime": "2026-08-18T21:29:25.870Z",
       "notePrice": 0,
-      "noteNumber": 157
+      "noteNumber": 157,
+      "titleEn": "Knowing All the Details Won't Save You from the One Question That Matters",
+      "summaryEn": "A team member fluent in every spec and deadline can still go blank when a senior leader asks \"so what actually gets better for the company?\" — because detailed knowledge and the answer executives need aren't the same currency.",
+      "keywordsEn": [
+        "reporting to executives",
+        "executive summary",
+        "translating details",
+        "upper management questions",
+        "presenting to leadership",
+        "big picture thinking",
+        "business impact",
+        "communicating up",
+        "executive briefing"
+      ]
     },
     {
       "id": "1R6N6Z1TrpdumQEjC0SjAgIITjUmppS7q9SiuCpUX9Uw",
@@ -2302,7 +4233,20 @@
       "createdTime": "2026-08-18T21:33:16.493Z",
       "modifiedTime": "2026-08-18T21:33:46.692Z",
       "notePrice": 0,
-      "noteNumber": 158
+      "noteNumber": 158,
+      "titleEn": "'We Don't Use It Much' Isn't a Reason to Remove It",
+      "summaryEn": "A feature nobody remembers using looks safe to cut — until you realize that not knowing why it's there is very different from knowing it's unnecessary, and getting it wrong can quietly undo a fix nobody remembers making.",
+      "keywordsEn": [
+        "legacy design features",
+        "tribal knowledge",
+        "jig design",
+        "why is this here",
+        "institutional memory",
+        "removing unused features",
+        "design history",
+        "engineering change risk",
+        "undocumented requirements"
+      ]
     },
     {
       "id": "1rrcr0rzyZQHuZUXMFzdz2y21Lwc5fki6ohU6hYHA7wg",
@@ -2314,7 +4258,20 @@
       "createdTime": "2026-08-18T21:37:14.307Z",
       "modifiedTime": "2026-08-18T21:37:45.981Z",
       "notePrice": 0,
-      "noteNumber": 159
+      "noteNumber": 159,
+      "titleEn": "Inviting the Expert Isn't the Plan — Knowing What to Ask Them Is",
+      "summaryEn": "Pulling an experienced colleague into the room feels reassuring, but without a clear question to bring to the table, expert input just multiplies the open issues instead of moving the project forward.",
+      "keywordsEn": [
+        "subject matter expert",
+        "cross functional meeting",
+        "scope creep",
+        "meeting preparation",
+        "asking the right questions",
+        "project stalling",
+        "too many open questions",
+        "consulting specialists",
+        "decision paralysis"
+      ]
     },
     {
       "id": "1Lrxe_Z9guufvFAx2V0jf6mHDOvLH8W5HUCmK_bYSrPg",
@@ -2326,7 +4283,20 @@
       "createdTime": "2026-08-18T21:41:53.706Z",
       "modifiedTime": "2026-08-18T21:42:29.414Z",
       "notePrice": 0,
-      "noteNumber": 160
+      "noteNumber": 160,
+      "titleEn": "Selling It In-House Doesn't Mean It'll Sell Outside",
+      "summaryEn": "Colleagues buy your new product with a head start you don't notice — they already know the company, forgive gaps in the pitch, and get rescued the moment something's unclear — advantages that vanish the second you try to sell to a stranger.",
+      "keywordsEn": [
+        "internal pilot",
+        "market validation",
+        "go to market strategy",
+        "external customers",
+        "new product testing",
+        "product market fit",
+        "internal vs external customers",
+        "launching externally",
+        "customer support gap"
+      ]
     },
     {
       "id": "1f6NIbDo-nml3GdKCwmmqaNNhNZAKc21Zi5-vyNQfzJo",
@@ -2338,7 +4308,20 @@
       "createdTime": "2026-08-18T21:46:25.655Z",
       "modifiedTime": "2026-08-18T21:46:58.033Z",
       "notePrice": 0,
-      "noteNumber": 161
+      "noteNumber": 161,
+      "titleEn": "When Managers Learn Every Detail, They Start Doing the Job for You",
+      "summaryEn": "Wanting to be ready for any question feels responsible, but a manager who absorbs every detail of a project quietly starts answering, deciding, and owning things that were supposed to belong to the person doing the work.",
+      "keywordsEn": [
+        "micromanagement",
+        "delegation",
+        "manager overreach",
+        "ownership",
+        "empowering staff",
+        "taking over",
+        "trust in the team",
+        "decision authority",
+        "management style"
+      ]
     },
     {
       "id": "1kIaGbTViMa3PuM5D7b0AqFNhMvV5cRGHcZ6q87_WR-A",
@@ -2350,7 +4333,20 @@
       "createdTime": "2026-08-19T20:35:02.872Z",
       "modifiedTime": "2026-08-19T20:35:40.570Z",
       "notePrice": 0,
-      "noteNumber": 161
+      "noteNumber": 161,
+      "titleEn": "Before You Say 'I'll Check,' Know What You're Actually Checking",
+      "summaryEn": "\"Let me confirm and get back to you\" sounds like a fine answer to any question you can't handle on the spot, but lumping every kind of unknown into one vague follow-up just piles up more things to chase — pinpoint what's actually missing and the next step becomes obvious.",
+      "keywordsEn": [
+        "i'll check and get back to you",
+        "clarifying unknowns",
+        "follow up actions",
+        "decision blockers",
+        "meeting follow ups",
+        "diagnosing gaps",
+        "information gathering",
+        "problem definition",
+        "unclear questions"
+      ]
     },
     {
       "id": "1hxqKEZcXZ-WkeSp0tIkXWKNnVo4SjmGT0NV9D3_3x_c",
@@ -2362,7 +4358,20 @@
       "createdTime": "2026-08-19T20:43:55.969Z",
       "modifiedTime": "2026-08-19T20:44:32.483Z",
       "notePrice": 0,
-      "noteNumber": 162
+      "noteNumber": 162,
+      "titleEn": "If It's Always 'Too Busy, Later,' the Problem Isn't Your Priority List",
+      "summaryEn": "Reordering the to-do list every day just means re-deciding the same pile of tasks tomorrow — the real fix isn't a better priority system, it's questioning why so much keeps landing on the desk in the first place.",
+      "keywordsEn": [
+        "prioritization",
+        "workload management",
+        "task overload",
+        "overtime",
+        "too busy",
+        "recurring tasks",
+        "work intake",
+        "capacity vs demand",
+        "reducing workload"
+      ]
     },
     {
       "id": "13C7SnqSlkHss1KHokL48qehBxGP_duTcCBsEbDvWY2g",
@@ -2374,7 +4383,20 @@
       "createdTime": "2026-08-19T20:50:41.372Z",
       "modifiedTime": "2026-08-19T20:51:19.991Z",
       "notePrice": 0,
-      "noteNumber": 163
+      "noteNumber": 163,
+      "titleEn": "The Best Presenter Isn't Always the Most Knowledgeable One",
+      "summaryEn": "Picking the person who knows the job best can produce a technically flawless talk that still misses the audience entirely — sometimes relatability matters more than expertise.",
+      "keywordsEn": [
+        "choosing a presenter",
+        "audience fit",
+        "public speaking",
+        "expert vs relatable",
+        "communicating with students",
+        "internship presentations",
+        "know your audience",
+        "tailoring a message",
+        "spokesperson selection"
+      ]
     },
     {
       "id": "1IigC-RVxapvNlwB5byrEXjyDfuMw-oSISV2vlOSYEvQ",
@@ -2386,7 +4408,20 @@
       "createdTime": "2026-08-19T20:58:39.390Z",
       "modifiedTime": "2026-08-19T20:59:23.181Z",
       "notePrice": 0,
-      "noteNumber": 164
+      "noteNumber": 164,
+      "titleEn": "Before You Edit a Single Slide, Decide What You Want Them to Remember",
+      "summaryEn": "It's tempting to dive straight into trimming text and redrawing diagrams, but fixing pages before deciding what the audience should walk away with just produces a prettier deck with a still-fuzzy purpose.",
+      "keywordsEn": [
+        "presentation design",
+        "slide editing",
+        "audience takeaway",
+        "communication goal",
+        "presentation planning",
+        "know your objective",
+        "deck structure",
+        "message clarity",
+        "editing slides"
+      ]
     },
     {
       "id": "1-CnJlJhPolckGEsa6ljFC06BpmRqAx6JC3lpGWlQIPA",
@@ -2398,7 +4433,20 @@
       "createdTime": "2026-08-19T21:03:23.471Z",
       "modifiedTime": "2026-08-19T21:04:13.331Z",
       "notePrice": 0,
-      "noteNumber": 165
+      "noteNumber": 165,
+      "titleEn": "In a 10-Minute Talk, Don't Open with What Your Department Does",
+      "summaryEn": "Leading with department names and job titles feels thorough, but to an audience with zero context — like students who've never worked a day — it's just unfamiliar words explained with more unfamiliar words, and you lose them before minute two.",
+      "keywordsEn": [
+        "presentation opening",
+        "hooking your audience",
+        "internship talks",
+        "public speaking structure",
+        "first impressions",
+        "know your audience",
+        "storytelling opener",
+        "communicating with students",
+        "presentation structure"
+      ]
     },
     {
       "id": "1_9xJanlwUCTIei-5RgTvEYNWkahloeHjGYSlipznQSM",
@@ -2410,7 +4458,20 @@
       "createdTime": "2026-08-19T21:08:43.661Z",
       "modifiedTime": "2026-08-19T21:09:22.734Z",
       "notePrice": 0,
-      "noteNumber": 166
+      "noteNumber": 166,
+      "titleEn": "Fix Every Slide Yourself and They'll Bring You Every Slide Next Time",
+      "summaryEn": "It's fastest for the manager to just rewrite the deck — but handing back edits without the reasoning behind them teaches a junior colleague nothing except to wait for the next round of corrections.",
+      "keywordsEn": [
+        "coaching junior staff",
+        "giving feedback",
+        "delegation",
+        "teaching judgment",
+        "presentation coaching",
+        "mentorship",
+        "feedback vs fixing",
+        "developing employees",
+        "building independence"
+      ]
     },
     {
       "id": "1H30rMzGyZNZoKFWbOWLq5DDQMY-bPy1HxdSlc7GQXqY",
@@ -2422,7 +4483,20 @@
       "createdTime": "2026-08-19T21:15:21.783Z",
       "modifiedTime": "2026-08-19T21:15:59.479Z",
       "notePrice": 0,
-      "noteNumber": 167
+      "noteNumber": 167,
+      "titleEn": "Feed Them the Answers Before an Audit and You'll Never Know What They Don't Understand",
+      "summaryEn": "Handing a team member scripted answers before an audit makes the session go smoothly, but it also hides exactly the gaps in understanding you needed to find and fix first.",
+      "keywordsEn": [
+        "audit preparation",
+        "understanding vs memorizing",
+        "coaching for audits",
+        "iso audit prep",
+        "knowledge gaps",
+        "testing comprehension",
+        "internal audit readiness",
+        "mock audit",
+        "real understanding"
+      ]
     },
     {
       "id": "1lUM8IV3xSP2bmedN0sF3sPnpiEPwuFUqTFyQpcZfv4g",
@@ -2434,7 +4508,20 @@
       "createdTime": "2026-08-19T21:34:55.433Z",
       "modifiedTime": "2026-08-19T21:35:27.338Z",
       "notePrice": 0,
-      "noteNumber": 168
+      "noteNumber": 168,
+      "titleEn": "Being Asked Doesn't Mean You're the One Who Should Answer",
+      "summaryEn": "When someone asks a manager for a quick opinion, it's tempting to just say \"probably fine\" and move things along — but being consulted and actually having the authority, or the knowledge, to decide are two different things.",
+      "keywordsEn": [
+        "decision authority",
+        "being consulted",
+        "saying i don't know",
+        "scope of expertise",
+        "assumed authority",
+        "cross department requests",
+        "knowing your limits",
+        "informal decisions",
+        "engineering judgment"
+      ]
     },
     {
       "id": "1UjzNR5LWmOiIJ2hgQcaQrprw4jM7fJZ8BodjJ9YcdD0",
@@ -2446,7 +4533,20 @@
       "createdTime": "2026-08-19T21:42:52.606Z",
       "modifiedTime": "2026-08-19T21:43:33.083Z",
       "notePrice": 0,
-      "noteNumber": 169
+      "noteNumber": 169,
+      "titleEn": "The Higher You Rise, the Fewer People Tell You 'That Won't Work'",
+      "summaryEn": "A quiet meeting room can feel like agreement, but as rank increases, fewer people are willing to say a plan is unrealistic out loud — which means the silence you're reading as approval might just be politeness.",
+      "keywordsEn": [
+        "silence in meetings",
+        "pushback from seniority",
+        "groupthink",
+        "speaking up to leadership",
+        "psychological safety",
+        "no one disagrees",
+        "hierarchy and communication",
+        "honest feedback",
+        "meeting dynamics"
+      ]
     },
     {
       "id": "1qPoKbMmq3jhtCGPElStMg0bSoPobeMba88O1CrPgEog",
@@ -2458,7 +4558,20 @@
       "createdTime": "2026-08-19T21:47:57.201Z",
       "modifiedTime": "2026-08-19T21:48:31.489Z",
       "notePrice": 0,
-      "noteNumber": 170
+      "noteNumber": 170,
+      "titleEn": "The Deeper the Expertise, the Easier It Is to Miss What Happens Next",
+      "summaryEn": "Someone can master every detail of their own task and still have no idea where the data comes from or where their decision goes next — because being good at a job and understanding how it fits into the whole process are two separate skills.",
+      "keywordsEn": [
+        "subject matter expertise",
+        "workflow visibility",
+        "upstream downstream",
+        "siloed knowledge",
+        "process understanding",
+        "specialist blind spots",
+        "understanding the bigger picture",
+        "cross functional awareness",
+        "process mapping"
+      ]
     },
     {
       "id": "1Pw6STyzcVyq-kD5kWSFbdB8sRS1z0LLkG7xMjt1lh6k",
@@ -2470,7 +4583,20 @@
       "createdTime": "2026-08-19T21:56:59.375Z",
       "modifiedTime": "2026-08-19T21:57:34.135Z",
       "notePrice": 0,
-      "noteNumber": 171
+      "noteNumber": 171,
+      "titleEn": "'The Old One Had It' Isn't a Reason to Keep It — or Cut It",
+      "summaryEn": "Copying whatever the last design had feels like the safe choice, but without knowing why a feature was added in the first place, keeping it and removing it are equally uninformed guesses.",
+      "keywordsEn": [
+        "legacy design",
+        "jig design",
+        "tribal knowledge",
+        "why is this here",
+        "design rationale",
+        "copying old designs",
+        "undocumented requirements",
+        "engineering change",
+        "design history"
+      ]
     },
     {
       "id": "1QUCYnMkkV1ngA--eB01aqORQ0SleHB4rG4uEjIZcTGE",
@@ -2482,7 +4608,20 @@
       "createdTime": "2026-08-19T22:06:21.537Z",
       "modifiedTime": "2026-08-19T22:06:59.943Z",
       "notePrice": 0,
-      "noteNumber": 172
+      "noteNumber": 172,
+      "titleEn": "Bringing In the Expert Isn't the Finish Line",
+      "summaryEn": "Adding a knowledgeable colleague to the meeting surfaces issues you hadn't thought of, which feels like real progress — right up until you realize nobody actually decided who owns any of those new issues.",
+      "keywordsEn": [
+        "subject matter expert",
+        "meeting outcomes",
+        "project ownership",
+        "false sense of progress",
+        "cross functional collaboration",
+        "next steps",
+        "who owns this",
+        "action items",
+        "stalled projects"
+      ]
     },
     {
       "id": "1AG94J-N0mBXZoD2mtYJC9uPAbKJDqZZ9tO5Av7FounA",
@@ -2524,7 +4663,20 @@
       "createdTime": "2026-08-21T03:52:30.964Z",
       "modifiedTime": "2026-08-21T03:53:36.536Z",
       "notePrice": 0,
-      "noteNumber": 173
+      "noteNumber": 173,
+      "titleEn": "'It's Faster If I Just Do It Myself' Is Only True Once",
+      "summaryEn": "Doing the small unglamorous task yourself really is quicker in the moment — but make that call every time and those five-minute chores never leave your desk, while the ten minutes it'd take to teach someone else would have paid for itself by next week.",
+      "keywordsEn": [
+        "delegation",
+        "doing it yourself",
+        "manager time management",
+        "small tasks piling up",
+        "teaching vs doing",
+        "time investment",
+        "letting go of tasks",
+        "efficiency trap",
+        "management workload"
+      ]
     },
     {
       "id": "1bGjMjdop3DENstwvxz53D7TshcHmyhiaLOv4MaTLvcY",
@@ -2536,7 +4688,20 @@
       "createdTime": "2026-08-21T09:58:21.750Z",
       "modifiedTime": "2026-08-21T09:58:23.243Z",
       "notePrice": 0,
-      "noteNumber": 174
+      "noteNumber": 174,
+      "titleEn": "Check the Patents Before You Build the Prototype, Not After",
+      "summaryEn": "Waiting until a working prototype exists to ask \"does this infringe on someone else's patent?\" is exactly backwards — the later you check, the more expensive it is to change course, so intellectual property needs to be a design constraint from day one, not a final legal sign-off.",
+      "keywordsEn": [
+        "patent search",
+        "intellectual property",
+        "ip clearance",
+        "freedom to operate",
+        "product development timing",
+        "design review",
+        "prototype risk",
+        "avoiding infringement",
+        "new product development"
+      ]
     },
     {
       "id": "1hJZoJ3KTds4l_SUerHyWzbYyfNyeT59UpSCMEl08OMM",
@@ -2548,7 +4713,20 @@
       "createdTime": "2026-08-21T10:08:15.666Z",
       "modifiedTime": "2026-08-21T10:10:22.849Z",
       "notePrice": 0,
-      "noteNumber": 175
+      "noteNumber": 175,
+      "titleEn": "When the Executive Briefing Falls Apart, Don't Just Blame the Presenter",
+      "summaryEn": "A manager who's been nodding along to weekly status updates can discover, in the room with a vice president, that they never actually pressed for the why — and that gap belongs to the manager as much as to the person who was reporting.",
+      "keywordsEn": [
+        "executive reporting",
+        "briefing preparation",
+        "manager accountability",
+        "why are we doing this",
+        "reporting to the board",
+        "project justification",
+        "status update gaps",
+        "coaching before presenting",
+        "leadership questions"
+      ]
     },
     {
       "id": "1ATRpiMjUVkM7MjF7wQzT1Tj3ANg8d8jYPFvTAxMcteM",
@@ -2890,7 +5068,20 @@
       "createdTime": "2026-08-29T05:10:41.287Z",
       "modifiedTime": "2026-08-29T05:10:42.150Z",
       "notePrice": 0,
-      "noteNumber": null
+      "noteNumber": null,
+      "titleEn": "The Manager Who Still Shows Up at 6:30 AM",
+      "summaryEn": "A personal origin story: from a rookie CAD engineer who learned that a technically correct drawing still isn't enough, through years in production engineering, to standing on the inspection line at dawn chasing an intermittent defect nobody else could fix.",
+      "keywordsEn": [
+        "about the author",
+        "career journey",
+        "production engineering",
+        "manufacturing management",
+        "author bio",
+        "engineering career path",
+        "quality troubleshooting",
+        "shop floor leadership",
+        "origin story"
+      ]
     }
   ]
 }
