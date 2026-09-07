@@ -104,6 +104,30 @@ npm run build-artifact
 UI側の変更（CTAリンク、有料記事バッジ、AI利用許可のタイミングなど）は
 `advice-app/artifact/template.html` を直接編集する。
 
+### 英語版サイト（`hidden-rules-en/`）
+
+海外SNS向けの英語版。日本語版と同じ「入力すると即座に検索」のUXだが、記事本文は
+日本語のままなので、英語の悩み文をそのまま日本語記事とマッチさせることはできない。
+そこで各記事に英語メタデータ（`titleEn` / `summaryEn` / `keywordsEn`。本文の無料公開
+部分だけを根拠にClaude自身が生成し、`data/articles.json`に保存済み）を事前に持たせ、
+検索自体は英語の単語ベースでこのメタデータに対して行う（本文の全訳はしない。AIの
+その場翻訳(`sample` capability)も使わない — 宣言するだけで許可ポップアップが全訪問者
+に出てしまい、日本語版で一度外した問題を再発させるため）。
+
+```bash
+cd advice-app
+npm run build-en-artifact
+```
+
+で `scripts/build-en-data.js`（英語メタデータが揃っている記事だけを抽出）→
+`scripts/build-en-html.js`（`hidden-rules-en/template.html` と合成）を実行し、
+`hidden-rules-en/dist/hidden-rules-en.html` を生成する。これをArtifactとして公開する。
+
+note.comに新しい記事が公開されて`npm run sync-note`がマッチさせると、その記事には
+まだ英語メタデータが無い。定期同期タスクの中で、Claude自身が新規記事ぶんだけ
+`titleEn`/`summaryEn`/`keywordsEn`を生成して埋める運用にしている（外部API呼び出し
+ではなく、そのセッションのClaudeが直接翻訳する）。
+
 `data/articles.json` の構造:
 
 ```json
