@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node server.js",
     "sync-note": "node scripts/sync-note-links.js",
-    "build-artifact": "node scripts/build-artifact-data.js && node scripts/build-artifact-html.js"
+    "build-artifact": "node scripts/build-artifact-data.js && node scripts/build-artifact-html.js",
+    "build-en-artifact": "node scripts/build-en-data.js && node scripts/build-en-html.js"
   },
   "engines": {
     "node": ">=18"
