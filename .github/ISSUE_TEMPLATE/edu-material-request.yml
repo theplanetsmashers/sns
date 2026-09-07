@@ -1,0 +1,34 @@
+name: 教材自動生成リクエスト
+description: テーマを指定するだけで、講義用のPPTX・スライド画像・ナレーション音声・動画(mp4)を自動生成します
+title: "[教材生成] "
+labels: ["edu-material-request"]
+body:
+  - type: input
+    id: theme
+    attributes:
+      label: テーマ
+      description: 講座で扱いたいお題を入力してください
+      placeholder: "例: 初心者向けExcel関数入門"
+    validations:
+      required: true
+  - type: input
+    id: level
+    attributes:
+      label: 対象者のレベル(任意)
+      placeholder: "例: 初心者 / 中級者 / 実務経験者向け"
+    validations:
+      required: false
+  - type: input
+    id: slidecount
+    attributes:
+      label: スライド枚数(任意・本編のみ、未入力の場合は8枚)
+      placeholder: "例: 10"
+    validations:
+      required: false
+  - type: textarea
+    id: note
+    attributes:
+      label: 追加の指示(任意)
+      placeholder: "例: 具体例を多めに。専門用語は避けて。特定の事例を扱いたい 等"
+    validations:
+      required: false

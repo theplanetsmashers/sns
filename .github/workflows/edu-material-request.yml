@@ -1,0 +1,56 @@
+name: Educational Material Generator From Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  generate:
+    # リポジトリの持ち主が開いたIssueだけを処理する(公開リポジトリでの悪用/API消費を防ぐため)
+    if: github.event.issue.user.login == github.repository_owner && contains(github.event.issue.labels.*.name, 'edu-material-request')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: edu-material-generator
+        run: npm ci
+
+      - name: Generate course materials
+        id: generate
+        working-directory: edu-material-generator
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: node bot.js
+
+      - name: Upload generated materials
+        if: always() && steps.generate.outputs.outdir != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: "edu-material-issue-${{ github.event.issue.number }}"
+          path: ${{ steps.generate.outputs.outdir }}
+          retention-days: 30
+
+      - name: Commit updated history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add edu-material-generator/state/history.json
+          git diff --staged --quiet || git commit -m "chore: update edu material history (issue #${{ github.event.issue.number }})"
+          git push
