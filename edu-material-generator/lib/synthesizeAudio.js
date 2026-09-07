@@ -1,7 +1,8 @@
 // lib/synthesizeAudio.js
-// スライドごとのナレーション原稿を音声(mp3)にする。
-// OPENAI_API_KEY があればOpenAIのTTSで実際に読み上げ、なければ
-// 原稿の文字数から尺を見積もった無音音声を代わりに作る(動画自体は無音でも生成できるようにするため)。
+// スライドごとのナレーション原稿を音声にする。
+// 優先順位: 1) VOICEVOX(無料・APIキー不要。GitHub Actions上でDockerコンテナとして起動する)
+//           2) OpenAI TTS(OPENAI_API_KEYを設定した場合のみ。有料なので任意)
+//           3) 無音(原稿の文字数から尺だけ見積もった無音音声。動画自体は必ず完成させるための最終手段)
 
 const fs = require("fs");
 const path = require("path");
@@ -11,6 +12,31 @@ function estimateDurationSeconds(text) {
   const chars = String(text || "").length;
   const seconds = chars / 6; // 日本語の読み上げ速度の目安(6文字/秒程度)
   return Math.max(seconds, 2);
+}
+
+async function synthesizeVoicevox(text, outPath, speaker) {
+  const baseUrl = process.env.VOICEVOX_URL || "http://127.0.0.1:50021";
+
+  const queryRes = await fetch(
+    `${baseUrl}/audio_query?speaker=${speaker}&text=${encodeURIComponent(text)}`,
+    { method: "POST" }
+  );
+  if (!queryRes.ok) {
+    throw new Error(`VOICEVOX audio_query error: ${queryRes.status} ${await queryRes.text()}`);
+  }
+  const query = await queryRes.json();
+
+  const synthRes = await fetch(`${baseUrl}/synthesis?speaker=${speaker}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(query),
+  });
+  if (!synthRes.ok) {
+    throw new Error(`VOICEVOX synthesis error: ${synthRes.status}`);
+  }
+
+  const buf = Buffer.from(await synthRes.arrayBuffer());
+  fs.writeFileSync(outPath, buf);
 }
 
 async function synthesizeOpenAiTts(text, outPath) {
@@ -25,7 +51,7 @@ async function synthesizeOpenAiTts(text, outPath) {
       model: "gpt-4o-mini-tts",
       voice: "alloy",
       input: text,
-      response_format: "mp3",
+      response_format: "wav",
     }),
   });
   if (!res.ok) {
@@ -45,7 +71,6 @@ function generateSilence(durationSeconds, outPath) {
         "-f", "lavfi",
         "-i", "anullsrc=r=44100:cl=mono",
         "-t", String(durationSeconds),
-        "-q:a", "9",
         outPath,
       ],
       (err) => (err ? reject(err) : resolve())
@@ -55,28 +80,45 @@ function generateSilence(durationSeconds, outPath) {
 
 async function synthesizeAudio(deck, outDir) {
   fs.mkdirSync(outDir, { recursive: true });
+  const speaker = process.env.VOICEVOX_SPEAKER_ID || "3"; // 3 = ずんだもん(ノーマル)
   const hasOpenAi = !!process.env.OPENAI_API_KEY;
+
   const audioPaths = [];
+  let usedVoicevox = false;
+  let usedOpenAi = false;
 
   for (let i = 0; i < deck.length; i++) {
     const slide = deck[i];
-    const outPath = path.join(outDir, `narration-${String(i + 1).padStart(2, "0")}.mp3`);
+    const outPath = path.join(outDir, `narration-${String(i + 1).padStart(2, "0")}.wav`);
     const text = (slide.narration && slide.narration.trim()) || slide.title;
+    let done = false;
 
-    if (hasOpenAi) {
+    try {
+      await synthesizeVoicevox(text, outPath, speaker);
+      usedVoicevox = true;
+      done = true;
+    } catch (err) {
+      console.error(`VOICEVOXでの音声生成に失敗しました(スライド${i + 1}): ${err.message}`);
+    }
+
+    if (!done && hasOpenAi) {
       try {
         await synthesizeOpenAiTts(text, outPath);
+        usedOpenAi = true;
+        done = true;
       } catch (err) {
-        console.error(`TTS生成に失敗したためスライド${i + 1}は無音で代替します: ${err.message}`);
-        await generateSilence(estimateDurationSeconds(text), outPath);
+        console.error(`OpenAI TTSでの音声生成にも失敗しました(スライド${i + 1}): ${err.message}`);
       }
-    } else {
+    }
+
+    if (!done) {
       await generateSilence(estimateDurationSeconds(text), outPath);
     }
     audioPaths.push(outPath);
   }
 
-  return { audioPaths, narrated: hasOpenAi };
+  const engine = usedVoicevox ? "voicevox" : usedOpenAi ? "openai" : "silence";
+  return { audioPaths, narrated: usedVoicevox || usedOpenAi, engine };
 }
 
 module.exports = { synthesizeAudio, estimateDurationSeconds };

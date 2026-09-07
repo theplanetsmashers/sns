@@ -12,6 +12,13 @@ jobs:
     permissions:
       issues: write
       contents: write
+    # VOICEVOX(無料の日本語音声合成エンジン)をサイドカーコンテナとして起動する。
+    # APIキー不要・無料でナレーション音声を生成するための仕組み。
+    services:
+      voicevox:
+        image: voicevox/voicevox_engine:cpu-ubuntu20.04-latest
+        ports:
+          - 50021:50021
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,12 +32,25 @@ jobs:
         working-directory: edu-material-generator
         run: npm ci
 
+      - name: Wait for VOICEVOX engine
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:50021/version > /dev/null 2>&1; then
+              echo "VOICEVOX is ready"
+              exit 0
+            fi
+            echo "waiting for VOICEVOX... ($i)"
+            sleep 5
+          done
+          echo "VOICEVOX did not become ready in time (音声はナレーションなしで続行されます)"
+
       - name: Generate course materials
         id: generate
         working-directory: edu-material-generator
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          VOICEVOX_URL: http://localhost:50021
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}

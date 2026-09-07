@@ -23,7 +23,7 @@ async function buildSegment(imagePath, audioPath, outPath) {
     "-c:v", "libx264",
     "-tune", "stillimage",
     "-c:a", "aac",
-    "-b:a", "192k",
+    "-b:a", "128k",
     "-pix_fmt", "yuv420p",
     "-shortest",
     outPath,

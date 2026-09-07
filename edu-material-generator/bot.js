@@ -1,7 +1,8 @@
 // bot.js
 // GitHub Issueを入力フォーム代わりにした教材自動生成ボット(GitHub Actionsから実行)。
-// Issueにテーマを1件書くだけで、講義構成→PPTX→スライド画像→ナレーション音声→動画(mp4)まで自動生成し、
-// Issueコメント+Discordで完成を通知する。生成物(PPTX/動画)はワークフロー実行のArtifactとして添付される。
+// Issueにテーマを1件書くだけで、講義構成→ナレーション音声(VOICEVOX)→スライド画像→動画(mp4)まで自動生成し、
+// Issueコメントと、PPTX・動画を直接添付したDiscord通知で完成を届ける(スマホだけで受け取り完結)。
+// ファイルサイズが大きく添付できなかった場合のみ、ワークフロー実行のArtifactsに案内する。
 
 const fs = require("fs");
 const path = require("path");
@@ -58,6 +59,42 @@ async function postDiscord(text) {
   }
 }
 
+// PPTX・動画をDiscordのメッセージに直接添付する。スマホだけで完結させるため、
+// GitHub ActionsのArtifactsを開かなくてもDiscordアプリ内でそのままファイルを受け取れるようにする。
+// Discordの無料枠での上限を超えるファイルは添付せず、Artifactsへの案内文だけを送る。
+async function postDiscordWithFiles(text, filePaths) {
+  if (!DISCORD_WEBHOOK_URL) return { posted: false, attached: [] };
+
+  const maxBytes = Number(process.env.DISCORD_MAX_FILE_MB || 8) * 1024 * 1024;
+  const attachable = filePaths.filter(
+    (p) => p && fs.existsSync(p) && fs.statSync(p).size <= maxBytes
+  );
+
+  if (attachable.length === 0) {
+    await postDiscord(text);
+    return { posted: true, attached: [] };
+  }
+
+  try {
+    const form = new FormData();
+    form.append("payload_json", JSON.stringify({ content: text.slice(0, 1900) }));
+    attachable.forEach((p, i) => {
+      form.append(`files[${i}]`, new Blob([fs.readFileSync(p)]), path.basename(p));
+    });
+    const res = await fetch(DISCORD_WEBHOOK_URL, { method: "POST", body: form });
+    if (!res.ok) {
+      console.error("Discordへのファイル添付投稿に失敗しました:", res.status, await res.text());
+      await postDiscord(text);
+      return { posted: true, attached: [] };
+    }
+    return { posted: true, attached: attachable };
+  } catch (err) {
+    console.error("Discordへのファイル添付投稿に失敗しました:", err.message);
+    await postDiscord(text);
+    return { posted: true, attached: [] };
+  }
+}
+
 function loadHistory() {
   try {
     return JSON.parse(fs.readFileSync(HISTORY_PATH, "utf8"));
@@ -109,6 +146,8 @@ async function main() {
   const slideTitles = deck.map((s, i) => `${i + 1}. ${s.title}`).join("\n");
   const runUrl = RUN_ID ? `${SERVER_URL}/${REPO}/actions/runs/${RUN_ID}` : null;
 
+  const engineLabel = { voicevox: "VOICEVOXで音声を生成しました(無料)", openai: "OpenAI TTSで音声を生成しました", silence: "音声合成に失敗したため無音です(尺は原稿の文字数から自動計算)" }[result.engine];
+
   const parts = [
     `✅ 教材が完成しました: **${outline.title}**`,
     "",
@@ -118,15 +157,18 @@ async function main() {
     `**スライド構成(全${deck.length}枚)**`,
     slideTitles,
     "",
-    `ナレーション: ${result.narrated ? "TTSで音声を生成しました" : "OPENAI_API_KEY未設定のため無音動画です(尺は原稿の文字数から自動計算)"}`,
+    `ナレーション: ${engineLabel}`,
     "",
-    "PPTXと動画(mp4)は、このワークフロー実行の Artifacts に添付されています。" +
+    "サイズが大きくDiscordに添付できなかった場合は、ワークフロー実行の Artifacts からダウンロードしてください。" +
       (runUrl ? `\n${runUrl}` : "Actionsタブから対象の実行を開いて確認してください。"),
   ];
   const message = parts.join("\n");
 
   await postIssueComment(message);
-  await postDiscord(`📚 教材が完成しました(#${ISSUE_NUMBER})\n\n${message}`);
+
+  const discordMessage = `📚 教材が完成しました(#${ISSUE_NUMBER})\n\n${message}`;
+  const filesToAttach = [result.pptxPath, result.videoPath].filter(Boolean);
+  await postDiscordWithFiles(discordMessage, filesToAttach);
 
   const history = loadHistory();
   history.push({
@@ -134,6 +176,7 @@ async function main() {
     title: outline.title,
     issueNumber: ISSUE_NUMBER || null,
     narrated: result.narrated,
+    engine: result.engine,
     slideCount: deck.length,
     createdAt: new Date().toISOString(),
   });

@@ -50,23 +50,26 @@ async function generateCourse({ topic, level, slideCount, language, note, skipVi
 
   let videoPath = null;
   let narrated = false;
+  let engine = "silence";
 
   if (!skipVideo) {
-    console.log("[3/5] スライド画像を生成中...");
-    const imagesDir = path.join(outDir, "images");
-    const imagePaths = await renderSlideImages(deck, imagesDir);
-
-    console.log("[4/5] ナレーション音声を生成中...");
+    console.log("[3/5] ナレーション音声を生成中(VOICEVOX優先)...");
     const audioDir = path.join(outDir, "audio");
     const audioResult = await synthesizeAudio(deck, audioDir);
     narrated = audioResult.narrated;
+    engine = audioResult.engine;
+
+    console.log("[4/5] スライド画像を生成中...");
+    const imagesDir = path.join(outDir, "images");
+    const creditText = engine === "voicevox" ? "音声: VOICEVOX" : null;
+    const imagePaths = await renderSlideImages(deck, imagesDir, { creditText });
 
     console.log("[5/5] 動画を組み立て中(ffmpeg)...");
     videoPath = path.join(outDir, "course.mp4");
     await buildVideo(imagePaths, audioResult.audioPaths, outDir, videoPath);
   }
 
-  return { outline, deck, outDir, pptxPath, videoPath, narrated };
+  return { outline, deck, outDir, pptxPath, videoPath, narrated, engine };
 }
 
 async function main() {
@@ -80,7 +83,10 @@ async function main() {
   console.log("\n完了しました:");
   console.log(`  出力先: ${result.outDir}`);
   console.log(`  PPTX: ${result.pptxPath}`);
-  if (result.videoPath) console.log(`  動画: ${result.videoPath} (ナレーション: ${result.narrated ? "TTS" : "無音(OPENAI_API_KEY未設定)"})`);
+  if (result.videoPath) {
+    const engineLabel = { voicevox: "VOICEVOX(無料)", openai: "OpenAI TTS", silence: "無音" }[result.engine];
+    console.log(`  動画: ${result.videoPath} (ナレーション: ${engineLabel})`);
+  }
 }
 
 if (require.main === module) {
