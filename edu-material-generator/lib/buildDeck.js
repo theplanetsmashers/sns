@@ -15,6 +15,8 @@ function buildDeck(outline) {
     title: outline.title,
     bullets: objectives,
     narration: titleNarration,
+    icon: outline.icon || "idea",
+    layout: "list",
   });
 
   for (const slide of outline.slides) {
@@ -23,6 +25,8 @@ function buildDeck(outline) {
       title: slide.title,
       bullets: slide.bullets,
       narration: slide.narration,
+      icon: slide.icon || "idea",
+      layout: slide.layout || "list",
     });
   }
 
@@ -32,6 +36,8 @@ function buildDeck(outline) {
     title: summary.title || "まとめ",
     bullets: Array.isArray(summary.bullets) ? summary.bullets.filter(Boolean) : [],
     narration: summary.narration || "以上で今回の講義は終わりです。お疲れさまでした。",
+    icon: summary.icon || "flag",
+    layout: "list",
   });
 
   return deck;
