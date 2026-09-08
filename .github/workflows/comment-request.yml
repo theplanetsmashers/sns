@@ -6,8 +6,9 @@ on:
 
 jobs:
   generate:
-    # リポジトリの持ち主が開いたIssueだけを処理する(公開リポジトリでの悪用/API消費を防ぐため)
-    if: github.event.issue.user.login == github.repository_owner
+    # リポジトリの持ち主が、このテンプレート由来のIssueを開いた場合だけ処理する
+    # (公開リポジトリでの悪用/API消費を防ぐのと、他のIssueテンプレートとの誤反応を防ぐため)
+    if: github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[コメント案]')
     runs-on: ubuntu-latest
     permissions:
       issues: write
