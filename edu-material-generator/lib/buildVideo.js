@@ -1,9 +1,12 @@
 // lib/buildVideo.js
-// スライド画像+ナレーション音声のペアを、ffmpegでスライドごとの動画クリップにしてから1本に結合する。
+// スライド画像+ナレーション音声のペアを、ffmpegでスライドごとの動画クリップにしてから、
+// クロスフェード(xfade/acrossfade)で滑らかに繋いで1本の動画にする。
 
 const fs = require("fs");
 const path = require("path");
 const { execFile } = require("child_process");
+
+const TRANSITION_SECONDS = 0.5; // スライド間のクロスフェードの長さ
 
 function run(cmd, args) {
   return new Promise((resolve, reject) => {
@@ -30,12 +33,66 @@ async function buildSegment(imagePath, audioPath, outPath) {
   ]);
 }
 
-async function concatSegments(segmentPaths, outPath, workDir) {
-  const listPath = path.join(workDir, "concat-list.txt");
-  const listContent = segmentPaths.map((p) => `file '${path.resolve(p).replace(/'/g, "'\\''")}'`).join("\n");
-  fs.writeFileSync(listPath, listContent);
+async function getDurationSeconds(filePath) {
+  const out = await run("ffprobe", [
+    "-v", "error",
+    "-show_entries", "format=duration",
+    "-of", "csv=p=0",
+    filePath,
+  ]);
+  const seconds = parseFloat(out.trim());
+  if (!Number.isFinite(seconds) || seconds <= 0) {
+    throw new Error(`動画の長さを取得できませんでした: ${filePath}`);
+  }
+  return seconds;
+}
 
-  await run("ffmpeg", ["-y", "-f", "concat", "-safe", "0", "-i", listPath, "-c", "copy", outPath]);
+// 1本しかない場合はそのままコピー、複数ある場合はxfade/acrossfadeでクロスフェード結合する。
+async function concatWithCrossfade(segmentPaths, durations, outPath) {
+  if (segmentPaths.length === 1) {
+    await run("ffmpeg", ["-y", "-i", segmentPaths[0], "-c", "copy", outPath]);
+    return;
+  }
+
+  const inputArgs = [];
+  segmentPaths.forEach((p) => inputArgs.push("-i", p));
+
+  let videoChain = "";
+  let audioChain = "";
+  let runningDuration = durations[0];
+  let prevV = "0:v";
+  let prevA = "0:a";
+
+  for (let i = 1; i < segmentPaths.length; i++) {
+    // セグメントがクロスフェード分より短い場合は、フリーズを避けるため短い方に合わせる
+    const t = Math.min(TRANSITION_SECONDS, durations[i - 1], durations[i]) / 2 || 0.1;
+    const offset = Math.max(runningDuration - t, 0);
+    const isLast = i === segmentPaths.length - 1;
+    const outV = isLast ? "vout" : `v${i}`;
+    const outA = isLast ? "aout" : `a${i}`;
+
+    videoChain += `[${prevV}][${i}:v]xfade=transition=fade:duration=${t.toFixed(3)}:offset=${offset.toFixed(3)}[${outV}];`;
+    audioChain += `[${prevA}][${i}:a]acrossfade=d=${t.toFixed(3)}[${outA}];`;
+
+    prevV = outV;
+    prevA = outA;
+    runningDuration = runningDuration + durations[i] - t;
+  }
+
+  const filterComplex = videoChain + audioChain;
+
+  await run("ffmpeg", [
+    "-y",
+    ...inputArgs,
+    "-filter_complex", filterComplex,
+    "-map", "[vout]",
+    "-map", "[aout]",
+    "-c:v", "libx264",
+    "-c:a", "aac",
+    "-b:a", "128k",
+    "-pix_fmt", "yuv420p",
+    outPath,
+  ]);
 }
 
 async function buildVideo(imagePaths, audioPaths, workDir, outputPath) {
@@ -53,7 +110,31 @@ async function buildVideo(imagePaths, audioPaths, workDir, outputPath) {
     segmentPaths.push(segPath);
   }
 
-  await concatSegments(segmentPaths, outputPath, workDir);
+  let durations;
+  try {
+    durations = [];
+    for (const p of segmentPaths) durations.push(await getDurationSeconds(p));
+  } catch (err) {
+    console.error(`セグメントの長さ取得に失敗したため、クロスフェード無しで結合します: ${err.message}`);
+    durations = null;
+  }
+
+  if (durations) {
+    try {
+      await concatWithCrossfade(segmentPaths, durations, outputPath);
+      return outputPath;
+    } catch (err) {
+      console.error(`クロスフェード結合に失敗したため、単純結合にフォールバックします: ${err.message}`);
+    }
+  }
+
+  // フォールバック: クロスフェードなしの単純結合(従来通り)
+  const listPath = path.join(workDir, "concat-list.txt");
+  const listContent = segmentPaths
+    .map((p) => `file '${path.resolve(p).replace(/'/g, "'\\''")}'`)
+    .join("\n");
+  fs.writeFileSync(listPath, listContent);
+  await run("ffmpeg", ["-y", "-f", "concat", "-safe", "0", "-i", listPath, "-c", "copy", outputPath]);
   return outputPath;
 }
 
