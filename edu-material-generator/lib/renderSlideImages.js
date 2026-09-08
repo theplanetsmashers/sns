@@ -10,6 +10,7 @@
 const fs = require("fs");
 const path = require("path");
 const puppeteer = require("puppeteer");
+const { colorFor, CHECK_COLOR } = require("./palette");
 
 const WIDTH = 1280;
 const HEIGHT = 720;
@@ -29,27 +30,50 @@ function escapeHtml(str) {
 const CHECK_ICON =
   '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
-function itemsHtml(bullets, badgeStyle) {
+// 「用語:説明」のような文を検出して、用語部分だけ強調表示する。
+// 先頭が数字のコロン区切り(例: "10:30")は誤検出を避けるため対象外にする。
+function formatBulletInner(text, accentHex) {
+  const str = String(text);
+  const m = str.match(/^([^\d：:][^：:]{0,18})[：:]\s*(.+)$/s);
+  if (m && m[2]) {
+    return `<strong style="color:#${accentHex}">${escapeHtml(m[1])}</strong><span style="color:#${accentHex}">:</span> ${escapeHtml(m[2])}`;
+  }
+  return escapeHtml(str);
+}
+
+function itemsHtml(bullets, badgeStyle, accentHex) {
   return (bullets || [])
     .map((b, i) => {
       const badgeInner = badgeStyle === "check" ? CHECK_ICON : `<span>${i + 1}</span>`;
-      const badgeClass = badgeStyle === "check" ? "badge badge-check" : "badge badge-num";
-      return `<div class="item"><div class="${badgeClass}">${badgeInner}</div><div class="text">${escapeHtml(b)}</div></div>`;
+      const badgeColor = badgeStyle === "check" ? CHECK_COLOR : accentHex;
+      return `<div class="item" style="background:#${accentHex}0d;border-left-color:#${accentHex}">
+        <div class="badge" style="background:#${badgeColor}">${badgeInner}</div>
+        <div class="text">${formatBulletInner(b, accentHex)}</div>
+      </div>`;
     })
     .join("\n");
 }
 
-function progressHtml(index, total) {
-  const segs = Array.from({ length: total }, (_, i) => `<div class="seg${i === index ? " active" : ""}"></div>`).join("");
+function progressHtml(index, total, accentHex) {
+  const segs = Array.from({ length: total }, (_, i) => {
+    const style = i === index ? `background:#${accentHex}` : "";
+    return `<div class="seg${i === index ? " active" : ""}" style="${style}"></div>`;
+  }).join("");
   return `<div class="progress">${segs}</div>`;
 }
 
-function slideHtml(slide, index, total, creditText) {
+function slideHtml(slide, index, total, options) {
   const isTitle = slide.kind === "title";
   const isSummary = slide.kind === "summary";
   const badgeStyle = isTitle || isSummary ? "check" : "num";
-  const items = itemsHtml(slide.bullets, badgeStyle);
+  const color = colorFor(slide, index);
+  const items = itemsHtml(slide.bullets, badgeStyle, color.accent);
   const eyebrowLabel = isTitle ? "LECTURE" : isSummary ? "SUMMARY" : `POINT ${String(index).padStart(2, "0")}`;
+  const creditText = options.creditText || null;
+  const metaLine =
+    isTitle && (options.totalSlides || options.totalMinutes)
+      ? `<div class="meta">全${options.totalSlides}枚 ・ 想定時間 約${options.totalMinutes}分</div>`
+      : "";
 
   return `<!doctype html>
 <html><head><meta charset="utf-8"><style>
@@ -61,55 +85,68 @@ function slideHtml(slide, index, total, creditText) {
     color: #111827;
   }
   .slide { position: relative; width: 100%; height: 100%; overflow: hidden; display: flex; flex-direction: column; }
-  .blob {
-    position: absolute; top: -140px; right: -140px; width: 460px; height: 460px;
-    border-radius: 50%; background: radial-gradient(circle at 30% 30%, #DBEAFE, rgba(219,234,254,0) 70%);
+  .topbar { height: 8px; background: #${color.accent}; }
+  .texture {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(15,23,42,0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
     z-index: 0;
   }
-  .content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; padding: 60px 88px 0; }
+  .blob {
+    position: absolute; top: -140px; right: -140px; width: 460px; height: 460px;
+    border-radius: 50%; background: radial-gradient(circle at 30% 30%, #${color.light}, rgba(255,255,255,0) 70%);
+    z-index: 0;
+  }
+  .content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 40px 88px; }
   .eyebrow {
     display: inline-flex; align-self: flex-start; align-items: center; gap: 8px;
-    background: #EEF2FF; color: #2563EB; font-weight: 700; font-size: 15px; letter-spacing: 2px;
+    background: #${color.light}; color: #${color.accent}; font-weight: 700; font-size: 15px; letter-spacing: 2px;
     padding: 7px 16px; border-radius: 999px; margin-bottom: 22px;
   }
-  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #2563EB; }
-  h1 { font-weight: 700; color: #1F2937; line-height: 1.35; margin-bottom: 30px; }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #${color.accent}; }
+  h1 { font-weight: 700; color: #1F2937; line-height: 1.35; letter-spacing: 0.3px; margin-bottom: 14px; }
   .content h1 { font-size: 34px; }
-  .title-slide .content { justify-content: center; padding-top: 0; }
-  .title-slide h1 { font-size: 54px; margin-bottom: 34px; }
-  .items { display: flex; flex-direction: column; gap: 16px; }
-  .item { display: flex; align-items: flex-start; gap: 18px; }
-  .badge {
-    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 700; color: #ffffff; margin-top: 2px;
+  .title-slide h1 { font-size: 54px; }
+  .meta { font-size: 16px; color: #6B7280; margin-bottom: 26px; }
+  .title-slide .items { margin-top: 12px; }
+  .items { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; }
+  .item {
+    display: flex; align-items: flex-start; gap: 16px;
+    border-radius: 12px; border-left: 4px solid transparent;
+    padding: 14px 18px;
   }
-  .badge-num { background: #2563EB; }
-  .badge-check { background: #059669; }
-  .item .text { font-size: 23px; line-height: 1.55; color: #1F2937; padding-top: 2px; }
+  .badge {
+    flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; color: #ffffff;
+    box-shadow: 0 3px 6px rgba(15, 23, 42, 0.22);
+  }
+  .item .text { font-size: 22px; line-height: 1.55; color: #1F2937; padding-top: 3px; }
   .footer {
     position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center;
-    padding: 22px 88px; border-top: 1px solid #F1F5F9;
+    padding: 20px 88px; border-top: 1px solid #F1F5F9;
   }
-  .footer .credit { font-size: 14px; color: #9CA3AF; }
+  .footer .credit { font-size: 15px; color: #6B7280; }
   .footer .right { display: flex; align-items: center; gap: 14px; }
   .progress { display: flex; gap: 6px; }
-  .progress .seg { width: 26px; height: 5px; border-radius: 3px; background: #E5E7EB; }
-  .progress .seg.active { background: #2563EB; }
-  .footer .page { font-size: 15px; color: #9CA3AF; min-width: 44px; text-align: right; }
+  .progress .seg { width: 26px; height: 6px; border-radius: 3px; background: #E2E8F0; }
+  .footer .page { font-size: 15px; color: #6B7280; min-width: 44px; text-align: right; }
 </style></head>
 <body>
   <div class="slide${isTitle ? " title-slide" : ""}">
+    <div class="topbar"></div>
+    <div class="texture"></div>
     ${isTitle ? '<div class="blob"></div>' : ""}
     <div class="content">
       <div class="eyebrow"><span class="dot"></span>${escapeHtml(eyebrowLabel)}</div>
       <h1>${escapeHtml(slide.title)}</h1>
+      ${metaLine}
       <div class="items">${items}</div>
     </div>
     <div class="footer">
       <div class="credit">${creditText ? escapeHtml(creditText) : ""}</div>
       <div class="right">
-        ${progressHtml(index, total)}
+        ${progressHtml(index, total, color.accent)}
         <div class="page">${index + 1} / ${total}</div>
       </div>
     </div>
@@ -119,7 +156,6 @@ function slideHtml(slide, index, total, creditText) {
 
 async function renderSlideImages(deck, outDir, options = {}) {
   fs.mkdirSync(outDir, { recursive: true });
-  const creditText = options.creditText || null;
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -132,7 +168,7 @@ async function renderSlideImages(deck, outDir, options = {}) {
     await page.setViewport({ width: WIDTH, height: HEIGHT });
 
     for (let i = 0; i < deck.length; i++) {
-      const html = slideHtml(deck[i], i, deck.length, creditText);
+      const html = slideHtml(deck[i], i, deck.length, options);
       await page.setContent(html, { waitUntil: "load" });
       const filePath = path.join(outDir, `slide-${String(i + 1).padStart(2, "0")}.png`);
       await page.screenshot({ path: filePath, type: "png" });
