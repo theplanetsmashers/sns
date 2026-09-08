@@ -1,7 +1,54 @@
 // lib/generateOutline.js
 // Claude APIを使って、テーマ名から講義の構成(スライド内容+ナレーション原稿)を丸ごと生成する。
+//
+// output_config.format(構造化出力)でJSON Schemaを指定し、Claudeの応答が必ずそのスキーマに
+// 一致した有効なJSONになることをAPI側で保証させている。以前はマークダウンっぽい応答から
+// 正規表現でJSON部分を抜き出していたが、コード例などJSONを壊しやすい内容(バッククォートや
+// 引用符)が混じると解析に失敗することがあったため、この方式に切り替えた。
+
+const LAYOUTS = ["list", "process", "callout", "code"];
 
 const { ICON_KEYS } = require("./icons");
+
+function buildSlideSchema() {
+  return {
+    type: "object",
+    properties: {
+      title: { type: "string" },
+      bullets: { type: "array", items: { type: "string" } },
+      narration: { type: "string" },
+      icon: { type: "string", enum: ICON_KEYS },
+      layout: { type: "string", enum: LAYOUTS },
+    },
+    required: ["title", "bullets", "narration", "icon", "layout"],
+    additionalProperties: false,
+  };
+}
+
+function buildOutlineSchema() {
+  return {
+    type: "object",
+    properties: {
+      title: { type: "string" },
+      objectives: { type: "array", items: { type: "string" } },
+      icon: { type: "string", enum: ICON_KEYS },
+      slides: { type: "array", items: buildSlideSchema() },
+      summary: {
+        type: "object",
+        properties: {
+          title: { type: "string" },
+          bullets: { type: "array", items: { type: "string" } },
+          narration: { type: "string" },
+          icon: { type: "string", enum: ICON_KEYS },
+        },
+        required: ["title", "bullets", "narration", "icon"],
+        additionalProperties: false,
+      },
+    },
+    required: ["title", "objectives", "icon", "slides", "summary"],
+    additionalProperties: false,
+  };
+}
 
 async function generateOutline({ topic, level, slideCount, language, note }) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -32,30 +79,12 @@ ${note ? `【追加の指示】${note}\n` : ""}
 【スライドごとのアイコンとレイアウトの指定】
 各スライドには、内容を視覚的にイメージしやすくするためのアイコン(icon)と、表示形式(layout)を指定すること。
 
-- icon: 次の一覧から、そのスライドの内容に最も合うものを1つだけ選ぶこと(必ずこのリストの中から選ぶ。この通りの英単語で出力する)
-  ${ICON_KEYS.join(", ")}
+- icon: そのスライドの内容に最も合うものを1つだけ選ぶこと
 - layout: 次の4つから選ぶこと
   - "list": 通常の箇条書き(デフォルト。迷ったらこれ)
   - "process": bulletsが「手順1→手順2→手順3」のような明確な順序を持つ2〜4ステップの場合だけ選ぶ(横に並ぶステップ図になる)
   - "callout": このスライドで伝えたいことが1つの重要な注意点・警告・強調メッセージに絞られる場合に選ぶ(bulletsは1〜2個程度にする)
-  - "code": プログラミングのコード例・コマンド例・関数の書式など、コード表記そのものを見せたい場合だけ選ぶ(ターミナル風の見た目になる。bulletsにはコードや数式をそのまま書く)
-
-出力は次のJSON形式のみ。前置き・説明・コードブロック(\`\`\`)は一切つけないこと。
-
-{
-  "title": "講義全体のタイトル",
-  "objectives": ["この講義で学べること1", "学べること2", "学べること3"],
-  "icon": "講義全体を象徴するアイコン(上記リストから1つ)",
-  "slides": [
-    { "title": "スライドタイトル", "bullets": ["項目1", "項目2", "項目3"], "narration": "ナレーション原稿", "icon": "アイコン名", "layout": "list/process/calloutのいずれか" }
-  ],
-  "summary": {
-    "title": "まとめスライドのタイトル(例: まとめ)",
-    "bullets": ["要点1", "要点2", "要点3"],
-    "narration": "まとめのナレーション原稿",
-    "icon": "アイコン名"
-  }
-}`;
+  - "code": プログラミングのコード例・コマンド例・関数の書式など、コード表記そのものを見せたい場合だけ選ぶ(ターミナル風の見た目になる。bulletsにはコードや数式をそのまま書く)`;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -68,6 +97,12 @@ ${note ? `【追加の指示】${note}\n` : ""}
       model: "claude-sonnet-5",
       max_tokens: 8000,
       messages: [{ role: "user", content: prompt }],
+      output_config: {
+        format: {
+          type: "json_schema",
+          schema: buildOutlineSchema(),
+        },
+      },
     }),
   });
 
@@ -77,17 +112,24 @@ ${note ? `【追加の指示】${note}\n` : ""}
   }
 
   const data = await response.json();
-  const textBlock = data.content.find((c) => c.type === "text");
-  const raw = textBlock ? textBlock.text.trim() : "";
 
-  const match = raw.match(/\{[\s\S]*\}/);
-  if (!match) {
-    throw new Error("Claude の応答からJSONを抽出できませんでした。");
+  if (data.stop_reason === "refusal") {
+    throw new Error("Claude がこのテーマの生成を拒否しました。テーマを変えて試してください。");
+  }
+  if (data.stop_reason === "max_tokens") {
+    throw new Error("生成が長くなりすぎて途中で打ち切られました。スライド枚数を減らして試してください。");
+  }
+
+  const textBlock = data.content.find((c) => c.type === "text");
+  if (!textBlock) {
+    throw new Error("Claude の応答にテキストが含まれていませんでした。");
   }
 
   let outline;
   try {
-    outline = JSON.parse(match[0]);
+    // output_config.format(構造化出力)により、このテキストは指定したJSON Schemaに
+    // 一致する有効なJSONであることがAPI側で保証されている。
+    outline = JSON.parse(textBlock.text);
   } catch (err) {
     throw new Error(`Claude の応答のJSON解析に失敗しました: ${err.message}`);
   }
@@ -96,26 +138,15 @@ ${note ? `【追加の指示】${note}\n` : ""}
     throw new Error("生成された講義構成が不完全です(title/slidesが不足)。");
   }
 
-  const validLayouts = new Set(["list", "process", "callout", "code"]);
-  const normalizeIcon = (icon) => (ICON_KEYS.includes(icon) ? icon : "idea");
-  const normalizeLayout = (layout) => (validLayouts.has(layout) ? layout : "list");
-
-  outline.icon = normalizeIcon(outline.icon);
-
   outline.slides = outline.slides.map((s) => ({
     title: String(s.title || "").trim(),
     bullets: Array.isArray(s.bullets) ? s.bullets.map((b) => String(b).trim()).filter(Boolean) : [],
     narration: String(s.narration || "").trim(),
-    icon: normalizeIcon(s.icon),
-    layout: normalizeLayout(s.layout),
+    icon: s.icon,
+    layout: s.layout,
   }));
-
-  if (!outline.summary) {
-    outline.summary = { title: "まとめ", bullets: [], narration: "" };
-  }
-  outline.summary.icon = normalizeIcon(outline.summary.icon);
 
   return outline;
 }
 
-module.exports = { generateOutline };
+module.exports = { generateOutline, LAYOUTS };
