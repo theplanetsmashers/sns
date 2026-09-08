@@ -28,7 +28,7 @@ PC・GitHub Actionsの画面を開く必要は基本的にありません。
 |---|---|---|
 | 講義構成・ナレーション原稿の生成 | Claude API | 従量課金(テキストのみなので1回あたり数円程度) |
 | ナレーション音声 | **VOICEVOX**(GitHub Actions上でDockerコンテナとして自動起動。APIキー不要) | 無料 |
-| スライド画像・PPTX・動画の生成 | Puppeteer / pptxgenjs / ffmpeg(すべてワークフロー内で実行) | 無料 |
+| スライド画像・PPTX・動画の生成 | Puppeteer / pptxgenjs / ffmpeg(すべてワークフロー内で実行、ffmpegはワークフロー内でapt installする) | 無料 |
 | GitHub Actionsの実行時間 | — | Freeプランの無料枠内で収まる想定 |
 
 つまり事前に用意が必要なのは実質 `ANTHROPIC_API_KEY` だけで、それ以外の追加登録(TTSサービスの契約など)は不要です。`OPENAI_API_KEY` を設定した場合はより自然な音声(有料)に切り替わりますが、必須ではありません。
@@ -42,7 +42,7 @@ VOICEVOXは無料の音声合成エンジンですが、キャラクターごと
    - `DISCORD_WEBHOOK_URL`: 完成したPPTX・動画を受け取るDiscordチャンネルのWebhook URL(スマホだけで完結させるなら実質必須)
    - `OPENAI_API_KEY`: OpenAIのAPIキー(任意。設定するとOpenAI TTSに切り替わる。通常は不要)
 2. Issueタブから「教材自動生成リクエスト」テンプレートで新しいIssueを作成し、テーマを入力する
-   - `edu-material-request` ラベルが自動で付き、ワークフローが起動する
+   - テンプレートのタイトル(`[教材生成] `)でワークフローが判定・起動する(ラベルには依存していない)
    - 完成するとIssueへのコメントと、Discordへ(PPTX・動画を添付して)通知される
 
 ## ローカルでの実行
@@ -56,7 +56,7 @@ export ANTHROPIC_API_KEY=sk-ant-...
 npm run generate -- "初心者向けExcel関数入門"
 ```
 
-`output/<日時>_<テーマ>/` 配下に生成物一式が出力されます。動画生成には `ffmpeg` がPATH上に必要です(GitHub Actionsのubuntu-latestには標準で入っています)。ローカルでVOICEVOXを起動していない場合、TTSは失敗して無音音声にフォールバックします(`OPENAI_API_KEY`を設定していればそちらにフォールバック)。
+`output/<日時>_<テーマ>/` 配下に生成物一式が出力されます。動画生成には `ffmpeg` がPATH上に必要です(`apt install ffmpeg` 等で事前にインストールしてください。GitHub Actions上のワークフローではインストール手順込みで用意済みです)。ローカルでVOICEVOXを起動していない場合、TTSは失敗して無音音声にフォールバックします(`OPENAI_API_KEY`を設定していればそちらにフォールバック)。
 
 ## ファイル構成
 
