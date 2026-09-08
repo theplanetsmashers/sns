@@ -1,0 +1,16 @@
+{
+  "name": "edu-material-generator",
+  "version": "1.0.0",
+  "description": "テーマ名から講義構成・PPTX・スライド画像・ナレーション音声・動画(mp4)を自動生成するツール",
+  "main": "generate-course.js",
+  "scripts": {
+    "generate": "node generate-course.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0",
+    "puppeteer": "^25.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
