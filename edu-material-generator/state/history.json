@@ -16,5 +16,14 @@
     "engine": "voicevox",
     "slideCount": 7,
     "createdAt": "2026-09-08T10:44:55.940Z"
+  },
+  {
+    "topic": "TPS解説",
+    "title": "トヨタ生産方式(TPS)完全解説 ― 基本思想から現場実践まで",
+    "issueNumber": "15",
+    "narrated": true,
+    "engine": "voicevox",
+    "slideCount": 7,
+    "createdAt": "2026-09-08T11:11:00.874Z"
   }
 ]
