@@ -9,7 +9,7 @@ const { generateOutline } = require("./lib/generateOutline");
 const { buildDeck } = require("./lib/buildDeck");
 const { buildPptx } = require("./lib/buildPptx");
 const { renderSlideImages } = require("./lib/renderSlideImages");
-const { synthesizeAudio } = require("./lib/synthesizeAudio");
+const { synthesizeAudio, estimateDurationSeconds } = require("./lib/synthesizeAudio");
 const { buildVideo } = require("./lib/buildVideo");
 
 function slugify(text) {
@@ -44,9 +44,14 @@ async function generateCourse({ topic, level, slideCount, language, note, skipVi
     .join("\n");
   fs.writeFileSync(path.join(outDir, "script.txt"), scriptText, "utf8");
 
+  const totalMinutes = Math.max(
+    1,
+    Math.round(deck.reduce((sum, s) => sum + estimateDurationSeconds(s.narration), 0) / 60)
+  );
+
   console.log("[2/5] PPTXを生成中...");
   const pptxPath = path.join(outDir, "course.pptx");
-  await buildPptx(outline, deck, pptxPath);
+  await buildPptx(outline, deck, pptxPath, { totalSlides: deck.length, totalMinutes });
 
   let videoPath = null;
   let narrated = false;
@@ -62,7 +67,11 @@ async function generateCourse({ topic, level, slideCount, language, note, skipVi
     console.log("[4/5] スライド画像を生成中...");
     const imagesDir = path.join(outDir, "images");
     const creditText = engine === "voicevox" ? "音声: VOICEVOX" : null;
-    const imagePaths = await renderSlideImages(deck, imagesDir, { creditText });
+    const imagePaths = await renderSlideImages(deck, imagesDir, {
+      creditText,
+      totalSlides: deck.length,
+      totalMinutes,
+    });
 
     console.log("[5/5] 動画を組み立て中(ffmpeg)...");
     videoPath = path.join(outDir, "course.mp4");
