@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "topic": "Excel関数入門",
+    "title": "実務で差がつくExcel関数入門",
+    "issueNumber": "11",
+    "narrated": true,
+    "engine": "voicevox",
+    "slideCount": 6,
+    "createdAt": "2026-09-08T10:28:22.146Z"
+  }
+]
