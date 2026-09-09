@@ -23,8 +23,9 @@ function buildScriptSchema() {
           required: ["text", "narration", "icon", "imagePrompt"],
           additionalProperties: false,
         },
-        minItems: 4,
-        maxItems: 6,
+        // Claude APIの構造化出力(json_schema)は、配列のminItems/maxItemsに0か1以外の値を
+        // 指定できない(4件のシーン数などをここで強制できない)ため、シーン数はプロンプト側の
+        // 指示のみで制御し、生成後にcode側でチェックする。
       },
       youtubeDescription: { type: "string" },
     },
@@ -134,6 +135,11 @@ ${noteUrl ? `【note記事の公開URL】${noteUrl}\n` : ""}${note ? `【追加�
 
   if (!script.videoTitle || !Array.isArray(script.scenes) || script.scenes.length === 0) {
     throw new Error("生成された台本が不完全です(videoTitle/scenesが不足)。");
+  }
+  if (script.scenes.length < 3 || script.scenes.length > 8) {
+    throw new Error(
+      `生成されたシーン数が想定外です(${script.scenes.length}件)。もう一度試してください。`
+    );
   }
 
   script.scenes = script.scenes.map((s) => ({
