@@ -49,7 +49,7 @@ async function synthesizeOpenAiTts(text, outPath) {
     },
     body: JSON.stringify({
       model: "gpt-4o-mini-tts",
-      voice: "alloy",
+      voice: "onyx", // 落ち着いた低めの男声(記事のトーンに合わせている)
       input: text,
       response_format: "wav",
     }),
@@ -74,7 +74,10 @@ function generateSilence(durationSeconds, outPath) {
 
 async function synthesizeAudio(scenes, outDir) {
   fs.mkdirSync(outDir, { recursive: true });
-  const speaker = process.env.VOICEVOX_SPEAKER_ID || "3"; // 3 = ずんだもん(ノーマル)
+  // 13 = 青山龍星(ノーマル)。落ち着いた低めの男声で、管理職の実務エピソードのトーンに合わせている。
+  // 他の候補: 11 = 玄野武宏(ノーマル)、8 = 春日部つむぎ(ノーマル)。
+  // VOICEVOX_SPEAKER_ID環境変数で変更できる(VOICEVOXエンジンのspeaker_uuid一覧を参照)。
+  const speaker = process.env.VOICEVOX_SPEAKER_ID || "13";
   const hasOpenAi = !!process.env.OPENAI_API_KEY;
 
   const audioPaths = [];

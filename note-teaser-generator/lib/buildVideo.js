@@ -6,8 +6,7 @@
 const fs = require("fs");
 const path = require("path");
 const { run, getDurationSeconds } = require("./ffmpegUtil");
-
-const TRANSITION_SECONDS = 0.4; // シーン間のクロスフェードの長さ(30秒程度の短い動画なので少し短めにする)
+const { computeSceneTimeline, TRANSITION_SECONDS } = require("./sceneTimeline");
 
 async function buildSegment(imagePath, audioPath, outPath) {
   await run("ffmpeg", [
@@ -34,15 +33,16 @@ async function concatWithCrossfade(segmentPaths, durations, outPath) {
   const inputArgs = [];
   segmentPaths.forEach((p) => inputArgs.push("-i", p));
 
+  const timeline = computeSceneTimeline(durations);
+
   let videoChain = "";
   let audioChain = "";
-  let runningDuration = durations[0];
   let prevV = "0:v";
   let prevA = "0:a";
 
   for (let i = 1; i < segmentPaths.length; i++) {
     const t = Math.min(TRANSITION_SECONDS, durations[i - 1], durations[i]) / 2 || 0.1;
-    const offset = Math.max(runningDuration - t, 0);
+    const offset = timeline[i].start;
     const isLast = i === segmentPaths.length - 1;
     const outV = isLast ? "vout" : `v${i}`;
     const outA = isLast ? "aout" : `a${i}`;
@@ -52,7 +52,6 @@ async function concatWithCrossfade(segmentPaths, durations, outPath) {
 
     prevV = outV;
     prevA = outA;
-    runningDuration = runningDuration + durations[i] - t;
   }
 
   const filterComplex = videoChain + audioChain;

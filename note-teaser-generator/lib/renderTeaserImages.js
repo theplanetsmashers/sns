@@ -1,9 +1,11 @@
 // lib/renderTeaserImages.js
-// 台本の各シーンをHTML/CSSで描画し、Puppeteerでスクリーンショットして動画用のPNG画像を作る。
+// 台本の各シーンをHTML/CSSで描画し、Puppeteerでスクリーンショットして動画用の背景画像を作る。
 // 既定は縦型(1080x1920 = YouTube Shorts想定)。横型(1920x1080)にも切り替え可能。
 //
 // 「文字だけの画面」にしないため、各シーンは背景に絵(AI生成イラスト、なければアイコン+
-// グラデーションの装飾)を敷き、その上に字幕(テロップ)としてキャプションを乗せる構成にしている。
+// グラデーションの装飾)を敷く。メインのキャプション(テロップ)テキストはここでは描かず、
+// lib/buildCaptions.js + lib/burnCaptions.jsで、話している文字が動いてハイライトされる
+// 字幕として動画に後から焼き込む(この画像はその背景のプレート)。
 //
 // 日本語テキストを描画するので、実行環境に日本語フォント(例: Noto Sans CJK JP)が
 // 入っていないと文字化け(トーフ/□□□)になる。GitHub Actionsのワークフロー側で
@@ -65,9 +67,7 @@ function sceneHtml(scene, index, total, dims, options) {
     : `<div class="deco-icon">${decoIcon}</div>`;
 
   const noteRow =
-    isCta && noteTitle
-      ? `<div class="note-title">${escapeHtml(noteTitle)}</div>`
-      : "";
+    isCta && noteTitle ? `<div class="note-title-wrap"><div class="note-title">${escapeHtml(noteTitle)}</div></div>` : "";
 
   return `<!doctype html>
 <html><head><meta charset="utf-8"><style>
@@ -104,27 +104,16 @@ function sceneHtml(scene, index, total, dims, options) {
     padding: 9px 20px; border-radius: 999px;
   }
   .dot-mark { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-  .telop-wrap {
-    position: absolute; left: 0; right: 0; bottom: ${Math.round(height * 0.1)}px; z-index: 2;
-    padding: 0 ${Math.round(width * 0.08)}px;
-  }
-  .telop-bar {
-    background: ${artUri ? "rgba(15,23,42,0.5)" : isCta ? "rgba(255,255,255,0.14)" : `#${accent}12`};
-    border-left: 6px solid ${artUri || isCta ? "rgba(255,255,255,0.85)" : `#${accent}`};
-    border-radius: 4px 20px 20px 4px;
-    padding: ${Math.round(height * 0.032)}px ${Math.round(width * 0.055)}px;
-  }
-  .telop-text {
-    font-weight: 800; line-height: 1.5; letter-spacing: 0.5px; white-space: pre-wrap;
-    color: ${artUri || isCta ? "#ffffff" : "#1F2937"};
-    font-size: ${Math.round(width * (scene.text.length > 14 ? 0.062 : 0.078))}px;
+  .note-title-wrap {
+    position: absolute; left: 0; right: 0; bottom: ${Math.round(height * 0.075)}px; z-index: 2;
+    padding: 0 ${Math.round(width * 0.1)}px; text-align: center;
   }
   .note-title {
-    margin-top: 14px; font-size: ${Math.round(width * 0.028)}px; line-height: 1.6;
-    color: ${artUri || isCta ? "rgba(255,255,255,0.85)" : "#4B5563"};
+    font-size: ${Math.round(width * 0.026)}px; line-height: 1.5;
+    color: rgba(255,255,255,0.85);
   }
   .footer {
-    position: absolute; left: 0; right: 0; bottom: ${Math.round(height * 0.03)}px; z-index: 2;
+    position: absolute; left: 0; right: 0; bottom: ${Math.round(height * 0.025)}px; z-index: 2;
     display: flex; align-items: center; justify-content: center; gap: 10px;
   }
   .dot { width: 10px; height: 10px; border-radius: 50%; background: ${artUri || isCta ? "rgba(255,255,255,0.35)" : "#E2E8F0"}; }
@@ -137,12 +126,7 @@ function sceneHtml(scene, index, total, dims, options) {
     <div class="scrim"></div>
     <div class="topbar"></div>
     <div class="kicker-wrap"><div class="kicker"><span class="dot-mark"></span>${escapeHtml(kickerLabel)}</div></div>
-    <div class="telop-wrap">
-      <div class="telop-bar">
-        <div class="telop-text">${escapeHtml(scene.text).replace(/\n/g, "<br/>")}</div>
-        ${noteRow}
-      </div>
-    </div>
+    ${noteRow}
     <div class="footer">${dots}</div>
   </div>
 </body></html>`;

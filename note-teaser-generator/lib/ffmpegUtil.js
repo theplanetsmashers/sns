@@ -3,9 +3,9 @@
 
 const { execFile } = require("child_process");
 
-function run(cmd, args) {
+function run(cmd, args, options = {}) {
   return new Promise((resolve, reject) => {
-    execFile(cmd, args, { maxBuffer: 1024 * 1024 * 64 }, (err, stdout, stderr) => {
+    execFile(cmd, args, { maxBuffer: 1024 * 1024 * 64, ...options }, (err, stdout, stderr) => {
       if (err) reject(new Error(`${cmd} failed: ${err.message}\n${stderr}`));
       else resolve(stdout);
     });

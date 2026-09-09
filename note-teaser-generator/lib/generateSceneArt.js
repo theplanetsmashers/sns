@@ -8,9 +8,10 @@ const fs = require("fs");
 const path = require("path");
 
 const STYLE_GUIDE =
-  "Flat editorial illustration, minimal 2D flat design, Japanese office/work life, " +
-  "soft navy (#1E3A5F), orange (#F97316) and white color palette, clean simple shapes, " +
-  "no text, no letters, no numbers, no logos, no watermark";
+  "Photorealistic documentary-style photograph, candid moment, natural available light, " +
+  "shallow depth of field, 35mm film photography look, Japanese office/factory setting, " +
+  "muted navy and warm orange color grading, no text, no letters, no numbers, no logos, no watermark, " +
+  "no illustration, no cartoon, no 3D render";
 
 async function generateOne(prompt, size, apiKey) {
   const res = await fetch("https://api.openai.com/v1/images/generations", {
