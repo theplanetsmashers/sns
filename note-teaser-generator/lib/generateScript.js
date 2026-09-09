@@ -3,6 +3,8 @@
 // output_config.format(構造化出力)でJSON Schemaを指定し、応答が必ずスキーマに一致することを
 // API側で保証させている(edu-material-generatorのlib/generateOutline.jsと同じ方式)。
 
+const { ICON_KEYS } = require("./icons");
+
 function buildScriptSchema() {
   return {
     type: "object",
@@ -15,8 +17,10 @@ function buildScriptSchema() {
           properties: {
             text: { type: "string" },
             narration: { type: "string" },
+            icon: { type: "string", enum: ICON_KEYS },
+            imagePrompt: { type: "string" },
           },
-          required: ["text", "narration"],
+          required: ["text", "narration", "icon", "imagePrompt"],
           additionalProperties: false,
         },
         minItems: 4,
@@ -66,6 +70,15 @@ ${noteUrl ? `【note記事の公開URL】${noteUrl}\n` : ""}${note ? `【追加�
 - 最後のシーンは必ず「続きはnoteで」という主旨のCTA(行動喚起)にする。${linkGuide}
 - narrationは記事本文のコピペではなく、要約・言い換えで書く
 - 誇大な煽り(「絶対に」「今すぐ知らないと損」等)は避け、記事のトーン(実務エピソードに基づく語り口)に合わせた自然な語り口にする
+
+【各シーンの背景の絵】
+テキストだけの画面にならないよう、各シーンには背景の絵を敷く。そのために2つの情報を付ける。
+
+- icon: 次の候補から、そのシーンの内容に最も近いものを1つ選ぶ(AI画像生成を使わない場合の
+  装飾アイコンとして使う)。候補: ${ICON_KEYS.join(", ")}
+- imagePrompt: AI画像生成に渡す、そのシーンの場面を表す短い英語の説明(15語程度)。
+  文字・数字・ロゴを画像に含めないこと。実在の人物や会社が特定できる描写は避け、
+  一般化した職場・オフィス・工場などの場面として描写する
 
 【動画タイトル・概要欄】
 - videoTitle: YouTube動画自体のタイトル案(30文字前後)
@@ -124,6 +137,8 @@ ${noteUrl ? `【note記事の公開URL】${noteUrl}\n` : ""}${note ? `【追加�
   script.scenes = script.scenes.map((s) => ({
     text: String(s.text || "").trim(),
     narration: String(s.narration || "").trim(),
+    icon: ICON_KEYS.includes(s.icon) ? s.icon : "note",
+    imagePrompt: String(s.imagePrompt || "").trim(),
   }));
 
   return script;

@@ -176,10 +176,14 @@ async function main() {
     silence: "音声合成に失敗したため無音です(尺は原稿の文字数から自動計算)",
   }[result.engine];
 
+  const artLabel = result.usedAiArt
+    ? "AI生成イラスト背景"
+    : "アイコン装飾背景(OPENAI_API_KEY未設定のため既定のフォールバック)";
+
   const parts = [
     `✅ 動画が完成しました: **${script.videoTitle}**`,
     "",
-    `尺: 約${result.totalSeconds}秒 / 向き: ${vertical ? "縦型(Shorts想定)" : "横型"}`,
+    `尺: 約${result.totalSeconds}秒 / 向き: ${vertical ? "縦型(Shorts想定)" : "横型"} / 背景: ${artLabel} / BGM: あり(ffmpegで自動生成)`,
     "",
     "**シーン構成**",
     sceneLines,

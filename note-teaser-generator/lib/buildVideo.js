@@ -5,18 +5,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const { execFile } = require("child_process");
+const { run, getDurationSeconds } = require("./ffmpegUtil");
 
 const TRANSITION_SECONDS = 0.4; // シーン間のクロスフェードの長さ(30秒程度の短い動画なので少し短めにする)
-
-function run(cmd, args) {
-  return new Promise((resolve, reject) => {
-    execFile(cmd, args, { maxBuffer: 1024 * 1024 * 64 }, (err, stdout, stderr) => {
-      if (err) reject(new Error(`${cmd} failed: ${err.message}\n${stderr}`));
-      else resolve(stdout);
-    });
-  });
-}
 
 async function buildSegment(imagePath, audioPath, outPath) {
   await run("ffmpeg", [
@@ -32,20 +23,6 @@ async function buildSegment(imagePath, audioPath, outPath) {
     "-shortest",
     outPath,
   ]);
-}
-
-async function getDurationSeconds(filePath) {
-  const out = await run("ffprobe", [
-    "-v", "error",
-    "-show_entries", "format=duration",
-    "-of", "csv=p=0",
-    filePath,
-  ]);
-  const seconds = parseFloat(out.trim());
-  if (!Number.isFinite(seconds) || seconds <= 0) {
-    throw new Error(`動画の長さを取得できませんでした: ${filePath}`);
-  }
-  return seconds;
 }
 
 async function concatWithCrossfade(segmentPaths, durations, outPath) {
