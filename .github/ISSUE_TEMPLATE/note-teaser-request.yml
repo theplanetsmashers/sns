@@ -1,0 +1,59 @@
+name: note紹介動画生成リクエスト
+description: note記事から、YouTube用の約30秒の紹介動画(台本・ナレーション・動画mp4)を自動生成します
+title: "[note動画生成] "
+labels: ["note-teaser-request"]
+body:
+  - type: input
+    id: article-title
+    attributes:
+      label: 記事タイトル
+      description: 動画にしたいnote記事のタイトルを入力してください
+      placeholder: "例: #248 「原因は分かった」と言った後も、現場から離れられない。"
+    validations:
+      required: true
+  - type: input
+    id: doc-link
+    attributes:
+      label: Googleドキュメントの共有リンク
+      description: >-
+        記事原稿のGoogleドキュメントのリンク(任意)。使う場合は共有設定を
+        「リンクを知っている全員が閲覧可(閲覧者)」に変更してください。
+        取得できない場合は下の「記事本文」欄への直接貼り付けにフォールバックします。
+      placeholder: "https://docs.google.com/document/d/xxxxxxxx/edit?usp=sharing"
+    validations:
+      required: false
+  - type: textarea
+    id: article-body
+    attributes:
+      label: 記事本文
+      description: >-
+        上のGoogleドキュメントのリンクが読み込めない場合、または直接貼り付ける場合はここに記事の本文
+        (無料部分の冒頭など)をコピペしてください。どちらか一方は必須です。
+      placeholder: "記事の本文をここに貼り付けてください"
+    validations:
+      required: false
+  - type: input
+    id: note-url
+    attributes:
+      label: note記事の公開URL
+      description: 公開済みの場合、動画の概要欄に載せるnote記事のURL(任意)
+      placeholder: "https://note.com/xxxxx/n/xxxxxxxxxxxx"
+    validations:
+      required: false
+  - type: dropdown
+    id: orientation
+    attributes:
+      label: 動画の向き
+      description: 未選択の場合は縦型(YouTube Shorts想定)になります
+      options:
+        - "縦型(YouTube Shorts想定・推奨)"
+        - "横型(通常のYouTube動画)"
+    validations:
+      required: false
+  - type: textarea
+    id: note
+    attributes:
+      label: 追加の指示(任意)
+      placeholder: "例: もっとフックを強く。特定のセリフを使いたい 等"
+    validations:
+      required: false
