@@ -1,0 +1,15 @@
+{
+  "name": "note-teaser-generator",
+  "version": "1.0.0",
+  "description": "note記事から、YouTube用の約30秒の紹介動画(台本・ナレーション・動画mp4)を自動生成するツール",
+  "main": "generate-teaser.js",
+  "scripts": {
+    "generate": "node generate-teaser.js"
+  },
+  "dependencies": {
+    "puppeteer": "^25.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
