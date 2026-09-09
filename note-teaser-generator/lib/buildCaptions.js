@@ -21,14 +21,22 @@ function escapeAssText(str) {
   return String(str).replace(/[{}]/g, "").replace(/\n/g, "\\N");
 }
 
+// ショート動画のテロップは読点・句点を入れないのが定石なので、表示用テキストからは取り除く
+// (ナレーション側や台本ログ用のscene.textそのものは変更しない)。
+function stripPunctuationForDisplay(str) {
+  return String(str).replace(/[、。]/g, "");
+}
+
 // 1シーンぶんのキャプションを、文字ごとに「その文字だけハイライトされる」イベントの列にする。
 // 常に全文を表示し続け、話している位置の文字だけ色が変わって進んでいく見た目になる。
-function buildSceneEvents(text, sceneStart, sceneEnd) {
-  const chars = Array.from(text);
+// ハイライトされた文字は、一瞬だけ拡大するスケールアニメーションも加えて強弱を出す。
+function buildSceneEvents(rawText, sceneStart, sceneEnd) {
+  const chars = Array.from(stripPunctuationForDisplay(rawText));
   if (chars.length === 0) return [];
 
   const duration = Math.max(sceneEnd - sceneStart, 0.3);
   const perChar = duration / chars.length;
+  const popMs = Math.min(perChar * 1000 * 0.6, 220);
 
   return chars.map((_, i) => {
     const start = sceneStart + perChar * i;
@@ -36,15 +44,18 @@ function buildSceneEvents(text, sceneStart, sceneEnd) {
     const before = escapeAssText(chars.slice(0, i).join(""));
     const active = escapeAssText(chars[i]);
     const after = escapeAssText(chars.slice(i + 1).join(""));
-    const line = `${before}{\\c&H${HIGHLIGHT_COLOR}&}${active}{\\c}${after}`;
+    const pop =
+      `{\\c&H${HIGHLIGHT_COLOR}&}` +
+      `{\\t(0,${Math.round(popMs / 2)},\\fscx118\\fscy118)}` +
+      `{\\t(${Math.round(popMs / 2)},${popMs},\\fscx100\\fscy100)}`;
+    const line = `${before}${pop}${active}{\\c\\fscx100\\fscy100}${after}`;
     return `Dialogue: 0,${formatAssTime(start)},${formatAssTime(end)},Telop,,0,0,0,,${line}`;
   });
 }
 
 function buildAss(scenes, durations, dims) {
   const timeline = computeSceneTimeline(durations, TRANSITION_SECONDS);
-  const fontSize = Math.round(dims.width * 0.072);
-  const marginV = Math.round(dims.height * 0.17);
+  const fontSize = Math.round(dims.width * 0.08);
 
   const header = `[Script Info]
 ScriptType: v4.00+
@@ -54,7 +65,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Telop,Noto Sans CJK JP,${fontSize},&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,6,3,2,60,60,${marginV},1
+Style: Telop,Noto Sans CJK JP,${fontSize},&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,6,3,5,60,60,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
