@@ -4842,7 +4842,21 @@
       "createdTime": "2026-08-22T06:34:51.707Z",
       "modifiedTime": "2026-08-22T06:35:26.817Z",
       "notePrice": 0,
-      "noteNumber": 180
+      "noteNumber": 180,
+      "titleEn": "Before You Fix the Drawing, Say Where the Change Will Land",
+      "summaryEn": "A design change that looks clean on paper can still blindside the shop floor — the real skill isn't fixing the flagged spot, it's naming every downstream place the fix will ripple into before anyone signs off.",
+      "keywordsEn": [
+        "design change impact",
+        "engineering drawing revision",
+        "downstream effects",
+        "change management",
+        "design review",
+        "manufacturing handoff",
+        "fixture and tooling impact",
+        "root cause thinking",
+        "cross-functional impact",
+        "catching hidden dependencies"
+      ]
     },
     {
       "id": "1cTPrd9WV0utsBcb8ydEHuR9CmDy9JwLMvFYYV8fm4-U",
@@ -4854,7 +4868,21 @@
       "createdTime": "2026-08-22T06:52:08.629Z",
       "modifiedTime": "2026-08-22T06:52:52.955Z",
       "notePrice": 0,
-      "noteNumber": 181
+      "noteNumber": 181,
+      "titleEn": "When No One Asks a Question, Don't Assume They Understood",
+      "summaryEn": "Silence at the end of a meeting feels like agreement, but the people listening often can't yet tell what they don't understand — so the real test isn't whether questions come up, it's whether you check what they'd actually do next.",
+      "keywordsEn": [
+        "meeting communication",
+        "checking for understanding",
+        "silent audience",
+        "explaining change",
+        "comprehension gap",
+        "effective briefings",
+        "confirming alignment",
+        "avoiding miscommunication",
+        "leading a meeting",
+        "did they really get it"
+      ]
     },
     {
       "id": "1wQfCal86_8ATbhMVrv2nVYoeqRoBKrcn-5ozrbnQe_o",
@@ -4866,7 +4894,21 @@
       "createdTime": "2026-08-22T06:57:05.658Z",
       "modifiedTime": "2026-08-22T06:57:50.286Z",
       "notePrice": 0,
-      "noteNumber": 182
+      "noteNumber": 182,
+      "titleEn": "A Decision Isn't Finished Until You've Decided Who Hears About It",
+      "summaryEn": "Agreeing on a plan in the meeting room feels like the finish line, but if the people whose work actually changes never hear about it clearly, the old way keeps running right alongside the new one.",
+      "keywordsEn": [
+        "closing the loop",
+        "communicating decisions",
+        "meeting follow-through",
+        "stakeholder communication",
+        "who needs to know",
+        "rollout communication",
+        "avoiding miscommunication",
+        "cross-shift handoff",
+        "change rollout",
+        "decisions that don't stick"
+      ]
     },
     {
       "id": "1qzSpq9IfkDqHKoydI8iecKE1EUC1SnFHr_qjXoRQcf4",
