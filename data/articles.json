@@ -4920,7 +4920,21 @@
       "createdTime": "2026-08-22T22:04:30.992Z",
       "modifiedTime": "2026-08-22T22:04:31.848Z",
       "notePrice": 0,
-      "noteNumber": 183
+      "noteNumber": 183,
+      "titleEn": "When a Complaint Comes In, Share the Status Before You Know the Cause",
+      "summaryEn": "The customer on the other end of an angry call doesn't need the root cause yet — they need to know what's known, what isn't, and when they'll hear more, so they can make their own call on stopping the line while you keep digging.",
+      "keywordsEn": [
+        "customer complaint response",
+        "incident communication",
+        "first response",
+        "root cause investigation",
+        "managing customer anxiety",
+        "quality issue escalation",
+        "crisis communication",
+        "keeping stakeholders informed",
+        "buying time under pressure",
+        "initial incident report"
+      ]
     },
     {
       "id": "1GPA6soi2X2eMOnVzb81InGpQFG_X1J4P-5i8ffGjXo0",
@@ -4932,7 +4946,21 @@
       "createdTime": "2026-08-22T22:05:27.011Z",
       "modifiedTime": "2026-08-22T22:05:27.908Z",
       "notePrice": 0,
-      "noteNumber": 184
+      "noteNumber": 184,
+      "titleEn": "A Handoff Note Should Say What to Watch Next, Not Just What Happened",
+      "summaryEn": "\"Strange noise, monitor it\" tells the next shift almost nothing — a handoff only works once it also spells out the threshold for action, so the person picking it up isn't left guessing what counts as normal.",
+      "keywordsEn": [
+        "shift handoff",
+        "handover notes",
+        "passing on information",
+        "operational continuity",
+        "clear instructions",
+        "decision criteria",
+        "night shift to day shift",
+        "documentation gaps",
+        "what to check next",
+        "avoiding ambiguity"
+      ]
     },
     {
       "id": "1W3aUYNCf15vtcO39uBwXbDMX_rYXgUnwV9ua-Dfb4H4",
