@@ -1,0 +1,14 @@
+{
+  "database_url": "https://app.notion.com/p/841fcddfe972443d80536b888d5e534a",
+  "data_source_id": "06721192-84dc-40f1-b07c-587680e5a848",
+  "parent_page_url": "https://app.notion.com/p/39ffb191ae4980b8888cd98772443384",
+  "migrated_at": "2026-09-12",
+  "note": "note記事DB(会社の裏設定)への試験移行分。Google Driveの「会社の裏設定 claude」フォルダにある記事のうち#211〜#215の5件をNotionへ移行した。",
+  "migrated_articles": [
+    { "number": "211", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981c99534e4cbba8ec60d", "driveFileId": "1bWby3MIBJlc-rVnyn6RoRVse6hv35NgQ" },
+    { "number": "212", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981aba29fe04cbd87c5da", "driveFileId": "1NNTwOu3rqHxLluf79w2sCaS955oawRuf" },
+    { "number": "213", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49814197bbdd12551d343e", "driveFileId": "1QqdwhXVY-BU2hmJINz2WyXgwFzqA0r7f" },
+    { "number": "214", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae498181ac59e59e0b176ab8", "driveFileId": "1A34qOoM6sqSNMeADgRjB1TuRz5nwoRYg" },
+    { "number": "215", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981a0a6a3f2d90796e7aa", "driveFileId": "1a55tJcuRyZn8jEC6Ec4mC8P3Ll-U8zl_" }
+  ]
+}
