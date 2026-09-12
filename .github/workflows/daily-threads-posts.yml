@@ -1,10 +1,12 @@
 name: Daily Threads Post Draft Generator
 
+# 一時停止中(2026-09-12): 売上が立つまでClaude APIの自動呼び出しを止めています。
+# 再開する場合は、下のcronの行のコメントアウトを外してください。
 on:
-  schedule:
-    # 毎日 21:00 UTC = 日本時間 6:00 に実行(必要に応じて時刻を調整してください)
-    - cron: "0 21 * * *"
-  workflow_dispatch: {} # 手動実行用ボタンをGitHub上に表示する
+  # schedule:
+  #   # 毎日 21:00 UTC = 日本時間 6:00 に実行(必要に応じて時刻を調整してください)
+  #   - cron: "0 21 * * *"
+  workflow_dispatch: {} # 手動実行用ボタンをGitHub上に表示する(必要な時だけ手動で使う)
 
 jobs:
   generate:
