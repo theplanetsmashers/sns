@@ -2,7 +2,7 @@
 
 Threads運用を楽にするための小さなツール群です。
 
-> **⚠️ 現在、Claude APIの自動呼び出しは一時停止中です(2026-09-12〜)。** 売上が立つまでコストをかけない方針のため、各ツールのGitHub Actions自動実行(毎日のcron・Issue起票トリガー)を止めています。手動実行(workflow_dispatch)は引き続き可能です。再開する場合は、各`.github/workflows/*.yml`内のコメントアウトを外してください。`note-trend-generator`のGoogle Drive同期(`sync-note-drive.yml`)だけはClaude APIを使わず完全無料なので、通常どおり自動実行されています。
+> **⚠️ 現在、全ワークフローの自動実行は一時停止中です(2026-09-12〜)。** 売上が立つまでコストをかけない方針のため、Claude APIを使う各ツールのGitHub Actions自動実行(毎日のcron・Issue起票トリガー)を止めています。`note-trend-generator`のGoogle Drive同期(`sync-note-drive.yml`)はClaude API不要で完全無料ですが、Googleサービスアカウントの設定がまだのため合わせて一時停止中です(設定を終えたら再開できます)。手動実行(workflow_dispatch)はどのツールも引き続き可能です。再開する場合は、各`.github/workflows/*.yml`内のコメントアウトを外してください。
 
 - [`threads-post-generator/`](threads-post-generator/) — 毎日の投稿案をClaude APIで自動生成し、Discordに通知するツール(フェーズ1)。GitHub Actionsで毎日自動実行。
 - [`comment-generator/`](comment-generator/) — 他の人の投稿に対する返信コメント案をClaude APIで自動生成するツール(フェーズ2)。GitHub Issueを作るだけでDiscordに案が届く、スマホだけで完結する運用と、PCでローカルWebアプリとして使う運用の2通りに対応。
