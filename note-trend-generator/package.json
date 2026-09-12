@@ -1,0 +1,15 @@
+{
+  "name": "note-trend-generator",
+  "version": "1.0.0",
+  "description": "note.comの検索結果から競合・トレンドを分析し、次のnote記事のネタ案を自動生成するツール",
+  "main": "generate-trend-report.js",
+  "scripts": {
+    "generate": "node generate-trend-report.js"
+  },
+  "dependencies": {
+    "puppeteer": "^25.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
