@@ -17,6 +17,7 @@ const AVOID_TITLES_LIMIT = 30;
 
 const KEYWORDS_PATH = path.join(__dirname, "keywords.json");
 const HISTORY_PATH = path.join(__dirname, "state", "history.json");
+const PUBLISHED_PATH = path.join(__dirname, "state", "published-articles.json");
 
 function loadJson(filePath, fallback) {
   if (!fs.existsSync(filePath)) return fallback;
@@ -88,6 +89,8 @@ async function main() {
 
   const history = loadJson(HISTORY_PATH, []);
   const avoidTitles = history.slice(-AVOID_TITLES_LIMIT).map((h) => h.title);
+  const published = loadJson(PUBLISHED_PATH, []);
+  const publishedTitles = published.map((p) => p.title).filter(Boolean);
 
   const searchResults = await collectSearchResults(keywords);
   const totalArticles = searchResults.reduce((sum, r) => sum + r.articles.length, 0);
@@ -100,7 +103,7 @@ async function main() {
     return;
   }
 
-  const reportText = await generateTrendReport(searchResults, avoidTitles);
+  const reportText = await generateTrendReport(searchResults, avoidTitles, publishedTitles);
   await postToDiscord(reportText);
 
   const today = new Date().toISOString().slice(0, 10);

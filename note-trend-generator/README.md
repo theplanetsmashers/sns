@@ -11,6 +11,7 @@ note.comの検索結果から競合・トレンドを分析し、次のnote記�
 3. トレンド分析を踏まえて、次に書くべきnote記事のネタを3件(タイトル案・フック・構成案)提案する
 4. トレンド分析とネタ案をDiscordに通知する
 5. 提案したタイトルを履歴(`state/history.json`)に記録し、翌週以降は同じ/似たネタを繰り返し提案しないようにする
+6. 実際にGoogle Driveで書き上げた note 記事(`state/published-articles.json`)も合わせてプロンプトに渡し、「もう書いたテーマ」を避けてネタを提案する(下記「Google Driveの執筆記録との連携」参照)
 
 ## セットアップ
 
@@ -45,14 +46,50 @@ npm run generate
 
 `state/trend-report-YYYY-MM-DD.json` に、収集した検索結果と生成したレポート全文が保存されます。
 
+## Google Driveの執筆記録との連携(sync-drive-articles.js)
+
+note記事は Google Drive のフォルダ(`会社の裏設定　claude`)にMarkdownファイルとして書き溜められています。`sync-drive-articles.js` が**GitHub Actionsで日次自動実行**され、新しく増えた記事を検出して`state/published-articles.json`へ「もう公開済みのテーマ」として取り込みます。これにより、`generate-trend-report.js`のネタ提案が既存記事と被らないようになります(上記「【すでに公開済みの自分のnote記事】」として毎回プロンプトに渡される)。
+
+処理の流れ:
+
+1. Googleサービスアカウントの認証情報(`GOOGLE_SERVICE_ACCOUNT_JSON`)でOAuth2アクセストークンを取得する(`lib/googleServiceAuth.js`。外部ライブラリを使わず、Node標準の`crypto`でJWT署名を自前生成している)
+2. Drive API v3で対象フォルダのファイル一覧を取得する(`lib/driveApi.js`)
+3. タイトルに「見出し画像プロンプト」を含むファイルを除外し、`state/published-articles.json`にまだ無いファイル(=新規記事)を見つける
+4. ファイル名(`NNN_タイトル.md`)から番号・タイトルを取り出す。その形式に合わないファイルだけ本文を取得し、先頭行の見出しから取り出す
+5. 新規エントリを`state/published-articles.json`に追記し、番号順にソートする
+6. (ワークフロー側で)変更をコミット・push する
+
+### セットアップ(Googleサービスアカウント)
+
+GitHub ActionsがGoogle Driveへ読み取りアクセスするために、Googleサービスアカウントを1つ用意する必要があります。
+
+1. [Google Cloud Console](https://console.cloud.google.com/)でプロジェクトを開く(無ければ新規作成。無料枠で問題ない)
+2. 「APIとサービス」→「ライブラリ」から **Google Drive API** を有効化する
+3. 「APIとサービス」→「認証情報」→「認証情報を作成」→「サービスアカウント」でサービスアカウントを作成する(役割の付与は不要)
+4. 作成したサービスアカウントの「鍵」タブから、JSON形式の新しい鍵を作成してダウンロードする
+5. ダウンロードしたJSONファイルの中の`client_email`の値(例: `xxxx@yyyy.iam.gserviceaccount.com`)をコピーする
+6. Google Driveで対象フォルダ(`会社の裏設定　claude`)を右クリック→「共有」→ 5.のメールアドレスを「閲覧者」として追加する
+7. リポジトリの Settings → Secrets and variables → Actions で、JSONファイルの中身をそのまま `GOOGLE_SERVICE_ACCOUNT_JSON` という名前のシークレットとして登録する
+8. フォルダIDが変わった場合は `.github/workflows/sync-note-drive.yml` の `DRIVE_NOTE_FOLDER_ID` を書き換える(フォルダのURL `drive.google.com/drive/folders/<ここ>` の部分)
+
+設定が終わったら、Actionsタブから`Sync Note Articles from Google Drive`を手動実行(workflow_dispatch)して、`note-trend-generator/state/published-articles.json`が更新されるか確認してください。
+
+### 既知のデータの不整合
+
+`state/published-articles.json` の初期データは、2026-09-12時点でフォルダにあった24記事(#192〜#215)を一括で取り込んだものです。**なお、ファイル名が`193.md`(番号なし)になっている記事が1件あり、中身を見ると実際は「#195」を名乗る別内容の記事でした(既存の`195_...`ファイルとは別物)。**番号が重複しているため`"195b"`という仮番号で登録しています。書き間違い・重複の可能性があるので、Drive側の確認をおすすめします。
+
 ## ファイル構成
 
 - `generate-trend-report.js` — キーワードごとの検索→トレンド分析・ネタ提案の生成→Discord通知→履歴保存までを繋ぐメイン処理
 - `lib/searchNote.js` — note.comの検索結果ページをヘッドレスブラウザ(Puppeteer)で開き、記事タイトル・URLを取得する。note.comは検索結果をクライアントサイドで描画するため、単純なfetchでは中身が取得できず、Puppeteerで実際にページを開いてDOMから読み取っている
-- `lib/generateTrendReport.js` — 収集したタイトル一覧からトレンド分析・次のネタ提案をClaude APIで生成する
+- `lib/generateTrendReport.js` — 収集したタイトル一覧・公開済み記事一覧からトレンド分析・次のネタ提案をClaude APIで生成する
 - `keywords.json` — 検索キーワードの設定ファイル
 - `state/history.json` — 過去に提案したネタのタイトル履歴(直近200件。重複提案を避けるための参考データとして次回生成時に渡す)
+- `state/published-articles.json` — Google Driveで実際に書き上げた note 記事の一覧(番号・タイトル・Drive上のファイルID)。`sync-drive-articles.js`が日次で更新する
 - `state/trend-report-*.json` — 実行ごとの生成ログ(収集結果・レポート全文)
+- `sync-drive-articles.js` — Google Driveのnote記事フォルダを確認し、新規記事を`state/published-articles.json`へ取り込むスクリプト(GitHub Actionsで日次実行)
+- `lib/googleServiceAuth.js` — Googleサービスアカウントの認証情報からOAuth2アクセストークンを取得する(JWT署名を`crypto`で自前生成)
+- `lib/driveApi.js` — Drive API v3のファイル一覧取得・本文取得の薄いラッパー
 
 ## 注意点・既知の制約
 

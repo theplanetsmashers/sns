@@ -15,10 +15,14 @@ function formatSearchResults(searchResults) {
     .join("\n\n");
 }
 
-async function generateTrendReport(searchResults, avoidTitles) {
+async function generateTrendReport(searchResults, avoidTitles, publishedTitles) {
   const resultsText = formatSearchResults(searchResults);
   const avoidText =
     avoidTitles.length > 0 ? avoidTitles.map((t) => `・${t}`).join("\n") : "(まだ提案履歴がありません)";
+  const publishedText =
+    publishedTitles.length > 0
+      ? publishedTitles.map((t) => `・${t}`).join("\n")
+      : "(まだ公開済みの記事データがありません)";
 
   const prompt = `あなたは製造業の管理職向けnoteマガジンの編集アシスタントです。
 以下は、関連キーワードでnote.comを検索して集めた、最近ヒットしている記事のタイトル一覧です(競合・トレンド調査用)。
@@ -26,7 +30,10 @@ async function generateTrendReport(searchResults, avoidTitles) {
 【検索結果】
 ${resultsText}
 
-【直近で提案済みのネタ(重複や似すぎた切り口を避けること)】
+【すでに公開済みの自分のnote記事(このテーマ・切り口はもう扱っているので避けること)】
+${publishedText}
+
+【直近で提案したが、まだ書いていないネタ(重複や似すぎた切り口を避けること)】
 ${avoidText}
 
 上記を踏まえて、次の2つを行ってください。
