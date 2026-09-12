@@ -1,0 +1,40 @@
+name: Sync Note Articles from Notion
+
+# 一時停止中(2026-09-12): Notion Internal Integrationトークン(NOTION_API_KEY)が
+# まだ未設定のため、cronのまま動かすと毎回失敗通知が来てしまう。
+# README「Notionとの連携(sync-notion-articles.js)」の手順を終えたら、
+# 下のcronの行のコメントアウトを外して再開してください。
+on:
+  # schedule:
+  #   # 毎日 22:00 UTC = 日本時間 7:00 に実行(必要に応じて時刻を調整してください)
+  #   - cron: "0 22 * * *"
+  workflow_dispatch: {} # 手動実行用ボタンをGitHub上に表示する(設定確認後の動作テストに使う)
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # state/published-articles.json をコミットし直すために必要
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync published articles from Notion
+        working-directory: note-trend-generator
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: "841fcddf-e972-443d-8053-6b888d5e534a"
+        run: node sync-notion-articles.js
+
+      - name: Commit updated state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add note-trend-generator/state/published-articles.json
+          git diff --staged --quiet || git commit -m "chore: sync note articles from Notion $(date -u +%Y-%m-%d)"
+          git push

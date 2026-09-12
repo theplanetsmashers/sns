@@ -1,14 +1,38 @@
 {
   "database_url": "https://app.notion.com/p/841fcddfe972443d80536b888d5e534a",
+  "database_id": "841fcddf-e972-443d-8053-6b888d5e534a",
   "data_source_id": "06721192-84dc-40f1-b07c-587680e5a848",
   "parent_page_url": "https://app.notion.com/p/39ffb191ae4980b8888cd98772443384",
   "migrated_at": "2026-09-12",
-  "note": "note記事DB(会社の裏設定)への試験移行分。Google Driveの「会社の裏設定 claude」フォルダにある記事のうち#211〜#215の5件をNotionへ移行した。",
+  "note": "note記事DB(会社の裏設定)へ、Google Driveの「会社の裏設定 claude」フォルダにあった記事24件(#193〜#215、番号重複の#195bを含む)を全件移行した。以後の新規記事はNotionのこのDBに直接追加していく運用とし、sync-notion-articles.jsがstate/published-articles.jsonをNotion側の内容で同期する(sync-drive-articles.js/Google Drive側は過去記事の参照用として残すが、新規追記の対象からは外れる)。",
+  "known_issues": [
+    "ファイル名が「192」の記事は、本文の見出しでは自ら「#193」を名乗っていたため、内容基準で#193として登録した(「#192」に相当する記事は存在しない)。",
+    "ファイル名が「193.md」(番号なし)の記事は、内容が「#195」を名乗る別記事だった(既存の#195本来の記事とは別物)。番号重複のため\"#195b(要確認:番号重複)\"というタイトル・番号195・ステータス「要確認」で登録し、どちらが正しい#195かはユーザー側での確認待ち。"
+  ],
   "migrated_articles": [
-    { "number": "211", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981c99534e4cbba8ec60d", "driveFileId": "1bWby3MIBJlc-rVnyn6RoRVse6hv35NgQ" },
-    { "number": "212", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981aba29fe04cbd87c5da", "driveFileId": "1NNTwOu3rqHxLluf79w2sCaS955oawRuf" },
-    { "number": "213", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49814197bbdd12551d343e", "driveFileId": "1QqdwhXVY-BU2hmJINz2WyXgwFzqA0r7f" },
-    { "number": "214", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae498181ac59e59e0b176ab8", "driveFileId": "1A34qOoM6sqSNMeADgRjB1TuRz5nwoRYg" },
-    { "number": "215", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981a0a6a3f2d90796e7aa", "driveFileId": "1a55tJcuRyZn8jEC6Ec4mC8P3Ll-U8zl_" }
+    { "number": 193, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49814da33dc2b65c17d4ec", "driveFileId": "1EAV7_aoVRCTHYWVeslJpO2W4u8a0E4NL" },
+    { "number": 194, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae498111abbbc57fe88488c3", "driveFileId": "1-9H--PYQS1LIonfJMbKXyGA7HCB_30WS" },
+    { "number": 195, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981d2ad01e16adca42525", "driveFileId": "1rvGzkZv81R67NV5U6zgGycgkokEW4Y1r" },
+    { "number": "195b", "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981dea66ef1f9327f7c57", "driveFileId": "1m455BKb3hXkij3-76UxqXyTz1TwBJ47B", "status": "要確認" },
+    { "number": 196, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae498105be63c1906970749f", "driveFileId": "1rRfXbEGy2KuSQVrYb9N6EoKG-Z46pa8x" },
+    { "number": 197, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981cd92cec2e3715550db", "driveFileId": "1krtPL2vD8RHsE45jwHwNvTt5B2NdNAEa" },
+    { "number": 198, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981108775c9c1d36066e3", "driveFileId": "15xw0uWe87OHKP2nnKTdMbp24QfEyJu69" },
+    { "number": 199, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49816498e1d29c0a2985ae", "driveFileId": "1R0wjQMZuYzw-50NnYbuVymBAh3MZIlZn" },
+    { "number": 200, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49819abc0ed266d1358f51", "driveFileId": "16eqp7bPlhnaXOSMKtfBpkVk9rfopW_A_" },
+    { "number": 201, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49811fa052da8ea0cc7414", "driveFileId": "1VGlMQRHOBCre_mYASZMYJW09DMvvsUTT" },
+    { "number": 202, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49814aa4b7d755eab2009d", "driveFileId": "1lzcjbKfEp5V-GTjtH7dKB1gsewzA3nDj" },
+    { "number": 203, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49814d9151f17a4d04f138", "driveFileId": "15PR0COpwIzmqdqgn8soicHAe2qoCYkrl" },
+    { "number": 204, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae498191b450e43beb571037", "driveFileId": "1lTDFlMc53b9OdEHvgJ5u8gfiF_gOrPYH" },
+    { "number": 205, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49816ebc8bcdc925f902b9", "driveFileId": "19egzXzVx7j-SCh3LWAsBo1-fBurZ8sHA" },
+    { "number": 206, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae498134a5d3ec4d7d9ca17a", "driveFileId": "1hvzsJ3cqQ5l7gL7cRubs38H7houRex3A" },
+    { "number": 207, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981ee9dbfff3753705551", "driveFileId": "1xgbUyO620fEtp3qAsLDNqDEcE7m_KWY9" },
+    { "number": 208, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981a68f0cc882e1139f6f", "driveFileId": "15buf_dntzdEAzLee8lK1PWYB6GVVpMTA" },
+    { "number": 209, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981c6a902f2ae72a037cc", "driveFileId": "1N6uqJZONDW12N5wtfLrOv1idM38K2kTq" },
+    { "number": 210, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981de88afe9ee42aea364", "driveFileId": "1juy6oehcZD3eYSS3h5pbsnsma-gFfKE8" },
+    { "number": 211, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981c99534e4cbba8ec60d", "driveFileId": "1bWby3MIBJlc-rVnyn6RoRVse6hv35NgQ" },
+    { "number": 212, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981aba29fe04cbd87c5da", "driveFileId": "1NNTwOu3rqHxLluf79w2sCaS955oawRuf" },
+    { "number": 213, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae49814197bbdd12551d343e", "driveFileId": "1QqdwhXVY-BU2hmJINz2WyXgwFzqA0r7f" },
+    { "number": 214, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae498181ac59e59e0b176ab8", "driveFileId": "1A34qOoM6sqSNMeADgRjB1TuRz5nwoRYg" },
+    { "number": 215, "notionPageUrl": "https://app.notion.com/p/3d9fb191ae4981a0a6a3f2d90796e7aa", "driveFileId": "1a55tJcuRyZn8jEC6Ec4mC8P3Ll-U8zl_" }
   ]
 }
