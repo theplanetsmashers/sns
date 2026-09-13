@@ -1,0 +1,12 @@
+{
+  "name": "threads-growth-autoreply",
+  "version": "1.0.0",
+  "description": "伸びている自分のThreads投稿を検出し、届いたコメントに短文で自動返信するボット",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

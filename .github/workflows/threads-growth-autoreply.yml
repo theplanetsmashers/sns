@@ -1,0 +1,42 @@
+name: Threads Growth Auto Reply
+
+on:
+  schedule:
+    # 30分おきに、伸びている投稿の検出とコメントへの自動返信を実行
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {} # 手動実行用ボタンをGitHub上に表示する
+
+concurrency:
+  group: threads-growth-autoreply
+  cancel-in-progress: false # 前回の実行(APIコール・コミット)を中断しない。次のスケジュールを待つ
+
+jobs:
+  auto-reply:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # state/ 配下のインサイト履歴・返信履歴をコミットし直すために必要
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Detect growing posts and auto-reply to comments
+        working-directory: threads-growth-autoreply
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node bot.js
+
+      - name: Commit updated state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add threads-growth-autoreply/state/
+          git diff --staged --quiet || git commit -m "chore: update growth snapshots / reply history $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push
