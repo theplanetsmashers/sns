@@ -129,11 +129,13 @@ async function main() {
         await createReply(userId, THREADS_ACCESS_TOKEN, { text: replyText, replyToId: reply.id });
 
         replied.ids.add(reply.id);
+        // author/commentText(相手のコメント本文)はここでは保存しない。
+        // このリポジトリはpublicなので、state/replied.jsonはgit履歴として誰でも閲覧できる。
+        // 重複返信の防止(commentId)と言い回しの重複回避(replyText)には自分の投稿内容だけで足りるため、
+        // 他人のコメント本文をpublicなgit履歴に残さないようにしている。
         replied.records.push({
           commentId: reply.id,
           mediaId: post.id,
-          author: reply.username,
-          commentText: (reply.text || "").slice(0, 200),
           replyText,
           repliedAt: now.toISOString(),
         });
