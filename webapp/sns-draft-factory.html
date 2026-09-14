@@ -13,6 +13,8 @@
     --threads-bg: #FBF1DE;
     --x: #206863;
     --x-bg: #E7F2F0;
+    --substack: #6B4A9E;
+    --substack-bg: #EFE9F6;
     --danger: #A5372F;
     --danger-bg: #FBEAE7;
     --done-bg: #E6F1E4;
@@ -35,6 +37,8 @@
       --threads-bg: #2C2313;
       --x: #4FAFA6;
       --x-bg: #122725;
+      --substack: #C9A6F0;
+      --substack-bg: #211A2E;
       --danger: #E28E86;
       --danger-bg: #2C1917;
       --done-bg: #17281B;
@@ -54,6 +58,8 @@
     --threads-bg: #2C2313;
     --x: #4FAFA6;
     --x-bg: #122725;
+    --substack: #C9A6F0;
+    --substack-bg: #211A2E;
     --danger: #E28E86;
     --danger-bg: #2C1917;
     --done-bg: #17281B;
@@ -70,9 +76,9 @@
   }
 
   .page {
-    max-width: 900px;
+    max-width: 640px;
     margin: 0 auto;
-    padding: 24px 16px 56px;
+    padding: 20px 10px 48px;
   }
 
   header.hero { margin-bottom: 20px; }
@@ -117,9 +123,9 @@
 
   .history-grid {
     display: grid;
-    grid-template-columns: 1.1fr 1.1fr 1.1fr 0.9fr;
+    grid-template-columns: 1fr 1fr 1fr 1.15fr 0.85fr;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
   .head-cell {
@@ -127,22 +133,23 @@
     top: 0;
     z-index: 3;
     background: var(--surface-2);
-    padding: 8px 6px;
+    padding: 5px 2px;
     font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
+    font-size: 8px;
+    letter-spacing: 0.01em;
     text-transform: uppercase;
     color: var(--ink-soft);
     border-bottom: 1px solid var(--line);
     text-align: center;
+    min-width: 0;
   }
 
-  .head-cell.corner-tl { border-top-left-radius: 12px; }
-  .head-cell.corner-tr { border-top-right-radius: 12px; }
+  .head-cell.corner-tl { border-top-left-radius: 10px; }
+  .head-cell.corner-tr { border-top-right-radius: 10px; }
 
   .cell {
     background: var(--surface);
-    padding: 8px 6px;
+    padding: 5px 3px;
     border-bottom: 1px solid var(--line);
     border-right: 1px solid var(--line);
     min-width: 0;
@@ -154,10 +161,10 @@
   .row-meta {
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin-bottom: 4px;
-    min-height: 14px;
-    font-size: 9px;
+    gap: 2px;
+    margin-bottom: 3px;
+    min-height: 12px;
+    font-size: 7px;
   }
 
   .row-date {
@@ -168,7 +175,7 @@
 
   .row-badge {
     border-radius: 999px;
-    padding: 1px 5px;
+    padding: 1px 3px;
     border: 1px solid var(--line);
     color: var(--ink-soft);
     white-space: nowrap;
@@ -185,8 +192,8 @@
     color: var(--ink-soft);
     text-decoration: underline;
     cursor: pointer;
-    padding: 2px;
-    font-size: 9px;
+    padding: 1px;
+    font-size: 7px;
     white-space: nowrap;
   }
 
@@ -196,7 +203,7 @@
   }
 
   .excerpt {
-    font-size: 13px;
+    font-size: 9.5px;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -206,18 +213,19 @@
   button.copy-btn {
     background: transparent;
     border: 1px solid currentColor;
-    border-radius: 6px;
-    padding: 2px 4px;
+    border-radius: 5px;
+    padding: 2px 2px;
     font-family: var(--font-body);
     font-weight: 700;
-    font-size: 10px;
+    font-size: 8px;
     cursor: pointer;
     width: 100%;
-    margin-top: 4px;
+    margin-top: 3px;
   }
 
   button.copy-btn.threads { color: var(--threads); }
   button.copy-btn.x { color: var(--x); }
+  button.copy-btn.substack { color: var(--substack); }
 
   .placeholder-cell {
     border: 1.5px dashed var(--line);
@@ -253,20 +261,20 @@
 
   /* checklist column */
 
-  .checklist { display: flex; flex-direction: column; gap: 3px; }
+  .checklist { display: flex; flex-direction: column; gap: 2px; }
 
   .checklist label {
     display: flex;
     align-items: center;
-    gap: 4px;
-    font-size: 10px;
+    gap: 2px;
+    font-size: 8px;
     color: var(--ink-soft);
     cursor: pointer;
   }
 
   .checklist input[type="checkbox"] {
-    width: 13px;
-    height: 13px;
+    width: 10px;
+    height: 10px;
     accent-color: var(--accent);
     cursor: pointer;
     flex: none;
@@ -442,9 +450,9 @@
 
 <div class="page">
   <header class="hero">
-    <div class="eyebrow">note / Threads / X</div>
+    <div class="eyebrow">note / Threads / X / Substack</div>
     <h1>SNS下書き工場</h1>
-    <p>note記事を貼って生成すると、note・Threads・Xが横並びの表に積み上がります。右端のチェックで、どこまで投稿し終えたか一目で分かります。</p>
+    <p>note記事を貼って生成すると、note・Threads・X・Substack(英語)が横並びの表に積み上がります。右端のチェックで、どこまで投稿し終えたか一目で分かります。</p>
   </header>
 
   <div class="table-wrap">
@@ -459,12 +467,12 @@
     <span class="status" id="statusEl" role="status" aria-live="polite"></span>
   </div>
 
-  <p class="reminder">note・Threads・Xへの実際の投稿は、それぞれ手動で行ってください。履歴・チェックはこのアプリのデータとして保存され、時間が空いても消えません。</p>
+  <p class="reminder">note・Threads・X・Substackへの実際の投稿は、それぞれ手動で行ってください。履歴・チェックはこのアプリのデータとして保存され、時間が空いても消えません。</p>
 
   <details class="style-editor" id="styleEditor">
     <summary>文体サンプルを編集する</summary>
     <div class="style-editor-body">
-      <p class="hint">生成されるThreads/X投稿は、ここに登録した例文の文体・リズム・長さに合わせて作られます。自分のアカウントの実際の投稿に差し替えると、より本人らしい文章になります。</p>
+      <p class="hint">生成されるThreads/X投稿は、ここに登録した例文の文体・リズム・長さに合わせて作られます。自分のアカウントの実際の投稿に差し替えると、より本人らしい文章になります。Substack(英語)は海外の新規読者向けの紹介文なので、この例文の対象外です。</p>
       <div class="style-field">
         <label for="threadsExample">Threads参考例</label>
         <textarea class="style-example" id="threadsExample"></textarea>
@@ -494,6 +502,7 @@
   var THREADS_DEFAULT_EXAMPLE = "正直、自分でも驚いています。プログラム未経験の私が、ClaudeというAIとチャットするだけで「悩みを書くと近い記事を自動で探してくれるツール」を作ってしまいました。\n\nコードは一切書いていません。「こういうのが欲しい」と伝え続けただけです。\n\n会社の裏設定161本から、あなたの状況に近いエピソードが見つかります。試しに一言書いてみてください。";
   var X_DEFAULT_EXAMPLE = "「頑張ってるアピール」が上手い人ほど、実際は一番何もしてない説。\n発言は多い、会議では目立つ、報告は丁寧。\nでも成果物を見ると、一番動いてるのは黙って作業してる人だったりする。\nアピール力と実務力、比例しないこと多すぎる";
   var EXAMPLE_ARTICLE = "なぜ、あの人ばかり仕事を頼まれるのか。信頼は能力だけでなく、報告・相談・期限遵守で作られる。ただし何でも抱え込まず、自分を守る断り方も必要——という「会社の裏設定」シリーズの記事。";
+  var SUBSTACK_EXAMPLE = "# The Colleague Everyone Trusts With the Important Stuff\n\nEvery office has one: the person who somehow always gets handed the work that actually matters. Not necessarily the most talented person in the room — just the one everyone quietly trusts to not drop it.\n\nIn Japan's corporate culture, that trust is built (and lost) through a very specific set of habits — how you report bad news, when you ask for help, whether you protect your own deadlines instead of quietly drowning. My latest essay on note breaks down exactly what that looks like, plus why saying no at the right moment is part of the same skill, not the opposite of it.";
 
   var STORAGE_THREADS = "sdf_threads_example_v1";
   var STORAGE_X = "sdf_x_example_v1";
@@ -516,12 +525,20 @@
     };
   }
 
+  // Older saved entries (before the Substack column existed) lack
+  // substackText/doneSubstack; fill them in so rendering never sees undefined.
+  function normalizeEntry(e) {
+    e.substackText = e.substackText || "";
+    e.doneSubstack = !!e.doneSubstack;
+    return e;
+  }
+
   function loadHistory() {
     var raw = safeGet(STORAGE_HISTORY, null);
     if (raw) {
       try {
         var parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) return parsed;
+        if (Array.isArray(parsed)) return parsed.map(normalizeEntry);
       } catch (e) { /* fall through to seed */ }
     }
     return [{
@@ -531,9 +548,11 @@
       articleText: EXAMPLE_ARTICLE,
       threadsText: THREADS_DEFAULT_EXAMPLE,
       xText: X_DEFAULT_EXAMPLE,
+      substackText: SUBSTACK_EXAMPLE,
       doneNote: false,
       doneThreads: false,
-      doneX: false
+      doneX: false,
+      doneSubstack: false
     }];
   }
 
@@ -559,9 +578,11 @@
       articleText: e.articleText,
       threadsText: e.threadsText,
       xText: e.xText,
+      substackText: e.substackText,
       doneNote: !!e.doneNote,
       doneThreads: !!e.doneThreads,
-      doneX: !!e.doneX
+      doneX: !!e.doneX,
+      doneSubstack: !!e.doneSubstack
     };
   }
 
@@ -620,6 +641,7 @@
       '<div class="head-cell corner-tl">note</div>' +
       '<div class="head-cell">Threads</div>' +
       '<div class="head-cell">X</div>' +
+      '<div class="head-cell">Substack</div>' +
       '<div class="head-cell corner-tr">投稿状況</div>' +
       '<div id="historyRows" style="display:contents"></div>';
   }
@@ -628,7 +650,8 @@
     var items = [
       ["doneNote", "note"],
       ["doneThreads", "Threads"],
-      ["doneX", "X"]
+      ["doneX", "X"],
+      ["doneSubstack", "Substack"]
     ];
     var html = '<div class="checklist">';
     for (var i = 0; i < items.length; i++) {
@@ -646,7 +669,7 @@
   }
 
   function renderRow(e, isLatest) {
-    var complete = !e.example && e.doneNote && e.doneThreads && e.doneX;
+    var complete = !e.example && e.doneNote && e.doneThreads && e.doneX && e.doneSubstack;
     var completeClass = complete ? " row-complete" : "";
 
     var badges = "";
@@ -668,6 +691,10 @@
       '<div class="cell' + completeClass + '">' +
         '<p class="excerpt" title="' + escapeHtml(e.xText.trim()) + '">' + escapeHtml(truncate10(e.xText)) + '</p>' +
         '<button type="button" class="copy-btn x" data-action="copy" data-target="x" data-id="' + e.id + '" data-label="コピー">コピー</button>' +
+      '</div>' +
+      '<div class="cell' + completeClass + '">' +
+        '<p class="excerpt" title="' + escapeHtml(e.substackText.trim()) + '">' + escapeHtml(truncate10(e.substackText)) + '</p>' +
+        '<button type="button" class="copy-btn substack" data-action="copy" data-target="substack" data-id="' + e.id + '" data-label="コピー">コピー</button>' +
       '</div>' +
       checklistCell(e, complete)
     );
@@ -741,7 +768,47 @@
     }
   }
 
-  function buildPrompt(articleBody) {
+  // ---- 投稿の「型」。毎回同じ構成にならないよう、生成のたびにランダムで選ぶ ----
+  // (直近使った型はThreads/Xそれぞれ別に記憶し、連続で同じ型にならないようにする)
+
+  var POST_PATTERNS = [
+    { name: "告白型", instruction: "「正直〜」「実は〜」など、本音をこっそり打ち明けるようなトーンで書き出す。" },
+    { name: "問いかけ型", instruction: "読者に直接問いかける一文から始める(「〜だと思いませんか」「〜したこと、ありませんか」など)。答えは急がず、共感してから展開する。" },
+    { name: "ビフォーアフター型", instruction: "「昔は〜だと思っていた。でも〜だと分かった」という、自分の中の変化を軸に書く。" },
+    { name: "セリフ再現型", instruction: "記事中に出てくる/暗示される誰かの一言をカギカッコで冒頭に置き、その場面から話を展開する。" },
+    { name: "毒舌型", instruction: "冒頭であえて厳しめの本音・皮肉を一言だけ置く(例:「優しい上司ほど、実は部下を潰す」)。ただし攻撃的になりすぎないよう、そのあとの展開と着地は必ず前向きにする。多用すると嫌味に見えるので、鋭さは一箇所だけに留める。" },
+    { name: "数字型", instruction: "件数・年数・回数など具体的な数字を冒頭に置き、意外性で興味を引く。" },
+    { name: "対比型", instruction: "「Aだと思われがちだが、実際はBだ」という一見意外な対比を最初に提示し、そのギャップを埋める形で書く。" }
+  ];
+
+  var STORAGE_RECENT_THREADS_PATTERNS = "sdf_recent_threads_patterns_v1";
+  var STORAGE_RECENT_X_PATTERNS = "sdf_recent_x_patterns_v1";
+  var RECENT_PATTERNS_TO_AVOID = 3;
+
+  function getRecentPatternNames(storageKey) {
+    try {
+      var parsed = JSON.parse(safeGet(storageKey, "[]"));
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+
+  function rememberPattern(storageKey, patternName) {
+    var recent = getRecentPatternNames(storageKey);
+    recent.push(patternName);
+    while (recent.length > RECENT_PATTERNS_TO_AVOID) recent.shift();
+    safeSet(storageKey, JSON.stringify(recent));
+  }
+
+  function pickPattern(storageKey) {
+    var recent = getRecentPatternNames(storageKey);
+    var pool = POST_PATTERNS.filter(function (p) { return recent.indexOf(p.name) === -1; });
+    if (pool.length === 0) pool = POST_PATTERNS;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // Threads/X: a short JSON reply (two short fields) -- low risk of being
+  // cut short before the JSON closes.
+  function buildThreadsXPrompt(articleBody, threadsPattern, xPattern) {
     var ex = getExamples();
     return [
       "あなたはnote記事の内容を元に、Threads・X(旧Twitter)向けの告知投稿を作るアシスタントです。",
@@ -759,7 +826,13 @@
       "【X参考例】",
       ex.x,
       "",
-      "【共通条件】",
+      "【文章の質に関する共通条件(人間らしく、記憶に残る文章にするため)】",
+      "- 抽象論で終わらせず、記事の中の具体的な場面・数字・セリフを拾って使う",
+      "- 一文を短く区切り、体言止めや言い切りも交ぜて、AIが書いたような滑らかすぎる文章にしない",
+      "- 上から目線の説教にならないよう共感ベースで書く。ただし予定調和にせず、どこか一箇所だけ本音・皮肉の効いた一言を混ぜてよい(毒を出しすぎて攻撃的にならないよう、着地は必ず前向きにする)",
+      "- 読んだ人が「あるある、わかる」と思うか「え、そうなの」と驚くかのどちらかを狙う",
+      "",
+      "【Threads・X共通条件】",
       "- 冒頭1行で興味を引く(体験談・結論・問いかけなど)",
       "- 記事の一番面白い/役に立つポイントを先出しする",
       "- 「続きはnoteで」等、note記事へ誘導する一言を末尾に入れる(URLは書かなくてよい)",
@@ -769,14 +842,44 @@
       "【Threads投稿の条件】",
       "- 日本語で150〜200文字程度",
       "- 参考例のように、空行で2〜3段落に分ける",
+      "- 今回の構成の型「" + threadsPattern.name + "」: " + threadsPattern.instruction,
       "",
       "【X投稿の条件】",
       "- 日本語で100〜130文字程度",
       "- 参考例のように、短い文を改行で区切ってリズムよく書く",
+      "- 今回の構成の型「" + xPattern.name + "」: " + xPattern.instruction,
       "",
       "【出力形式】",
       "以下のJSON形式のみを出力してください。説明や前置きは不要です。",
       '{"threads": "投稿文", "x": "投稿文"}'
+    ].join("\n");
+  }
+
+  // Substack: a long-form (300-450 word) English essay. Kept OUT of the
+  // JSON call above and asked for as plain text instead -- a long reply
+  // wrapped in required JSON braces is exactly the shape most likely to get
+  // cut short before it closes, which is what was surfacing as "generation
+  // failed" (json() rejects invalid_json when the reply is incomplete).
+  // Plain text has no structure to break: even a cut-short reply is still
+  // usable text, not a hard failure.
+  function buildSubstackPrompt(articleBody) {
+    return [
+      "あなたはnote記事をもとに、Substack向けの英語の紹介記事(ティザー記事)を書くアシスタントです。",
+      "",
+      "【note記事(日本語)】",
+      articleBody,
+      "",
+      "【依頼内容】",
+      "この記事を、海外の新規読者向けの英語の導入記事として書いてください。逐語訳ではなく、日本特有の背景・文脈を補いながら要約・紹介してください。",
+      "",
+      "【条件】",
+      "- 完全に英語で書くこと(日本語を残さない)",
+      "- Substackらしい、個人的で親しみやすい語り口のフックから書き始める",
+      "- 300〜450語程度",
+      "- 先頭にMarkdownのH1見出し(# )で記事タイトルを1つ付ける",
+      "- 最後に、続きはnoteで日本語で公開している旨を一言添える(URLは書かなくてよい)",
+      "",
+      "本文だけを出力してください。前置きや説明は不要です。"
     ].join("\n");
   }
 
@@ -799,22 +902,37 @@
     btn.textContent = "生成中…";
     setStatus("考え中…(数十秒かかることがあります)", "loading");
 
-    sampleFn.json(buildPrompt(body), { modelTier: "default", cache: false })
-      .then(function (data) {
-        if (!data || typeof data.threads !== "string" || typeof data.x !== "string") {
+    var threadsPattern = pickPattern(STORAGE_RECENT_THREADS_PATTERNS);
+    var xPattern = pickPattern(STORAGE_RECENT_X_PATTERNS);
+
+    Promise.all([
+      sampleFn.json(buildThreadsXPrompt(body, threadsPattern, xPattern), { modelTier: "default", cache: false }),
+      sampleFn(buildSubstackPrompt(body), { modelTier: "default", cache: false })
+    ])
+      .then(function (results) {
+        var twData = results[0];
+        var substackResult = results[1];
+        if (!twData || typeof twData.threads !== "string" || typeof twData.x !== "string") {
           throw { code: "invalid_json" };
         }
+        var substackText = ((substackResult && substackResult.text) || "").trim();
+        if (!substackText) throw { code: "empty_completion" };
+
         addEntry({
           id: "e" + Date.now() + Math.random().toString(36).slice(2, 7),
           example: false,
           createdAt: Date.now(),
           articleText: body,
-          threadsText: data.threads.trim(),
-          xText: data.x.trim(),
+          threadsText: twData.threads.trim(),
+          xText: twData.x.trim(),
+          substackText: substackText,
           doneNote: false,
           doneThreads: false,
-          doneX: false
+          doneX: false,
+          doneSubstack: false
         });
+        rememberPattern(STORAGE_RECENT_THREADS_PATTERNS, threadsPattern.name);
+        rememberPattern(STORAGE_RECENT_X_PATTERNS, xPattern.name);
         articleEl.value = "";
         updateArticleCount();
         setStatus("", null);
@@ -874,6 +992,8 @@
 
   // ---- delegated events within the table ----
 
+  var COPY_FIELD_BY_TARGET = { threads: "threadsText", x: "xText", substack: "substackText" };
+
   gridEl.addEventListener("click", function (evt) {
     var target = evt.target.closest("[data-action]");
     if (!target) return;
@@ -899,8 +1019,8 @@
     } else if (action === "copy") {
       var entry = history.filter(function (e) { return e.id === id; })[0];
       if (!entry) return;
-      var text = target.getAttribute("data-target") === "threads" ? entry.threadsText : entry.xText;
-      copyText(target, text);
+      var field = COPY_FIELD_BY_TARGET[target.getAttribute("data-target")];
+      copyText(target, entry[field]);
     }
   });
 
@@ -982,17 +1102,19 @@
         if (snap.docs.length > 0) {
           history = snap.docs.map(function (d) {
             var data = d.data() || {};
-            return {
+            return normalizeEntry({
               id: d.id,
               example: false,
               createdAt: data.createdAt || 0,
               articleText: data.articleText || "",
               threadsText: data.threadsText || "",
               xText: data.xText || "",
+              substackText: data.substackText || "",
               doneNote: !!data.doneNote,
               doneThreads: !!data.doneThreads,
-              doneX: !!data.doneX
-            };
+              doneX: !!data.doneX,
+              doneSubstack: !!data.doneSubstack
+            });
           });
           saveHistoryLocal();
           renderHistoryRows();
