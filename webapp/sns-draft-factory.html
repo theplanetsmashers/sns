@@ -202,6 +202,35 @@
     font-weight: 700;
   }
 
+  .row-select {
+    width: 12px;
+    height: 12px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex: none;
+  }
+
+  .bulk-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .bulk-bar button.danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
   .excerpt {
     font-size: 9.5px;
     margin: 0;
@@ -459,6 +488,8 @@
     <div class="history-grid" id="grid"></div>
   </div>
 
+  <div class="bulk-bar" id="bulkBar" hidden></div>
+
   <div class="compose-card">
     <div class="row-meta"><span class="row-badge next">次回</span></div>
     <textarea id="article" maxlength="20000" placeholder="書き終えたnote記事の本文をここに貼り付け"></textarea>
@@ -565,6 +596,9 @@
   var pendingDeleteTimer = null;
   var pendingClearArmed = false;
   var pendingClearTimer = null;
+  var selectedIds = {};
+  var pendingBulkDeleteArmed = false;
+  var pendingBulkDeleteTimer = null;
 
   // localStorage is only a fast local cache now; db (when available) is the
   // durable copy, since browsers can and do evict localStorage over time.
@@ -678,10 +712,11 @@
     var dateLabel = e.example ? "" : '<span class="row-date">' + formatDate(e.createdAt) + "</span>";
     var deleting = pendingDeleteId === e.id;
     var deleteBtn = e.example ? "" : '<button type="button" class="row-delete' + (deleting ? " confirm" : "") + '" data-action="delete" data-id="' + e.id + '">' + (deleting ? "本当に削除?" : "削除") + '</button>';
+    var selectBox = e.example ? "" : '<input type="checkbox" class="row-select" data-action="select" data-id="' + e.id + '"' + (selectedIds[e.id] ? " checked" : "") + '>';
 
     return (
       '<div class="cell' + completeClass + '">' +
-        '<div class="row-meta">' + dateLabel + badges + deleteBtn + '</div>' +
+        '<div class="row-meta">' + selectBox + dateLabel + badges + deleteBtn + '</div>' +
         '<p class="excerpt" title="' + escapeHtml(e.articleText.trim()) + '">' + escapeHtml(truncate10(e.articleText)) + '</p>' +
       '</div>' +
       '<div class="cell' + completeClass + '">' +
@@ -707,6 +742,65 @@
       html += renderRow(history[i], isLatest);
     }
     document.getElementById("historyRows").innerHTML = html;
+  }
+
+  function selectedCount() {
+    return Object.keys(selectedIds).filter(function (id) { return selectedIds[id]; }).length;
+  }
+
+  function renderBulkBar() {
+    var bar = document.getElementById("bulkBar");
+    var count = selectedCount();
+    if (count === 0) {
+      bar.hidden = true;
+      bar.innerHTML = "";
+      pendingBulkDeleteArmed = false;
+      window.clearTimeout(pendingBulkDeleteTimer);
+      return;
+    }
+    bar.hidden = false;
+    var label = pendingBulkDeleteArmed
+      ? "本当に" + count + "件削除しますか?もう一度タップ"
+      : "選択した" + count + "件を削除";
+    bar.innerHTML =
+      '<button type="button" class="danger" id="bulkDeleteBtn">' + label + '</button>' +
+      '<button type="button" class="link-btn" id="clearSelectionBtn">選択を解除</button>';
+    document.getElementById("bulkDeleteBtn").addEventListener("click", handleBulkDeleteClick);
+    document.getElementById("clearSelectionBtn").addEventListener("click", function () {
+      selectedIds = {};
+      pendingBulkDeleteArmed = false;
+      window.clearTimeout(pendingBulkDeleteTimer);
+      renderHistoryRows();
+      renderBulkBar();
+    });
+  }
+
+  function handleBulkDeleteClick() {
+    var count = selectedCount();
+    if (count === 0) return;
+    if (pendingBulkDeleteArmed) {
+      window.clearTimeout(pendingBulkDeleteTimer);
+      pendingBulkDeleteArmed = false;
+      var idsToDelete = Object.keys(selectedIds).filter(function (id) { return selectedIds[id]; });
+      history = history.filter(function (e) { return !selectedIds[e.id]; });
+      selectedIds = {};
+      saveHistoryLocal();
+      if (useDb) {
+        idsToDelete.forEach(function (id) {
+          db.doc("entries/" + id).delete().catch(function () {});
+        });
+      }
+      renderHistoryRows();
+      renderBulkBar();
+    } else {
+      pendingBulkDeleteArmed = true;
+      renderBulkBar();
+      window.clearTimeout(pendingBulkDeleteTimer);
+      pendingBulkDeleteTimer = window.setTimeout(function () {
+        pendingBulkDeleteArmed = false;
+        renderBulkBar();
+      }, 3000);
+    }
   }
 
   function setStatus(text, kind) {
@@ -1006,7 +1100,9 @@
         pendingDeleteId = null;
         history = history.filter(function (e) { return e.id !== id; });
         persistDelete(id);
+        delete selectedIds[id];
         renderHistoryRows();
+        renderBulkBar();
       } else {
         pendingDeleteId = id;
         window.clearTimeout(pendingDeleteTimer);
@@ -1025,9 +1121,17 @@
   });
 
   gridEl.addEventListener("change", function (evt) {
-    var target = evt.target.closest('[data-action="check"]');
+    var target = evt.target.closest('[data-action="check"], [data-action="select"]');
     if (!target) return;
+    var action = target.getAttribute("data-action");
     var id = target.getAttribute("data-id");
+
+    if (action === "select") {
+      if (target.checked) selectedIds[id] = true; else delete selectedIds[id];
+      renderBulkBar();
+      return;
+    }
+
     var field = target.getAttribute("data-field");
     var entry = history.filter(function (e) { return e.id === id; })[0];
     if (!entry) return;
@@ -1047,6 +1151,7 @@
       clearHistoryBtn.textContent = "履歴をすべて削除";
       var idsToDelete = history.map(function (e) { return e.id; });
       history = [];
+      selectedIds = {};
       saveHistoryLocal();
       if (useDb) {
         idsToDelete.forEach(function (id) {
@@ -1054,6 +1159,7 @@
         });
       }
       renderHistoryRows();
+      renderBulkBar();
     } else {
       pendingClearArmed = true;
       clearHistoryBtn.textContent = "本当にすべて削除しますか？もう一度タップ";
@@ -1151,6 +1257,7 @@
 
   buildStaticShell();
   renderHistoryRows();
+  renderBulkBar();
   updateArticleCount();
   document.getElementById("article").addEventListener("input", updateArticleCount);
   document.getElementById("generateBtn").addEventListener("click", handleGenerate);
