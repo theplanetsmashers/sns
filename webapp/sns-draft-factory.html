@@ -762,7 +762,7 @@
       case "empty_completion":
         return "うまく生成できませんでした。もう一度お試しください。";
       case "cancelled":
-        return "";
+        return "生成が途中で中断されました(アプリを切り替えたか、画面が再読み込みされた可能性があります)。もう一度お試しください。";
       default:
         return "通信エラーが起きました。もう一度お試しください。";
     }
@@ -1129,6 +1129,23 @@
       })
       .catch(function () { /* keep working from the local cache */ });
   }
+
+  // ---- last-resort safety net ----
+  // If generation is in flight and something throws or rejects outside the
+  // handleGenerate try/catch (a bug, a dropped promise), never leave the
+  // viewer staring at a stuck button with no explanation.
+  function recoverFromStuckGenerate() {
+    if (!draftLoading) return;
+    draftLoading = false;
+    var btn = document.getElementById("generateBtn");
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "生成する";
+    }
+    setStatus("エラーが発生しました。もう一度お試しください。", "error");
+  }
+  window.addEventListener("unhandledrejection", recoverFromStuckGenerate);
+  window.addEventListener("error", recoverFromStuckGenerate);
 
   // ---- init ----
 
