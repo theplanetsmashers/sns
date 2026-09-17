@@ -9,5 +9,16 @@
     "vertical": true,
     "totalSeconds": 32,
     "createdAt": "2026-09-09T12:56:53.254Z"
+  },
+  {
+    "noteTitle": "動画生成するプロンプト",
+    "videoTitle": "顔出しなしで動画で稼ぐAIキャラクター副業",
+    "noteUrl": null,
+    "issueNumber": null,
+    "narrated": false,
+    "engine": "silence",
+    "vertical": true,
+    "totalSeconds": 25,
+    "createdAt": "2026-09-17T11:04:33.176Z"
   }
 ]
