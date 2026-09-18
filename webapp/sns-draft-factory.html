@@ -875,6 +875,16 @@
     { name: "対比型", instruction: "「Aだと思われがちだが、実際はBだ」という一見意外な対比を最初に提示し、そのギャップを埋める形で書く。" }
   ];
 
+  // Xはインプレッション低下を受けて専用の型に切り替え(Threadsは従来のまま)。
+  // 「具体エピソード単発型」はAIに実体験を創作させない: themes.json
+  // (会社の裏設定シリーズの実話ネタ元)から実際のエピソードを引いて書かせる。
+  var X_PATTERNS = [
+    { name: "心理の裏側暴露型", instruction: "「〜な人ほど実は…」のように、一見よく見える行動や性格の裏にある本当の心理・実態を暴く構成で書く。" },
+    { name: "そもそも論型", instruction: "「本来は〜だったはず。今は…」のように、物事の本来あるべき姿と現状とのズレを対比させる構成で書く。" },
+    { name: "終わらないループ言語化型", instruction: "「AしてはB、BしてはA」のように、堂々巡りで終わらない構造・矛盾をテンポよく言語化する構成で書く。" },
+    { name: "具体エピソード単発型", instruction: "具体的な数字・固有名詞を含む、実体験ベースのエピソードを一つだけ淡々と描写する構成で書く。誇張や後付けの教訓は入れず、実際に起きたことをそのまま書く。" }
+  ];
+
   var STORAGE_RECENT_THREADS_PATTERNS = "sdf_recent_threads_patterns_v1";
   var STORAGE_RECENT_X_PATTERNS = "sdf_recent_x_patterns_v1";
   var RECENT_PATTERNS_TO_AVOID = 3;
@@ -893,25 +903,50 @@
     safeSet(storageKey, JSON.stringify(recent));
   }
 
-  function pickPattern(storageKey) {
+  function pickPattern(storageKey, patternList) {
     var recent = getRecentPatternNames(storageKey);
-    var pool = POST_PATTERNS.filter(function (p) { return recent.indexOf(p.name) === -1; });
-    if (pool.length === 0) pool = POST_PATTERNS;
+    var pool = patternList.filter(function (p) { return recent.indexOf(p.name) === -1; });
+    if (pool.length === 0) pool = patternList;
     return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // ---- themes.json (会社の裏設定シリーズの実話ネタ元) ----
+  // Xの「具体エピソード単発型」で、AIが数字や固有名詞を創作しないよう、
+  // 実際にあったエピソードを1件渡すために使う。読み込みはページ表示時に
+  // 一度だけ試み、以後はキャッシュを使い回す。取得できなくても、その場合は
+  // 単に実話ネタなしでプロンプトを組む(生成自体は止めない)。
+  var themesPromise = null;
+  function loadThemes() {
+    if (!themesPromise) {
+      themesPromise = fetch("themes.json")
+        .then(function (res) { if (!res.ok) throw new Error("themes fetch failed"); return res.json(); })
+        .then(function (data) { return Array.isArray(data) ? data : []; })
+        .catch(function () { return []; });
+    }
+    return themesPromise;
+  }
+  function pickRandomTheme(themes) {
+    if (!themes || themes.length === 0) return null;
+    return themes[Math.floor(Math.random() * themes.length)];
   }
 
   // Threads/X: a short JSON reply (two short fields) -- low risk of being
   // cut short before the JSON closes.
-  function buildThreadsXPrompt(articleBody, threadsPattern, xPattern) {
+  //
+  // X specifically dropped from ~150-200 impressions to 2-6 once every post
+  // ended on a "続きはnoteで"-style external hook. Threads keeps that
+  // hook (it still works fine there); X's own conditions below forbid it
+  // entirely and require the post to stand on its own.
+  function buildThreadsXPrompt(articleBody, threadsPattern, xPattern, episodeTheme) {
     var ex = getExamples();
-    return [
+    var lines = [
       "あなたはnote記事の内容を元に、Threads・X(旧Twitter)向けの告知投稿を作るアシスタントです。",
       "",
       "【note記事】",
       articleBody,
       "",
       "【依頼内容】",
-      "この記事を要約し、フックの効いたThreads投稿文とX投稿文をそれぞれ1本ずつ作成してください。",
+      "この記事を元に、フックの効いたThreads投稿文とX投稿文をそれぞれ1本ずつ作成してください。",
       "文体・リズム・長さ・構成は、以下の参考例に合わせてください(参考例の内容自体はコピーしない。あくまで書き方の見本)。",
       "",
       "【Threads参考例】",
@@ -926,27 +961,46 @@
       "- 上から目線の説教にならないよう共感ベースで書く。ただし予定調和にせず、どこか一箇所だけ本音・皮肉の効いた一言を混ぜてよい(毒を出しすぎて攻撃的にならないよう、着地は必ず前向きにする)",
       "- 読んだ人が「あるある、わかる」と思うか「え、そうなの」と驚くかのどちらかを狙う",
       "",
-      "【Threads・X共通条件】",
-      "- 冒頭1行で興味を引く(体験談・結論・問いかけなど)",
-      "- 記事の一番面白い/役に立つポイントを先出しする",
-      "- 「続きはnoteで」等、note記事へ誘導する一言を末尾に入れる(URLは書かなくてよい)",
+      "【共通条件】",
       "- ハッシュタグは付けない",
       "- Markdown記号(#や*など)は使わない",
       "",
       "【Threads投稿の条件】",
       "- 日本語で150〜200文字程度",
+      "- 冒頭1行で興味を引く(体験談・結論・問いかけなど)",
+      "- 記事の一番面白い/役に立つポイントを先出しする",
+      "- 「続きはnoteで」等、note記事へ誘導する一言を末尾に入れてよい(URLは書かなくてよい)",
       "- 参考例のように、空行で2〜3段落に分ける",
       "- 今回の構成の型「" + threadsPattern.name + "」: " + threadsPattern.instruction,
       "",
-      "【X投稿の条件】",
-      "- 日本語で100〜130文字程度",
+      "【X投稿の条件(最重要)】",
+      "- 日本語で100〜140文字程度、140文字を超えない",
+      "- 「続きはnoteで」「続きは記事で」等、note記事や外部リンクへ誘導する言葉は一切使わない",
+      "- この1投稿だけで起承転結を完結させる。結論・オチ・気づきまでこの投稿の中に書き切ること。読者が「これだけで話が終わっている」と感じられる内容にする",
       "- 参考例のように、短い文を改行で区切ってリズムよく書く",
-      "- 今回の構成の型「" + xPattern.name + "」: " + xPattern.instruction,
+      "- 今回の構成の型「" + xPattern.name + "」: " + xPattern.instruction
+    ];
+
+    if (episodeTheme) {
+      lines.push(
+        "",
+        "【X用の参考エピソード(実話・会社の裏設定シリーズより)】",
+        "タイトル: " + episodeTheme.title,
+        "テーマ: " + episodeTheme.theme,
+        "教訓: " + episodeTheme.lesson,
+        "キーワード: " + (episodeTheme.keywords || []).join("、"),
+        "上記は実際にあったエピソードです。X投稿の「具体エピソード」部分は、この実話の具体性(場面・数字・固有名詞のニュアンス)を踏まえて書いてください。数字や固有名詞をAIが作り話で足さないこと。今回のnote記事と無理につなげなくてよい(自然につながる場合のみ触れる)。"
+      );
+    }
+
+    lines.push(
       "",
       "【出力形式】",
       "以下のJSON形式のみを出力してください。説明や前置きは不要です。",
       '{"threads": "投稿文", "x": "投稿文"}'
-    ].join("\n");
+    );
+
+    return lines.join("\n");
   }
 
   // Substack: a long-form (300-450 word) English essay. Kept OUT of the
@@ -996,13 +1050,17 @@
     btn.textContent = "生成中…";
     setStatus("考え中…(数十秒かかることがあります)", "loading");
 
-    var threadsPattern = pickPattern(STORAGE_RECENT_THREADS_PATTERNS);
-    var xPattern = pickPattern(STORAGE_RECENT_X_PATTERNS);
+    var threadsPattern = pickPattern(STORAGE_RECENT_THREADS_PATTERNS, POST_PATTERNS);
+    var xPattern = pickPattern(STORAGE_RECENT_X_PATTERNS, X_PATTERNS);
 
-    Promise.all([
-      sampleFn.json(buildThreadsXPrompt(body, threadsPattern, xPattern), { modelTier: "default", cache: false }),
-      sampleFn(buildSubstackPrompt(body), { modelTier: "default", cache: false })
-    ])
+    loadThemes().then(function (themes) {
+      var episodeTheme = xPattern.name === "具体エピソード単発型" ? pickRandomTheme(themes) : null;
+
+      return Promise.all([
+        sampleFn.json(buildThreadsXPrompt(body, threadsPattern, xPattern, episodeTheme), { modelTier: "default", cache: false }),
+        sampleFn(buildSubstackPrompt(body), { modelTier: "default", cache: false })
+      ]);
+    })
       .then(function (results) {
         var twData = results[0];
         var substackResult = results[1];
@@ -1276,5 +1334,7 @@
     useDb = true;
     loadFromDb();
   });
+
+  loadThemes(); // warm the cache so the first generate isn't delayed by it
 })();
 </script>
