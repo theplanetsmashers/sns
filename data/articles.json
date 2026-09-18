@@ -142,7 +142,21 @@
       "createdTime": "2026-09-01T12:35:30.031Z",
       "modifiedTime": "2026-09-01T12:35:30.031Z",
       "notePrice": 0,
-      "noteNumber": null
+      "noteNumber": null,
+      "titleEn": "At the AGV Showroom, the Surroundings Worried Me More Than the Speed",
+      "summaryEn": "Watching a warehouse robot glide along its QR-coded route, the specs sheet numbers were impressive, but the questions that actually mattered turned out to be about the floor, the layout, and what happens when one unit stops — not how fast it moves.",
+      "keywordsEn": [
+        "automated guided vehicles",
+        "warehouse automation",
+        "robotics implementation",
+        "factory floor infrastructure",
+        "evaluating new technology",
+        "logistics DX",
+        "operational readiness",
+        "beyond the spec sheet",
+        "avoiding failed rollouts",
+        "what to check before buying equipment"
+      ]
     },
     {
       "id": "15xw0uWe87OHKP2nnKTdMbp24QfEyJu69",
@@ -154,7 +168,21 @@
       "createdTime": "2026-09-03T10:14:53.578Z",
       "modifiedTime": "2026-09-03T10:14:53.578Z",
       "notePrice": 0,
-      "noteNumber": null
+      "noteNumber": null,
+      "titleEn": "Why Building a Dashboard Feels Like Progress but Isn't the Finish Line",
+      "summaryEn": "Getting real-time data up on a screen feels like real momentum, but the effort of wiring up the sensors and building the dashboard can quietly become the whole project — leaving the actual analysis, action, and follow-through never to happen.",
+      "keywordsEn": [
+        "data visualization trap",
+        "smart factory",
+        "dashboard fatigue",
+        "visibility without action",
+        "manufacturing analytics",
+        "beyond the dashboard",
+        "turning data into improvement",
+        "operational metrics",
+        "avoiding false progress",
+        "closing the loop on data"
+      ]
     },
     {
       "id": "1R0wjQMZuYzw-50NnYbuVymBAh3MZIlZn",
