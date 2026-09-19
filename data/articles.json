@@ -194,7 +194,21 @@
       "createdTime": "2026-09-03T10:33:18.641Z",
       "modifiedTime": "2026-09-03T10:33:18.641Z",
       "notePrice": 0,
-      "noteNumber": null
+      "noteNumber": null,
+      "titleEn": "Why Deep Expertise Doesn't Always Survive an Audit",
+      "summaryEn": "The person who knows a process better than anyone in the building can still freeze the moment an auditor asks what happens right before or right after it — because deep knowledge of one step isn't the same as being able to explain how it connects to the ones around it.",
+      "keywordsEn": [
+        "ISO audit preparation",
+        "IATF audit",
+        "process approach",
+        "explaining your work to auditors",
+        "subject matter expert blind spots",
+        "quality management systems",
+        "internal audit readiness",
+        "connecting the dots across processes",
+        "process thinking",
+        "audit interview questions"
+      ]
     },
     {
       "id": "16eqp7bPlhnaXOSMKtfBpkVk9rfopW_A_",
@@ -206,7 +220,21 @@
       "createdTime": "2026-09-03T10:54:07.372Z",
       "modifiedTime": "2026-09-03T10:54:07.372Z",
       "notePrice": 100,
-      "noteNumber": null
+      "noteNumber": null,
+      "titleEn": "A Total Coding Novice Built a Task App Using Nothing but Chat",
+      "summaryEn": "After giving up on Notion, Excel, and OneNote for never quite fitting how they actually wanted to track tasks, someone with zero programming background decided to just build their own app with AI — and ran straight into a wall the first time they tried.",
+      "keywordsEn": [
+        "building apps with AI",
+        "no-code app development",
+        "vibe coding",
+        "task management app",
+        "AI coding assistant",
+        "learning to code with chatgpt",
+        "beginner programming project",
+        "personal productivity tools",
+        "DIY software",
+        "overcoming a technical wall"
+      ]
     },
     {
       "id": "10J_1FNEiBYOBUGWvnBBXwyez8R-A69FjajPbWZJnZWk",
